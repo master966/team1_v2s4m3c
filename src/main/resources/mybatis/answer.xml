@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.mvc.answer.AnswerDAOInter">
+<insert id="create" parameterType="AnswerVO">
+  INSERT INTO answer(answerno, questionno, adminno, antitle, ancontent, andate)
+  VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), #{questionno}, #{adminno}, #{antitle}, #{ancontent}, sysdate)
+</insert>
+<select id="list" resultType="HashMap">
+  SELECT an.answerno, an.questionno, an.adminno, an.antitle, an.ancontent, an.andate,
+            ad.adminno, ad.nickname
+  FROM answer an, admini ad
+  WHERE an.adminno = ad.adminno
+  ORDER BY answerno DESC
+</select>
+
+<select id="list_member" parameterType="int" resultType="HashMap">
+SELECT an.answerno, an.questionno, an.adminno, an.antitle, an.ancontent, an.andate,
+          ad.nickname
+FROM (
+          SELECT a.answerno, a.questionno, a.adminno, a.antitle, a.ancontent, a.andate
+          FROM (
+                      SELECT q.questionno, q.memberno
+                      FROM question q
+                      WHERE q.memberno = 1
+                      ORDER BY questionno DESC
+                      ) q, answer a
+          WHERE q.questionno = a.questionno
+          ORDER BY answerno DESC
+          ) an, admini ad
+ WHERE an.adminno = ad.adminno
+ ORDER BY answerno DESC
+</select>
+
+<delete id="delete" parameterType="int">
+  DELETE FROM answer
+  WHERE questionno = #{questionno}
+</delete>
+</mapper>

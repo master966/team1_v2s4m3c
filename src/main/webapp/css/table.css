@@ -1,0 +1,10 @@
+.td_center{
+  text-align:center; 
+  vertical-align:middle;
+}
+
+  .table_basic {
+    border-collapse: collapse;
+    margin: 2px auto;
+    width: 100%;
+  }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.mvc.question.QuestionDAOInter">
+<insert id="create" parameterType="QuestionVO">
+  INSERT INTO question(questionno, memberno, categorization, asktitle, askcont, state, askdate)
+  VALUES((SELECT NVL(MAX(questionno), 0)+1 as questionno FROM question), 
+              #{memberno}, #{categorization}, #{asktitle}, #{askcont}, #{state}, sysdate)
+</insert> 
+
+<resultMap type="HashMap" id="AskContMap">
+  <result property="ASKCONT" column="ASKCONT" jdbcType="CLOB" javaType="java.lang.String" />
+</resultMap>
+<select id="list_all" resultType="HashMap" resultMap="AskContMap">
+  SELECT q.questionno, q.memberno, q.categorization, q.asktitle, q.askcont, q.state, q.askdate,
+           m.mname
+  FROM question q,  members m
+  WHERE q.memberno = m.memberno
+  ORDER BY questionno DESC
+</select>
+
+<select id="getNOs" resultType="int">
+  SELECT questionno
+  FROM question
+</select>
+
+<select id="list_by_memberno" parameterType="int" resultType="QuestionVO">
+  SELECT questionno, memberno, categorization, asktitle, askcont, state, askdate
+  FROM question
+  WHERE memberno = #{memberno}
+  ORDER BY questionno DESC
+</select>
+
+<select id="read" parameterType="int" resultType="QuestionVO">
+  SELECT questionno, memberno, categorization, asktitle, askcont, state, askdate
+  FROM question
+  WHERE questionno = #{questionno}
+  ORDER BY questionno DESC
+</select>
+
+<select id="getNOs_member" parameterType="int" resultType="int">
+  SELECT questionno
+  FROM question
+  WHERE memberno = #{memberno}
+</select>
+
+<update id="answer_regist" parameterType="HashMap">
+  UPDATE question 
+  SET state=#{state}
+  WHERE questionno=#{questionno}
+</update>
+
+<delete id="delete" parameterType="int">
+  DELETE FROM question
+  WHERE questionno = #{questionno}
+</delete>
+</mapper>

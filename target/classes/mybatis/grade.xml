@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "dev.mvc.grade.GradeDAOInter">
+
+<insert id="create" parameterType="GradeVO">
+  INSERT INTO grade(gradeno, gname, accum)
+  VALUES(#{gradeno}, #{gname},#{accum})
+</insert>
+
+<select id="list" resultType="GradeVO">
+  SELECT gradeno, gname, accum
+  FROM grade
+  ORDER BY gradeno ASC
+</select>
+
+<select id="read" resultType="GradeVO" parameterType="int">
+  SELECT gradeno, gname, accum
+  FROM grade
+  WHERE gradeno=#{gradeno}
+</select>
+
+<update id="update" parameterType="GradeVO">
+  UPDATE grade
+  SET gname=#{gname}
+  WHERE gradeno = #{gradeno}
+</update>
+
+<delete id="delete" parameterType="int">
+  DELETE FROM grade
+  WHERE gradeno=#{gradeno}
+</delete>
+
+
+</mapper> 

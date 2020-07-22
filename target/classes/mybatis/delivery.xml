@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- dev.mvc.delivery.DeliveryDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.delivery.DeliveryDAOInter"> 
+  <insert id="create" parameterType="DeliveryVO">
+    INSERT INTO delivery(deliveryno, stateno, receiver, contact, zipcode, address1, address2)
+    VALUES(delivery_seq.nextval, #{stateno}, #{receiver}, #{contact}, #{zipcode}, #{address1}, #{address2})
+  </insert> 
+  <select id="list" resultType="DeliveryVO">
+    SELECT deliveryno, stateno, receiver, contact, zipcode, address1, address2
+    FROM delivery
+    ORDER BY deliveryno DESC
+  </select>  
+  <select id="read" resultType="DeliveryVO" parameterType="int">
+    SELECT deliveryno, stateno, receiver, contact, zipcode, address1, address2
+    FROM delivery
+    WHERE deliveryno=#{deliveryno}
+  </select>
+  <update id="update" parameterType="DeliveryVO">
+    UPDATE delivery
+    SET stateno=#{stateno}, receiver=#{receiver}, contact =#{contact}, zipcode=#{zipcode},  address1=#{address1},  address2=#{address2}
+    WHERE deliveryno = #{deliveryno}
+  </update>
+  <delete id="delete" parameterType="int">
+    DELETE FROM delivery
+    WHERE deliveryno = #{deliveryno}
+  </delete>
+</mapper>

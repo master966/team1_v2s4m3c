@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.mvc.qna.QnaDAOInter"> 
+<insert id="create" parameterType="QnaVO">
+  INSERT INTO qna(qnano, adminno, qtitle, qcontent, qimage, qfile, isview, qdate)
+  VALUES((SELECT NVL(MAX(qnano), 0)+1 as qnano FROM qna), #{adminno}, #{qtitle}, #{qcontent}, #{qimage}, #{qfile}, #{isview}, sysdate)
+</insert>
+
+<select id="list" resultType="QnaVO">
+  SELECT qnano, adminno, qtitle, qcontent, qimage, qfile, isview, qdate
+  FROM qna
+  ORDER BY qnano
+</select>
+
+<select id="read" parameterType="int" resultType="QnaVO">
+  SELECT qnano, adminno, qtitle, qcontent, qimage, qfile, isview, qdate
+  FROM qna
+  WHERE qnano = #{qnano}
+</select>
+
+<update id="update" parameterType="QnaVO">
+  UPDATE  qna
+  SET qtitle=#{qtitle}, qcontent=#{qcontent}, qimage=#{qimage}, qfile=#{qfile}, isview=#{isview}
+  WHERE qnano = #{qnano}
+</update>
+
+<delete id="delete" parameterType="int">
+  DELETE FROM qna
+  WHERE qnano = #{qnano}
+</delete>
+ <update id="changeisview" parameterType="HashMap">
+   UPDATE qna
+   SET isview=#{isview}
+   WHERE qnano = #{qnano}
+ </update>
+ 
+ <select id="read_maxno" resultType="int">
+   SELECT MAX(qnano) as maxno
+   FROM qna
+ </select>
+</mapper>

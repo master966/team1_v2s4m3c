@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- dev.mvc.cate.CateDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.cate_gory.Cate_goryDAOInter">
+  <insert id="create" parameterType="Cate_goryVO">
+	INSERT INTO cate_gory(goryno, name, seqno, printout, rdate, cnt)
+	VALUES(gory_seq.nextval, #{name}, #{seqno} , #{printout}, sysdate, 0)
+  </insert>
+  
+  <!-- 출력 순서 오름차순 전체 목록 -->
+  <select id="list" resultType="Cate_goryVO">
+  SELECT goryno, name, seqno, printout, rdate, cnt
+	FROM cate_gory
+	ORDER BY goryno ASC
+ </select>
+ 
+ <select id="read" resultType="Cate_goryVO" parameterType="int">
+	SELECT goryno, name, seqno, printout, rdate, cnt
+	FROM cate_gory
+	WHERE goryno=#{goryno}
+ </select> 
+ 
+  <update id="update" parameterType="Cate_goryVO">
+    UPDATE cate_gory
+    SET goryno=#{goryno}, name=#{name}, seqno=#{seqno}, printout=#{printout}, cnt=#{cnt}
+    WHERE goryno=#{goryno}
+  </update> 
+  
+  <delete id="delete" parameterType="int">
+		DELETE FROM cate_gory
+		WHERE goryno = #{goryno}
+  </delete>
+  
+  <update id="increaseCnt" parameterType="int">
+    UPDATE cate_gory 
+    SET cnt = cnt + 1 
+    WHERE goryno=#{goryno} 
+  </update>
+  
+  <update id="decreaseCnt" parameterType="int">
+    UPDATE cate_gory 
+    SET cnt = cnt - 1 
+    WHERE goryno=#{goryno}  
+  </update>
+  
+</mapper> 

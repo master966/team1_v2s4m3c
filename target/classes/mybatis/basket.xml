@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dev.mvc.basket.CateDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.basket.BasketDAOInter">
+
+  <insert id="create" parameterType="BasketVO"> <!-- OrdersVO를 전달 받는다
+    이 태그를 Spring이 참조하여 자동으로 DAO class를 생성함
+    생성된 class는 MyBATIS를 호출하는 역할을 함
+    -->
+    <!-- 등록후 OrdersVO class의 ordersno 컬럼에 PK return  -->
+    <selectKey keyProperty="basketno" resultType="int" order="BEFORE"> 
+      SELECT basket_seq.nextval FROM dual
+    </selectKey>
+    INSERT INTO basket(basketno, memberno, p_no, p_name, cnt, p_price, pay, thumb1, p_quantity, basket_date)
+    VALUES(#{basketno}, #{memberno}, #{p_no}, #{p_name}, #{cnt}, #{p_price}, #{pay}, #{thumb1}, #{p_quantity}, sysdate)
+  </insert>
+  
+  <select id="list_all" resultType="CouponVO">
+    SELECT basketno, memberno, p_no, p_name, cnt, p_price, basket_date, thumb1, pay, p_quantity, sysdate
+    FROM basket
+    </select>
+  
+  <!-- 조회, id: read, 입력: basketno, 리턴: BasketVO -->
+  <select id="read_memberno" resultType="BasketVO" parameterType="int">
+    SELECT basketno, memberno, p_no, p_name, cnt, p_price, basket_date, thumb1, pay, p_quantity, sysdate
+    FROM basket
+    WHERE  memberno=#{memberno}
+  </select>
+  <!-- 주문 상세 등록을 위한 조회, id: read_memberno_to_detail, 입력: basketno, 리턴: BasketVO -->
+  <select id="read_memberno_to_detail" resultType="Orders_detailVO" parameterType="int">
+    SELECT memberno, p_no, p_name, cnt, p_price, thumb1, pay
+    FROM basket
+    WHERE  memberno=#{memberno}
+  </select>
+   <!-- 수량변경, id: update_cnt_pay, 입력: BasketVO -->
+   <update id="update_cnt_pay" parameterType="BasketVO">
+      UPDATE basket
+      SET cnt=#{cnt}, pay=#{pay}
+      WHERE basketno=#{basketno}
+   </update>
+    
+  <!-- 삭제, id: delete, 입력: PK, 삭제된 개수: int -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM basket
+    WHERE basketno=#{basketno}
+  </delete>
+  
+  <delete id="delete_memberno" parameterType="int">
+    DELETE FROM basket
+    WHERE memberno=#{memberno}
+  </delete>
+  
+
+</mapper>

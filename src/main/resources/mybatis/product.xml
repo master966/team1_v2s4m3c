@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.product.ProductDAOInter">
+
+  <insert id="create" parameterType="ProductVO">
+    <!-- 등록후 ProductVO class의 p_no 컬럼에 PK return  -->
+    <selectKey keyProperty="p_no" resultType="int" order="BEFORE">
+      SELECT p_seq.nextval FROM dual
+    </selectKey>
+    INSERT INTO product(p_no, goryno, adminno, p_name, p_printout, p_date, p_price, p_unit,
+                        p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity, searchword, file1, thumb1, size1)
+    VALUES(#{p_no}, #{goryno}, #{adminno}, #{p_name}, #{p_printout}, sysdate, #{p_price}, #{p_unit},
+                #{p_capacity}, #{p_delivery}, #{p_allergy_info}, #{p_expiration_date}, #{p_detailed}, #{p_quantity},
+                #{searchword}, #{file1}, #{thumb1}, #{size1})
+  </insert>
+  
+  <!-- cate_gory별 목록 -->
+  <select id="list" resultType="ProductVO" parameterType="int">
+    SELECT p_no, goryno, p_name, p_price
+    FROM product 
+    WHERE goryno = #{goryno}
+    ORDER BY p_no DESC
+  </select>  
+   
+  <!-- cate_gory 별 product 목록: cate_gory + product inner join,  1 : 다, 통합 VO  사용X-->
+  <select id="list_join_by_goryno" resultType="Cate_gory_Product_join" parameterType="int">
+  SELECT c.goryno as c_goryno, c.name as c_name,
+	          p.p_no, p.p_name, p.p_date, p.p_printout
+	FROM cate_gory c, product p
+	WHERE c.goryno = p.goryno
+	ORDER BY c.goryno ASC, p.p_no ASC
+  </select>
+  
+  <select id="read" resultType="productVO" parameterType="int">
+  SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+         p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity, thumb1
+  FROM product
+  WHERE p_no = #{p_no}
+  </select>
+  
+  <!-- 장바구니 등록을 위한 -->
+  <select id="read_for_basket" resultType="basketVO" parameterType="int">
+  SELECT p_no, p_name, p_price, thumb1, p_quantity
+  FROM product
+  WHERE p_no = #{p_no}
+  </select>
+  
+   <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->
+   <select id="list_by_goryno_search_paging" 
+              resultType="ProductVO" parameterType="HashMap">
+     SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+              p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
+              searchword,file1, thumb1, size1, r
+     FROM (
+                SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+                     p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
+                     searchword,file1, thumb1, size1, rownum as r
+                FROM (
+                          SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+                                   p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
+                                   searchword,file1, thumb1, size1
+                          FROM product
+                          <choose>
+                            <when test="searchword == null or searchword == ''"> <!-- 검색하지 않는 경우 -->
+                              WHERE goryno=#{goryno}
+                            </when>
+                            <otherwise>
+                              WHERE goryno=#{goryno} AND (p_name LIKE '%' || #{searchword} || '%' 
+                                                        OR p_detailed LIKE '%' || #{searchword} || '%' 
+                                                        OR searchword LIKE '%' || #{searchword} || '%')
+                            </otherwise>
+                          </choose>
+                          ORDER BY p_no DESC
+                )
+     )
+     WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>
+     <!-- 
+     1 page: WHERE r >= 1 AND r <= 10; 
+     2 page: WHERE r >= 11 AND r <= 20;
+     3 page: WHERE r >= 21 AND r <= 30;
+     -->                          
+   </select>  
+ 
+   <!-- 카테고리별 검색 레코드 갯수 -->
+   <select id="search_count" resultType="int" parameterType="HashMap">
+     SELECT COUNT(*) as cnt
+     FROM product
+     <choose>
+       <when test="searchword == null or searchword == ''">
+         WHERE goryno=#{goryno}
+       </when>
+       <otherwise>
+         WHERE goryno=#{goryno} AND (p_name LIKE '%' || #{searchword} || '%' 
+                                     OR p_detailed LIKE '%' || #{searchword} || '%' 
+                                     OR searchword LIKE '%' || #{searchword} || '%')
+       </otherwise>
+     </choose>
+   </select>  
+   
+   <!-- 수정 -->
+  <update id="update" parameterType="ProductVO">
+    UPDATE product
+    SET p_name=#{p_name}, p_printout=#{p_printout}, p_price=#{p_price}, p_unit=#{p_unit}, p_capacity=#{p_capacity}, p_delivery=#{p_delivery}, p_allergy_info=#{p_allergy_info},
+        p_expiration_date=#{p_expiration_date}, p_detailed=#{p_detailed}, p_quantity=#{p_quantity}, searchword=#{searchword}
+    WHERE p_no = #{p_no}
+  </update>   
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM product
+    WHERE p_no=#{p_no}
+  </delete>  
+  
+  
+<!--   <select id="read_for_basket" resultType="basketVO" parameterType="int">
+  SELECT p_no, p_name, p_price, thumb1, p_quantity
+  FROM product
+  WHERE p_no = #{p_no}
+  </select> -->
+  
+   
+</mapper>

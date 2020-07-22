@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dev.mvc.orders.CateDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.orders.OrdersDAOInter">
+
+ <!-- 
+  insert: INSERT SQL 실행
+  id: Spring에서 호출시 사용
+  parameterType: 전달받는 데이터 객체
+  return: 등록한 레코드 갯수 리턴
+  SQL선언시 ';'은 삭제
+  #{}: ? 동일
+  #{name}: public String getName(){...
+   -->
+  <insert id="create" parameterType="OrdersVO"> <!-- OrdersVO를 전달 받는다
+    이 태그를 Spring이 참조하여 자동으로 DAO class를 생성함
+    생성된 class는 MyBATIS를 호출하는 역할을 함
+    -->
+    <selectKey keyProperty="ordersno" resultType="int" order="BEFORE"> 
+      SELECT orders_seq.nextval FROM dual
+    </selectKey>
+    INSERT INTO orders(ordersno, memberno, p_no, total_cost, pay_how, coupon_name,
+                        coupon_cost, point_use, deli_cost, total_pay, point_acc, name_post, phon_post,
+                        zipcode, address1, address2, name_get, phon_get, request, pay_date)
+    VALUES(#{ordersno}, #{memberno}, #{p_no}, #{total_cost}, #{pay_how}, #{coupon_name}, #{coupon_cost},
+                #{point_use}, #{deli_cost}, #{total_pay}, #{point_acc}, #{name_post}, #{phon_post}, #{zipcode}, #{address1},
+                #{address2}, #{name_get}, #{phon_get}, #{request}, sysdate)
+  </insert>
+  <!-- 
+   레코드 갯수 만큼 CategrpVO 객체를 만들어 ArrayList에 저장하여 리턴, mybatis가 자동으로 해주는 기능
+   List<CategrpVO> list = new ArrayList<CategrpVO>(); 
+    -->
+  <select id="list_all" resultType="OrdersVO">
+    SELECT ordersno, memberno, p_no, total_cost, pay_how, coupon_name,
+                        coupon_cost, point_use, deli_cost, total_pay, point_acc, name_post, phon_post,
+                        zipcode, address1, address2, name_get, phon_get, request, pay_date
+    FROM orders
+    ORDER BY ordersno DESC
+  </select>
+  
+  <select id="list_memberno" resultType="OrdersVO" parameterType="int">
+    SELECT ordersno, memberno, p_no, total_cost, pay_how, coupon_name,
+                        coupon_cost, point_use, deli_cost, total_pay, point_acc, name_post, phon_post,
+                        zipcode, address1, address2, name_get, phon_get, request, pay_date
+    FROM orders
+    ORDER BY ordersno DESC
+    WHERE memberno=#{memberno}
+  </select>
+  
+  <!-- 조회, id: read, 입력: ordersno, 리턴: OrdersVO -->
+  <select id="read" resultType="OrdersVO" parameterType="int">
+    SELECT ordersno, memberno, p_no, total_cost, pay_how, coupon_name,
+                        coupon_cost, point_use, deli_cost, total_pay, point_acc, name_post, phon_post,
+                        zipcode, address1, address2, name_get, phon_get, request, pay_date
+    FROM orders
+    WHERE ordersno=#{ordersno}
+  </select>
+  
+  <update id="update" parameterType="OrdersVO">
+      UPDATE orders
+      SET total_cost=#{total_cost}, pay_how=#{pay_how}, coupon=#{coupon}, total_coupon_cost=#{total_coupon_cost},
+            total_point_use=#{total_point_use}, total_pay=#{total_pay}, total_point_acc=#{total_point_acc}, name_post=#{name_post},
+            phon_post=#{phon_post}, zipcode=#{zipcode}, address1=#{address1}, address2=#{address2}, name_get=#{name_get}, request=#{request}, cnt=#{cnt}
+      WHERE ordersno=#{ordersno}
+    </update>
+    
+    <update id="update_coupon" parameterType="OrdersVO">
+      UPDATE basket
+      SET coupon_name=#{coupon_name}, coupon_cost=#{coupon_cost}
+      WHERE basketno=#{basketno}
+   </update>
+   
+  <!-- 삭제, id: delete, 입력: PK, 삭제된 개수: int -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM orders
+    WHERE ordersno=#{ordersno}
+  </delete>
+  <!-- 더보기 버튼 페이징 구현 -->
+  <select id="list_add_view" resultType="OrdersVO" parameterType="HashMap">
+    SELECT ordersno, memberno, p_no, total_cost, pay_how, coupon_name,
+                        coupon_cost, point_use, deli_cost, total_pay, point_acc, name_post, phon_post,
+                        zipcode, address1, address2, name_get, phon_get, request, pay_date, r
+    FROM (
+        SELECT ordersno, memberno, p_no, total_cost, pay_how, coupon_name,
+                        coupon_cost, point_use, deli_cost, total_pay, point_acc, name_post, phon_post,
+                        zipcode, address1, address2, name_get, phon_get, request, pay_date, rownum as r
+        FROM orders)
+    WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>
+  </select>
+</mapper>

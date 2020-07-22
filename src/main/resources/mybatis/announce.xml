@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="dev.mvc.announce.AnnounceDAOInter"> 
+ 
+ <insert id="create" parameterType="AnnounceVO">
+  INSERT INTO announce(announceno, adminno, atitle, acontent, mp3, mp4, isview, keyword, adate)
+  VALUES((SELECT NVL(MAX(announceno), 0)+1 as announceno FROM announce),
+             #{adminno}, #{atitle}, #{acontent}, #{mp3}, #{mp4}, #{isview}, #{keyword}, sysdate)
+ </insert>
+ 
+ <select id="list" resultType="Announce_admin_VO">
+  SELECT an.announceno, an.adminno, an.atitle, an.isview, an.keyword, an.adate,
+            ad.adminno as ad_adminno, ad.nickname as ad_nickname
+  FROM announce an, admini ad
+  WHERE ad.adminno = an.adminno
+  ORDER BY announceno DESC
+ </select>
+ 
+ <select id="read" resultType="Announce_admin_VO" parameterType="int">
+   SELECT an.announceno, an.adminno, an.atitle, an.acontent, an.mp3, an.mp4, an.isview, an.keyword, an.adate,
+             ad.adminno as ad_adminno, ad.nickname as ad_nickname
+   FROM announce an, admini ad
+   WHERE (ad.adminno = an.adminno) AND announceno = #{announceno}
+ </select>
+ 
+ <update id="update" parameterType="Announce_admin_VO">
+   UPDATE announce
+   SET atitle=#{atitle}, acontent=#{acontent}, mp3=#{mp3}, mp4=#{mp4}, isview=#{isview}, keyword=#{keyword}
+   WHERE announceno = #{announceno}
+ </update>
+ 
+ <delete id="delete" parameterType="int">
+   DELETE FROM announce
+   WHERE announceno = #{announceno}
+ </delete>
+ 
+ <update id="changeisview" parameterType="HashMap">
+   UPDATE announce
+   SET isview=#{isview}
+   WHERE announceno = #{announceno}
+ </update>
+ 
+ <select id="check_anno" parameterType="int" resultType="int">
+   SELECT COUNT(*) CNT FROM announce WHERE announceno=#{announceno}
+ </select>
+ 
+ <select id="read_max_anno" resultType="int">
+   SELECT MAX(announceno) as MAXNO
+   FROM announce
+ </select>
+ 
+ <select id="read_min_anno" resultType="int">
+   SELECT MIN(announceno) as MINNO
+   FROM announce
+ </select>
+ 
+ </mapper>

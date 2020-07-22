@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- dev.mvc.change.ChangeDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.change.ChangeDAOInter">
+
+  <insert id="create" parameterType="ChangeVO">
+    INSERT INTO change(changeno, ordersno, memberno, producename, pricecode, changecnt, process, rdate)
+    VALUES(change_seq.nextval, #{ordersno}, #{memberno}, #{producename}, #{pricecode}, #{changecnt}, #{process}, sysdate)
+  </insert> 
+  
+  <select id="list" resultType="ChangeVO">
+    SELECT changeno, ordersno, memberno, producename, pricecode, changecnt, process, rdate
+    FROM change
+    ORDER BY changeno DESC
+  </select>
+  
+  <select id="read" resultType="ChangeVO" parameterType="int">
+    SELECT changeno, ordersno, memberno, producename, pricecode, changecnt, process, rdate
+    FROM change
+    WHERE changeno=#{changeno}
+  </select>
+  <update id="update" parameterType="ChangeVO">
+    UPDATE change
+    SET changecnt=#{changecnt}, process=#{process}
+    WHERE changeno=#{changeno}
+  </update>
+  <delete id="delete" parameterType="int">
+    DELETE FROM change
+    WHERE changeno=#{changeno}
+  </delete>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- dev.mvc.deldetail.DeldetailDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.deliverystate.DeliverystateDAOInter"> 
+ <insert id="create" parameterType="DeliverystateVO">
+   INSERT INTO deliverystate(stateno, state)
+   VALUES(deliverystate_seq.nextval,  #{state})
+ </insert>
+ <select id="list" resultType="DeliverystateVO">
+    SELECT stateno, state
+    FROM deliverystate
+    ORDER BY stateno DESC
+ </select>
+ <select id="read" resultType="DeliverystateVO" parameterType="int">
+    SELECT stateno, state
+    FROM deliverystate
+    WHERE stateno=#{stateno}
+  </select>
+  <update id="update" parameterType="DeliverystateVO">
+    UPDATE deliverystate
+    SET state=#{state}
+    WHERE stateno=#{stateno}
+  </update>
+  <delete id="delete" parameterType="int">
+    DELETE FROM deliverystate
+    WHERE stateno = #{stateno}
+  </delete>
+ 
+</mapper>

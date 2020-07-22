@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.mvc.recipeseq.RecipeseqDAOInter"> 
+  <insert id="create" parameterType="RecipeseqVO">
+    INSERT INTO recipeseq(recipeseqno, recipeno, memberno, contents, file_seq, thumb_seq, size_seq, step, recipeseqseqno)
+    VALUES(recipeseq_seq.nextval, #{recipeno}, #{memberno}, #{contents}, #{file_seq}, #{thumb_seq}, #{size_seq}, #{step}, #{recipeseqseqno})
+  </insert>
+  
+  <!-- recipeno 별 list -->
+  <select id="list" resultType="RecipeseqVO" parameterType="int">
+    SELECT recipeseqno, recipeno, memberno, contents, file_seq, thumb_seq, size_seq, step, recipeseqseqno
+    FROM recipeseq
+    WHERE recipeno = #{recipeno}
+    ORDER BY step ASC
+  </select>
+  
+</mapper>

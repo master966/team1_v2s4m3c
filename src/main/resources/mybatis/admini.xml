@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- dev.mvc.A.B 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.admini.AdminiDAOInter"> 
+<insert id="create" parameterType="AdminiVO">
+  INSERT INTO admini(adminno, name, identify, passwd, nickname, acclevel, phone, email, picture, signupdate)
+  VALUES(admini_seq.nextval, #{name}, #{identify}, #{passwd}, #{nickname}, #{acclevel}, #{phone}, #{email}, #{picture}, sysdate)
+</insert>
+
+<select id="list" resultType="AdminiVO">
+  SELECT adminno, name, identify, passwd, nickname, acclevel, phone
+  FROM admini
+  ORDER BY adminno
+</select>
+ 
+ <select id="read" resultType="AdminiVO" parameterType="int">
+  SELECT adminno, name, identify, passwd, nickname, acclevel, phone, email, picture, signupdate
+  FROM admini
+  WHERE adminno = #{adminno}
+</select>
+
+<select id="read_max_adminno" resultType="int">
+  SELECT MAX(adminno) as MAXNO
+  FROM admini
+</select>
+
+<select id="read_min_adminno" resultType="int">
+  SELECT MIN(adminno) as MINNO
+  FROM admini
+</select>
+
+<update id="update" parameterType="AdminiVO">
+  UPDATE admini
+  SET name=#{name}, nickname=#{nickname}, phone=#{phone}, email=#{email}, picture=#{picture}
+  WHERE adminno = #{adminno}
+</update>
+
+<update id="acclevel_up" parameterType="int">
+  UPDATE admini
+  SET acclevel=acclevel-1
+  WHERE adminno = #{adminno}
+</update>
+<update id="acclevel_down" parameterType="int">
+  UPDATE admini
+  SET acclevel=acclevel+1
+  WHERE adminno = #{adminno}
+</update>
+<update id="update_othersdetail" parameterType="HashMap">
+  UPDATE admini
+  SET othersdetail=#{othersdetail}
+  WHERE adminno = #{adminno}
+</update>
+
+<delete id="delete" parameterType="int">
+  DELETE FROM admini
+  WHERE adminno = #{adminno}
+</delete>
+
+  <select id="idcheckdup" parameterType="HashMap" resultType="int">
+    SELECT COUNT(*) as iddupcnt
+    FROM admini
+    WHERE identify=#{identify}
+  </select>
+  
+  <select id="nickcheckdup" parameterType="HashMap" resultType="int">
+    SELECT COUNT(*) as nickdupcnt
+    FROM admini
+    WHERE nickname=#{nickname}
+  </select>
+  
+ <select id="check_adno" parameterType="int" resultType="int">
+   SELECT COUNT(*) CNT FROM admini WHERE adminno=#{adminno}
+ </select>
+ 
+ <select id="login" resultType="int" parameterType="Map">
+    SELECT COUNT(adminno) as cnt
+    FROM admini
+    WHERE identify=#{identify} AND passwd=#{passwd}
+  </select>
+ 
+ <select id="readById" resultType="AdminiVO" parameterType="String">
+    SELECT adminno, identify, passwd, name, nickname, acclevel, phone, email, picture, signupdate
+    FROM admini
+    WHERE identify = #{identify}
+  </select>
+</mapper>

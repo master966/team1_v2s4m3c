@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "dev.mvc.viewfile.ViewfileDAOInter">
+  <insert id="create" parameterType="ViewfileVO">
+  INSERT INTO viewfile(viewfileno, p_no, vname, vupname, thumb, vsize, vdate)
+  VALUES(attachfile_seq.nextval, #{p_no}, #{vname}, #{vupname}, #{thumb}, #{vsize}, sysdate)
+  </insert>
+  
+  <select id="list" resultType="ViewfileVO">
+    SELECT viewfileno, p_no, vname, vupname, thumb, vsize, vdate
+    FROM viewfile
+    ORDER BY p_no DESC,  p_no ASC
+  </select>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM viewfile
+    WHERE viewfileno = #{viewfileno}
+  </delete>
+  
+  <select id="read" resultType="ViewfileVO" parameterType="int">
+    SELECT viewfileno, p_no, vname, vupname, thumb, vsize, vdate
+    FROM viewfile
+    WHERE viewfileno=#{viewfileno}
+  </select>
+  
+  <select id="list_by_p_no" resultType="ViewfileVO" parameterType="int">
+    SELECT viewfileno, p_no, vname, vupname, thumb, vsize, vdate
+    FROM viewfile
+    WHERE p_no=#{p_no}
+  </select>  
+
+     
+</mapper>

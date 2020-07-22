@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.mvc.recipecate.RecipecateDAOInter"> 
+  <insert id="create" parameterType="RecipecateVO">
+    INSERT INTO recipecate(recipecateno, recipecategrpno, name, seqno, visible, cnt, rdate)
+    VALUES(recipecate_seq.nextval, #{recipecategrpno}, #{name}, #{seqno}, #{visible}, #{cnt}, sysdate)
+  </insert>
+  
+  <!-- 출력 순서 오름차순 전체 목록 -->
+  <select id="list_seqno_asc" resultType="RecipecateVO">
+    SELECT recipecateno, recipecategrpno, name, seqno, visible, cnt, rdate
+    FROM recipecate
+    ORDER BY recipecateno ASC, seqno ASC
+  </select>
+  
+  <select id="read" resultType="RecipecateVO" parameterType="int">
+    SELECT recipecateno, recipecategrpno, name, seqno, visible, cnt, rdate
+    FROM recipecate
+    WHERE recipecateno=#{recipecateno}
+  </select>  
+  
+  <update id="update" parameterType="RecipecateVO">
+    UPDATE recipecate
+    SET recipecategrpno=#{recipecategrpno}, name=#{name}, seqno=#{seqno}, visible=#{visible}, cnt=#{cnt}
+    WHERE recipecateno = #{recipecateno}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM recipecate
+    WHERE recipecateno = #{recipecateno}
+  </delete>
+  
+  
+</mapper>

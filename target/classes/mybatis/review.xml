@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "dev.mvc.review.ReviewDAOInter">
+
+  <insert id="create" parameterType="ReviewVO">
+    <!-- 등록후 ReviewVO class의 reviewno 컬럼에 PK return  -->
+    <selectKey keyProperty="reviewno" resultType="int" order="BEFORE">
+    SELECT review_seq.nextval FROM dual
+    </selectKey>
+    INSERT INTO review(reviewno, p_no, memberno, title, rdate,content, passwd, file1, thumb1, size1)
+    VALUES(#{reviewno}, #{p_no}, #{memberno}, #{title}, sysdate, #{content}, #{passwd}, #{file1}, #{thumb1}, #{size1})
+  </insert>
+
+  <select id="list" resultType="ReviewVO">
+  SELECT reviewno, title, nickname, rdate
+  FROM review
+  ORDER BY reviewno DESC
+ </select>
+ 
+  <select id="list_by_p_no_join" resultType="ReviewProductVO" parameterType="int">
+  SELECT p.p_no,
+         r.reviewno, r.title, r.nickname, r.rdate
+  FROM product p,  review r
+  WHERE (p.p_no = r.p_no) AND AND r.p_no=#{p_no}
+  ORDER BY r.reviewno DESC
+  </select> 
+  
+  <select id="list_by_p_no_join_add_view" resultType="ReviewProductVO" parameterType="HashMap">
+    SELECT p_no, reviewno, title, nickname, rdate
+    FROM (
+            SELECT p_no, reviewno, title, nickname, rdate, rownum as r
+            FROM (
+                    SELECT p.p_no,
+                           r.reviewno, r.title, r.nickname, r.rdate
+                    FROM product p,  review r
+                    WHERE (p.p_no = r.p_no) AND r.p_no=#{p_no}
+                    ORDER BY r.reviewno DESC
+            )
+    )
+    WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>
+  </select>  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+</mapper>

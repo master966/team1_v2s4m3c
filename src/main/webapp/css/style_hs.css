@@ -1,0 +1,1485 @@
+  /* ver 1.3 */
+  /* 모든 태그에 적용 */
+  *{
+     font-family: Malgun Gothic; 
+     font-size: 16px; 
+     margin: 0px;  /* top right bottom left */
+     padding: 0px;
+     color: #555555;
+  }  
+  
+  
+  /* 이미지 사용시 경로 지정
+  권장하지 않는 경우: background-image: url('/jsp_test/menu/images/top_image.jpg');
+  권장하는 경우: background-image: url('./images/top_image.jpg');
+  style.css 파일이 include(link)되는 폴더가 자동으로 현재 폴더로 인식됨.
+  style.css 파일이 있는 폴더가 현재 폴더로 인식됨.
+  /blog_v2jc/css/style.css 사용하는 경우
+  /blog_v2jc/css/images/top_image.jpg 형태로 구성됨.
+   */
+  .content_body {
+    width: 84%;
+    float: left;
+    margin-bottom: 10px;
+  }
+  
+  .pagediv {
+    line-height: 1;
+    color: #4c4c4c;
+    text-align: center;
+    font-size: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  
+  .layout-pagination{
+    line-height: 1;
+    color: #4c4c4c;
+    box-sizing: border-box;
+    padding: 0;
+    word-break: break-all;
+    margin: 60px 0 0;
+    text-align: center;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 0;  
+  }
+  
+  .copyright {
+    border-top: solid 1px #999999;
+    text-align: center; 
+    clear: both;  /* 앞쪽 태그의 float 효과를 제거함. */    
+  }
+  
+  .li_none {
+    list-style: none;
+    margin: 15px 10px;
+  }
+
+  .li_none_left {
+    text-align: left;
+    list-style: none;
+    margin: 15px 10px;
+  }
+  
+  .li_warning { /* 경고 메시지 */
+    list-style: none;
+    margin: 15px 10px;
+    color: #FF6600;
+  }
+  
+  .li_error { /* 에러 메시지 */
+    list-style: none;
+    margin: 15px 10px;
+    color: #FF0000;
+  }
+  
+  .li_right {
+    text-align: right;
+    list-style: none;
+    margin: 20px auto;
+    padding-right: 20px;
+  }
+    
+  .fieldset_basic {
+    width: 90%; 
+    margin: 10px auto; 
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    padding: 10px;
+  }
+  
+  .legend_basic {
+    margin-left: 30px; 
+    border: solid 1px #999999; 
+    background-color: #A6C2FF; 
+    color: #FFFFFF;
+  }
+  
+  .input_basic {
+    border-top: none;
+    border-right: none;
+    border-bottom: solid 1px #999999;
+    border-left: none;
+  }
+  
+  .title_line {
+    text-align: left;
+    border-bottom: solid 3px #555555;
+    width: 100%;
+    margin: 20px auto;
+    font-size: 20px;    
+  }
+  
+  .sub_menu {
+    text-align: right;
+    width: 100%;
+  }
+  
+  .table_basic {
+    border-collapse: collapse;
+    margin: 2px auto;
+    width: 100%;
+  }
+  
+  /* 1em 기본값 : 16px, 주변 태그의 글자크기를 1em으로 인식
+      DIV 태그가 20px 일경우 자식태그가 0.5em이면 최종적으로 10px이 적용됨.
+      DIV 태그가 20px 일경우 자식태그가 1em이면 최종적으로 20px이 적용됨.
+      DIV 태그가 20px 일경우 자식태그가 1.5em이면 최종적으로 30px이 적용됨.
+  */
+  .th_basic {
+    font-size: 0.8em;
+    border-bottom: solid 3px #DDDDDD; 
+  }
+  
+  .th_bs {
+    text-align: center;
+  }
+  
+  .td_basic {
+    background-color: #FFFFFF;
+    border-top: none;
+    border-right: none;
+    border-bottom: solid 1px #DDDDDD;
+    border-left: none;
+    text-align: center;
+  }
+  
+  .td_left {
+    background-color: #FFFFFF;
+    border-top: none;
+    border-right: none;
+    border-bottom: solid 1px #DDDDDD;
+    border-left: none;
+    text-align: left;
+  }
+  
+  .td_bs {
+    text-align: center;
+  }
+  
+  .td_bs_left {
+    text-align: left;
+  }
+  
+  A:link{  /* 방문전 상태 */
+    text-decoration: none; /* 밑줄 삭제 */
+    color: #555555;
+  }
+
+  A:visited{  /* 방문후 상태 */
+    text-decoration: none; /* 밑줄 삭제 */
+    color: #555555;
+  }
+  
+  A:hover{  /* A 태그에 마우스가 올라간 상태 */
+    text-decoration: underline; /* 밑줄 출력 */
+    color: #7777FF;
+  }
+  
+  A:active{  /* A 태그를 클릭한 상태 */
+    text-decoration: underline; /* 밑줄 출력 */
+    color: #7777FF;
+  }
+
+  .menu_link:link{  /* 방문전 상태 */
+    text-decoration: none; /* 밑줄 삭제 */
+    color: white;
+  }
+
+  .menu_link:visited{  /* 방문후 상태 */
+    text-decoration: none; /* 밑줄 삭제 */
+    color: white;
+  }
+
+  .menu_link:hover{  /* A 태그에 마우스가 올라간 상태 */
+    text-decoration: underline; /* 밑줄 출력 */
+    color: white;
+  }
+
+  .menu_link:active{  /* A 태그를 클릭한 상태 */
+    text-decoration: underline; /* 밑줄 출력 */
+    color: white;
+  }
+  
+  .content_title {
+    border-top: none;
+    border-right: none;
+    border-bottom: solid 1px #DDDDDD;
+    border-left: none;
+    margin-bottom: 20px;
+  }   
+
+  .content_bottom {
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: right;
+    font-size: 0.9em;
+  }
+  
+  .li_left_menu_1 { /* 화면 좌측 대분류 */
+    list-style: none;
+    margin-top: 25px;
+    background: url(./images/li_left_menu_1.png) left center no-repeat;
+    background-size: 16px;
+    padding-left: 25px;
+    line-height: 15px;
+  }   
+    
+  .li_left_menu_2 { /* 화면 좌측 중분류 */
+    list-style: none;
+    margin: 15px 10px;
+    background: url(./images/li_left_menu_2.png) left center no-repeat;
+    background-size: 16px;
+    padding-left: 25px;
+    line-height: 15px;
+  }   
+  
+  .label_basic {
+    width: 200px;
+    background-color: #99cc00;
+    color: #FFFFFF;
+    font-weight: normal;
+    display: inline-block; /* DIV 태그처럼 한줄의 영역을 블럭 영역으로 확장 표시 */
+    text-align: right;
+    padding-right: 10px;
+  }
+  
+  /* 화면 내용 하단 메뉴 우측 배치 */
+  .content_bottom_menu {
+    clear: both;
+    padding-top: 20px;
+    padding-right: 20px;
+    text-align: right;
+    width: 100%;
+    background-color: white;
+  }
+  
+  /* 기타 메시지 */
+  .message {
+    width: 70%;
+    border: none;
+    margin: 0px auto;
+    text-align: center;
+    background-color: #FAFAFA;
+    padding: 30px;
+    
+  }
+  
+  /* 알림 메시지 */ 
+  .span_info {
+    color: #ffffff;
+    background-color: rgba(0, 200, 0, 0.6);
+    padding: 2px;
+  }
+  
+  /* 주의 메시지 */
+  .span_alert {
+    color: #ffffff;
+    background-color: rgba(0, 0, 200, 0.6);
+    padding: 2px;
+  }
+  
+  /* 경고 메시지 */  
+  .span_warning {
+    color: #FFFFFF;
+    background-color: rgba(255, 0, 0, 0.6);
+    padding: 2px; 
+  }
+  
+  .msg_warning {
+    color: #FFFFFF;
+    background-color: rgba(255, 0, 0, 0.6);
+    padding: 2px;
+    margin: 10px auto;
+    text-align: center;
+    width: 80%; 
+  }  
+  
+  /* 처리 성공 메시지 */
+  .span_success {
+    background: url('./images/url5.png') left center no-repeat;
+    background-size: 10px;
+    padding-top: 0px;
+    padding-left: 20px; 
+  }
+  
+  /* 처리 실패 메시지 */
+  .span_fail {
+    background: url('./images/url8.png') left center no-repeat;
+    background-size: 10px;
+    padding-top: 0px;
+    padding-left: 20px; 
+  }
+  
+  .product_tit {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    letter-spacing: -.5px;
+    float: left;
+    width: 150px;
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+  }
+  
+  .tit{
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: noto sans;
+    float: left;
+    padding: 20px 0 0 4px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: -.3px;
+  }
+  
+  .product_desc{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 20px;
+    word-break: break-all;
+  }
+  
+  .product_price{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 30px;
+    letter-spacing: -.5px;
+    word-break: break-all;
+    text-align: right;
+    padding-left: 60px;
+  }
+  
+  
+  .name_frame{
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    float: right;
+    width: 560px;
+    padding: 10px 0 29px;
+    padding-left: 60px;
+  }
+  .product_name{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    display: block;
+    padding-right: 60px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 34px;
+    word-break: break-all;  
+  }
+  
+  .product_jjim{
+    word-break: break-all;
+    box-sizing: border-box;
+    padding: 0;
+    font: inherit;
+    margin: 0;
+    text-transform: none;
+    -webkit-appearance: button;
+    cursor: pointer;
+    max-width: 100%;
+    outline: none;
+    font-family: noto sans;
+    overflow: hidden;
+    float: right;
+    width: 128px;
+    height: 54px;
+    margin-right: 12px;
+    border: 1px solid #FFBB00;
+    border-radius: 3px;
+    background: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    color: #FFBB00;
+    line-height: 52px;
+    letter-spacing: -.1px;
+    text-align: center;
+  }
+  
+  .btn_type1{
+    line-height: 1;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: block;
+    overflow: hidden;
+    height: 54px;
+    border-radius: 3px;
+    font-size: 0;
+    text-align: center;
+    border: 1px solid #FFBB10;
+    background-color: #FFBB00;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    width: 10;
+  }
+  
+  .product_cart{
+    word-break: break-all;
+    box-sizing: border-box;
+    padding: 0;
+    font: inherit;
+    margin: 0;
+    overflow: visible;
+    border-radius: 0;
+    text-transform: none;
+    -webkit-appearance: button;
+    cursor: pointer;
+    max-width: 100%;
+    outline: none;
+    font-family: noto sans;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: 0 0;
+    font-weight: 700;
+    color: #fff;
+    font-size: 16px;
+    line-height: 52px;
+    letter-spacing: -.1px;
+    text-align: center;
+  }
+  
+  .view_function{
+    line-height: 1;
+    font-size: 12px;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    display: block;
+    float: left;
+    width: 280px;  
+  }
+  
+  .group_btn{
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    text-align: center;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    overflow: hidden;
+    width: 100%;  
+  }
+  
+  .cart_put {
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;  
+  }
+  
+  .cart_option2{
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    background-color: #fff;
+    float: right;
+    width: 560px;
+    padding-bottom: 40px;  
+  }
+  
+  .thumb{  
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    float: left;
+    background-color: #eee;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .thumb_img{
+    line-height: 1;
+    font-size: 12px;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    border: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    width: 430px;
+    height: 552px;  
+  }
+  
+  .inner_option{
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;    
+  }
+  
+  .product_info{
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    float: right;
+    width: 560px;
+    margin-top: 19px;
+    padding-bottom: 19px;
+    border-top: 1px solid #f4f4f4;  
+  }
+  
+  .list_fst{
+    line-height: 1;
+    font-size: 12px;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    overflow: hidden;
+    padding: 18px 0;
+    padding-bottom: 0;
+    border-bottom: 0;  
+  }
+  
+  .list{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    width: 1008px;   
+  }
+  
+  .section_view{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    word-break: break-all;
+    width: 1050px;
+    margin: 0 auto;
+    padding-top: 20px;  
+  }
+  
+  .name{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: -.5px;
+    display: block;
+    padding-right: 60px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 34px;
+    word-break: break-all;
+  }
+  
+  .content{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: auto;
+    padding: 0;
+    word-break: break-all;
+    position: relative;
+    width: 1080px;
+    padding-bottom: 170px;
+    opacity: 1;
+  }
+  
+  .list_nopackage{
+    line-height: 1;
+    font-size: 12px;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    list-style-type: none;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    overflow: hidden;
+    padding: 0;      
+  }
+  
+  .on{
+    line-height: 1;
+    font-size: 12px;
+    list-style-type: none;
+    box-sizing: border-box;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    float: none;
+    width: 100%;
+    padding: 0 0 5px;
+    margin: 0;
+    border: 0; 
+  }
+  
+  .btn_position{
+    line-height: 1;
+    font-size: 12px;
+    list-style-type: none;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    position: relative;
+    display: none;
+  }
+  
+  .btn_del{
+    list-style-type: none;
+    word-break: break-all;
+    box-sizing: border-box;
+    padding: 0;
+    font: inherit;
+    margin: 0;
+    border-radius: 0;
+    text-transform: none;
+    -webkit-appearance: button;
+    cursor: pointer;
+    max-width: 100%;
+    outline: none;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: -1px;
+    width: 24px;
+    height: 24px;
+    border: 0;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;  
+  }
+  
+  .product_quantity{
+    list-style-type: none;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    float: left;
+    width: 150px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+    letter-spacing: -.5px;  
+  }  
+  
+  .cost{
+    list-style-type: none;
+    word-break: break-all;
+    cursor: pointer;
+    color: inherit;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    display: block;
+    padding-top: 9px;
+    font-size: 17px;
+    line-height: 24px;  
+  }
+  
+  .price{
+    list-style-type: none;
+    word-break: break-all;
+    cursor: pointer;
+    font-size: 17px;
+    line-height: 24px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    letter-spacing: 0;
+    font-weight: 700;
+    color: #FFBB00;  
+  }
+  
+  .info{
+    line-height: 1;
+    font-size: 12px;
+    list-style-type: none;
+    word-break: break-all;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin: 0;
+    background-color: transparent;
+    text-decoration: none;
+    color: inherit;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    display: block;
+    padding: 10px;  
+  }
+  
+  .product_view_info{
+    letter-spacing: -.05em;
+    list-style-type: none;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    position: relative;
+    top: 1px;
+    line-height: 46px;
+    text-align: center;
+    display: block;
+    color: #4c4c4c;
+    font-size: 14px;
+    font-family: noto sans;
+    border: 1px solid #bfbfbf;
+    border-bottom: 0;
+    background-color: #fff;
+    height: 47px;
+    border-left: 1px solid #bfbfbf;
+    width: 170px;  
+  }
+  
+  .num{
+    word-break: break-all;
+    text-align: right;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    padding-left: 8px;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 32px;  
+  }
+  
+  .won{
+    word-break: break-all;
+    text-align: right;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    padding-left: 2px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    vertical-align: -1px;        
+  }
+  
+  .sum{
+    line-height: 1;
+    font-size: 12px;
+    word-break: break-all;
+    text-align: right;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;  
+  }
+  
+  .total{
+    line-height: 1;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    padding: 30px 0 20px;
+    border-top: 1px solid #f4f4f4; 
+  }
+  
+  .information_gorup{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    border-bottom: 1px solid #bfbfbf;
+  }
+  
+  .information-content{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    padding-top: 60px;
+    min-height: 500px;
+    margin-bottom: 50px;
+    display: block;
+}
+  .information_tab{
+    letter-spacing: -.05em;
+    list-style-type: none;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    position: relative;
+    top: 1px;
+    line-height: 46px;
+    text-align: center;
+    display: block;
+    color: #4c4c4c;
+    font-size: 20px;
+    font-weight: 10px;
+    font-family: noto sans;
+    border: 1px solid #fff;
+    border-bottom: 0;
+    background-color: #fff;
+    height: 47px;
+    border-left: 1px solid #fff;
+    width: 170px;
+}
+
+  .goodsview{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    padding-top: 74px;
+    }
+
+  .txt_point{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    letter-spacing: 0;
+    display: block;
+    padding-top: 14px;
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+    text-align: right;
+}
+    .no_login{
+    word-break: break-all;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: right;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    color: #333;
+    letter-spacing: 0;
+    }
+    
+  .product_view{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    padding-top: 60px;
+    min-height: 500px;
+    margin-bottom: 50px;
+    display: block;
+  }
+  
+  .editing_area{
+    border-collapse: collapse;
+    border-spacing: 0;
+    word-break: break-all;
+    box-sizing: border-box;
+    padding: 0;
+    font: inherit;
+    margin: 0;
+    overflow: auto;
+    font-size: 12px;
+    max-width: 100%;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 25px;
+    border: 1px solid #d9d9d9;
+    color: #202020;
+    width: 100%;
+    height: 474px;  
+  }
+  
+  .xans-board-wirte{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;  
+  }
+  .table_after{
+    color: #4c4c4c;
+    font-size: 12px;
+    word-break: break-all;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    table-layout: fixed;
+    border-top: 2px solid #FFBB00;
+    line-height: 180%;  
+  }
+  
+  .input_txt{
+    color: #4c4c4c;
+    font-size: 12px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    line-height: 180%;
+    box-sizing: border-box;
+    margin: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    letter-spacing: 0;
+    background: #FAECC5;
+    width: 110px;
+    padding: 15px 0 15px 20px;
+    background-color: #FAECC5;
+    border-bottom: 1px solid #e8e8e8;
+    text-align: left;
+    font-weight: 400;
+    vertical-align: middle;   
+  }
+  
+  .bhs_button{
+    border-collapse: collapse;
+    border-spacing: 0;
+    word-break: break-all;
+    box-sizing: border-box;
+    padding: 0;
+    font: inherit;
+    margin: 0;
+    max-width: 100%;
+    border-radius: 0;
+    width: 150px;
+    display: inline-block;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid #FFBB00;
+    margin-left: 2px;
+    font-size: 13px;
+    -webkit-appearance: button;
+    cursor: pointer;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    background-color: #FFBB00;
+    color: #fff;
+    float: none;  
+  }
+  
+  .head{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    padding: 5px 0 24px; 
+  }
+  
+  .review_tit{
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    letter-spacing: 0;
+    height: 42px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #333;
+  }
+  
+  .main{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    border-bottom: 1px solid #f7f7f7;  
+  }
+  
+  .page_aticle{ 
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    word-break: break-all;
+    width: 1050px;
+    margin: 0 auto;  
+  }
+  
+  .inner_lnb{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    position: relative;
+    padding-left: 29px;  
+  }
+  
+  .ico_cate{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    padding-bottom: 10px;
+  }
+
+    .quick_navigation {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      word-break: break-all;
+      position: absolute;
+      z-index: 1;
+      right: 20px;
+      width: 80px;
+      font: normal 12px/16px "Noto Sans";
+      color: #333;
+      letter-spacing: -0.3px;
+      transition: top 0.2s;
+      display: none;
+      top: 70px;
+    }
+    
+    .bg{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    list-style-type: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    float: left;
+    position: absolute;
+    height: 1px;
+    margin-top: -1px;
+    background-color: #FFBB00;
+    top: 78px;
+    width: 68px;
+    left: 29px;
+    opacity: 1;    
+    }
+    
+   .on{
+    list-style-type: none;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    background-color: transparent;
+    text-decoration: none;
+    font-family: noto sans;
+    overflow: hidden;
+    float: left;
+    padding: 0 13px 7px 12px;
+    border-bottom: 1px solid #ddd;
+    line-height: 20px;
+    font-size: 12px;
+    letter-spacing: -.3px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #FFBB00;
+   }
+    
+    .list{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    width: 870px;    
+    }
+    
+    .lnb_menu{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    padding-top: 26px;   
+    }
+    
+    .page_section section_goodlist{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;    
+    }
+    
+    .list_abillity{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    position: relative;
+    }
+    
+    .sort_menu{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    position: absolute;
+    right: 0;
+    top: -33px;
+    padding: 0 10px;    
+    }
+    
+    .list_goods{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    padding: 0 29px;    
+    }
+    
+    .inner_listgoods{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    width: 990px;       
+    }
+    
+    .item{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    list-style-type: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    display: block;
+    background-color: #fff;
+    cursor: pointer;    
+    }
+    
+    .img{
+    line-height: 1;
+    font-size: 12px;
+    list-style-type: none;
+    cursor: pointer;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    text-decoration: none;
+    color: inherit;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    }
+    
+    
+    .layout-wrapper goods-view-area{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    word-break: break-all;
+    position: relative;
+    width: 1050px;
+    height: 100%;
+    margin: 0 auto;
+    padding-right: 40px;    
+    }
+    
+    .goods-view-information-content{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    padding-top: 60px;
+    min-height: 500px;
+    margin-bottom: 50px;    
+    }
+    
+    .goods-view-information-board{
+    font-family: malgun gothic,AppleGothic,dotum;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    word-break: break-all;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    height: 718px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;         
+    }
+    
+    .ico{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    word-break: break-all;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    overflow: hidden;
+    float: left;
+    width: 40px;
+    height: 40px;
+    display: block;    
+    }
+    
+    .name_select{
+    line-height: 1;
+    color: #4c4c4c;
+    font-size: 12px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    font-family: noto sans;
+    font-weight: 400;
+    letter-spacing: 0;
+    position: relative;
+    z-index: 1;
+    height: 44px;
+    float: right;
+    width: 130px;
+    padding-right: 30px;    
+    }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "dev.mvc.members.MembersDAOInter">
+
+  <select id="checkID" resultType="int" parameterType="String">
+    SELECT COUNT(id) as cnt
+    FROM members
+    WHERE id = #{id}
+  </select>
+  
+  <select id="checkNick" resultType="int" parameterType="String">
+    SELECT COUNT(nickname) as cnt
+    FROM members
+    WHERE UPPER(nickname) = UPPER(#{nickname})
+  </select>
+  
+  <select id="checkEmail" resultType="int" parameterType="String">
+    SELECT COUNT (email) as cnt
+    FROM members
+    WHERE UPPER(email) = UPPER(#{email})
+  </select>
+
+  <insert id="create" parameterType="MembersVO">
+    INSERT INTO members(memberno, gradeno, id, passwd, mname, nickname, email, tel, zipcode, address1, address2, birth, points, mdate)
+    VALUES (members_seq.nextval, 1, #{id}, #{passwd}, #{mname}, #{nickname}, #{email}, #{tel}, #{zipcode},
+            #{address1}, #{address2}, #{birth}, 0, sysdate)
+  </insert>
+
+  <select id="list" resultType="MembersVO">
+    SELECT memberno, gradeno, id, passwd, mname, nickname, email, tel, zipcode, address1, address2, birth, points, mdate
+    FROM members
+    ORDER BY memberno ASC
+  </select>
+  
+  <select id="read" resultType="MembersVO" parameterType="int">
+    SELECT memberno, gradeno, id, passwd, mname, nickname, email, tel, zipcode, address1, address2, birth, points, mdate
+    FROM members
+    WHERE memberno = #{memberno}
+  </select> 
+  
+  <update id="update" parameterType="MembersVO">
+    UPDATE members
+    SET passwd=#{passwd}, mname=#{mname}, nickname=#{nickname}, email=#{email}, tel=#{tel}, zipcode=#{zipcode}, 
+        address1=#{address1}, address2=#{address2}, birth=#{birth}
+    WHERE memberno = #{memberno}
+  </update>
+  
+    <update id="update_points" parameterType="MembersVO">
+    UPDATE members 
+    SET points=#{points}
+    WHERE memberno=#{memberno}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM members
+    WHERE memberno=#{memberno}
+  </delete>
+  
+  <select id="passwd_check" parameterType="HashMap" resultType="int">
+    SELECT COUNT(memberno) as cnt
+    FROM members
+    WHERE memberno=#{memberno} AND passwd=#{passwd}
+  </select>
+  
+  <update id="passwd_update" parameterType="HashMap">
+    UPDATE members
+    SET passwd=#{passwd}
+    WHERE memberno=#{memberno}
+  </update>
+  
+  <select id="login" resultType="int" parameterType="Map">
+  SELECT COUNT(memberno) as cnt
+  FROM members
+  WHERE id=#{id} AND passwd=#{passwd}
+  </select>
+  
+  <select id="readById" resultType="MembersVO" parameterType="String">
+  SELECT memberno, id, passwd, mname, nickname, tel, email, zipcode, address1, address2, mdate
+  FROM members
+  WHERE id=#{id}
+  </select>
+
+</mapper> 

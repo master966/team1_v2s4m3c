@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dev.mvc.orders_detail.CateDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.orders_detail.Orders_detailDAOInter">
+
+ <!-- 
+  insert: INSERT SQL 실행
+  id: Spring에서 호출시 사용
+  parameterType: 전달받는 데이터 객체
+  return: 등록한 레코드 갯수 리턴
+  SQL선언시 ';'은 삭제
+  #{}: ? 동일
+  #{name}: public String getName(){...
+   -->
+  <insert id="create" parameterType="Orders_detailVO"> <!-- OrdersVO를 전달 받는다
+    이 태그를 Spring이 참조하여 자동으로 DAO class를 생성함
+    생성된 class는 MyBATIS를 호출하는 역할을 함
+    -->
+    <!-- 등록후 OrdersVO class의 orders_detailno 컬럼에 PK return  -->
+    <selectKey keyProperty="orders_detailno" resultType="int" order="BEFORE"> 
+      SELECT orders_detail_seq.nextval FROM dual
+    </selectKey>
+    INSERT INTO orders_detail(orders_detailno, ordersno, memberno, p_no, p_name, cnt, p_price, pay, thumb1, pay_date)
+    VALUES(#{orders_detailno}, #{ordersno}, #{memberno}, #{p_no}, #{p_name}, #{cnt}, #{p_price}, #{pay}, #{thumb1}, sysdate)
+  </insert>
+  <!-- 
+   레코드 갯수 만큼 CategrpVO 객체를 만들어 ArrayList에 저장하여 리턴, mybatis가 자동으로 해주는 기능
+   List<Orders_detailVO> list = new ArrayList<Orders_detailVO>(); 
+    -->
+  <select id="list_ordersno" resultType="Orders_detailVO" parameterType="int">
+    SELECT orders_detailno, ordersno, memberno, p_no, p_name, cnt, p_price, pay, thumb1, pay_date
+    FROM orders_detail
+    WHERE ordersno=#{ordersno }
+  </select>
+  
+  <!-- 조회, id: read, 입력: orders_detailno, 리턴: OrdersVO_detail -->
+  <select id="read" resultType="Orders_detailVO" parameterType="int">
+    SELECT orders_detailno, ordersno, memberno, p_no, cnt, p_price, coupon,
+                        coupon_cost, point_use, pay, point_acc, pay_how, thumb1, pay_date
+    FROM orders_detail
+    WHERE orders_detailno=#{orders_detailno}
+  </select>
+  
+  <update id="update" parameterType="Orders_detailVO">
+      UPDATE orders_detail
+      SET ordersno=#{ordersno}, memberno=#{memberno}, p_no=#{p_no}, cnt=#{cnt},
+            p_price=#{p_price}, coupon=#{coupon}, coupon_cost=#{coupon_cost}, point_use=#{point_use},
+            pay=#{pay}, point_acc=#{point_acc}, pay_how=#{pay_how}
+      WHERE orders_detailno=#{orders_detailno}
+    </update>
+    
+  <!-- 삭제, id: delete, 입력: PK, 삭제된 개수: int -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM orders_detail
+    WHERE orders_detailno=#{orders_detailno}
+  </delete>
+
+</mapper>
