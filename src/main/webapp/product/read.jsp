@@ -9,7 +9,7 @@
   content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" />
 <title>♡ 꼬박꼬밥 ♡</title>
 
-<link href="../css/style_hs.css" rel="Stylesheet" type="text/css">
+<link href="../css/style.css" rel="Stylesheet" type="text/css">
 
 <script
   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -21,7 +21,7 @@
   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
   $(function() {
-	  list_by_p_no_join_add_view()  // 리뷰 목록 출력
+    list_by_p_no_join_add_view()  // 리뷰 목록 출력
     price();
     $('#cnt_down').on('click', cnt_down);
     $('#cnt_up').on('click', cnt_up);
@@ -88,11 +88,15 @@
         
         for (i=0; i < rdata.list.length; i++) {
           var row = rdata.list[i];
-          
+          msg +="<DIV>"
           msg += "<span style='font-weight: bold;'>" + row.reviewno + "  " +"</span>";
-          msg += row.title;
-          msg += row.nickname;
-          msg += "  " + row.rdate;          
+          if (row.file1 != null) {            
+          msg += "  " + "<IMG src='../review/storage/main_images/" + row.file1 +"'style='width: 128px; height: 128px;'>";
+          }
+          msg += "<strong class='user_name'>" + row.title+ "</strong>";  
+          msg += "<span class='user_name'>" + row.content; + "</span>"; 
+          msg += "<span class='user_name'>" + row.nickname + "</span>";         
+          msg += "<span class='time'>" + row.rdate.substring(0, 10) + "</span>";      
           msg += "</DIV>";
         }
         // alert(msg);
@@ -162,9 +166,8 @@
 
     <FORM name='frm' method="get" action='./update.do'>
 
-      <input type="hidden" id=p_quantity
-        value="${productVO.p_quantity }"> <input type="hidden"
-        name="p_no" value="${p_no }">
+      <input type="hidden" id=p_quantity value="${productVO.p_quantity }">
+      <input type="hidden" name="p_no" value="${p_no }">
 
       <div class="section_view">
         <div class="cart_put">
@@ -270,6 +273,7 @@
 
         <br>
       </div>
+      
       <div class="product_view">
 
         <div class="information_content">
@@ -277,17 +281,28 @@
           <div class="product_desc">${productVO.p_detailed }</div>
         </div>
       </div>
+</form>
 
-    </FORM>
-    
+  <div class="information_tab">고객후기</div>
+  <div class="information_gorup">
+
+  <br>
+  </div>
   <!-- 댓글 영역 시작 -->
-  <DIV style='width: 80%; margin: 0px auto;'>
-      <HR>
-      <FORM name='frm_review' id='frm_review'> <%-- 댓글 등록 폼 --%>
-          <input type='hidden' name='p_no' id='p_no' value='${p_no}'>
+  <DIV class="goods-view-information-content">
+  <div class="title_tit">
+   <h2 class="product_riview">PRODUCT REVIEW</h2>
+   <div class="soft_wrap">
+    <ul class="list_type1 old">
+     <li>
+       <p class="txt">
+       배송관련, 주문(취소/교환/환불)관련 문의 및 요청사항은 1:1 문의에 남겨주세요.
+       </p>
+     </li>
+    </ul> <!-- list_type1 old -->
+   </div> <!-- soft_wrap -->
+  </div> <!-- title_tit -->
 
-      </FORM>
-      <HR>
       <DIV id='review_list' data-reviewPage='1'>  <%-- 댓글 목록 --%>
       
       </DIV>
@@ -295,10 +310,18 @@
       
           <button id='addBtn' style='width: 100%;'>더보기 ▽</button>
       </DIV>  
-    
-  </DIV>
+
+  </DIV> <!-- goods-view-information-content -->
+      
+     <DIV class="btnArea after">
+       <button class="bhs_button" type="button" style='float: right;'
+               onclick="location.href='http://localhost:9090/team1/review/create.do?p_no=${p_no }'">후기쓰기</button>
+    </DIV> <!-- btnArea after -->  
+   
   
   <!-- 댓글 영역 종료 --> 
+ 
+    
   </DIV>
 
   <jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
