@@ -33,7 +33,7 @@ public class AdminiProc implements AdminiProcInter{
   public boolean isAdmin(HttpSession session){
     boolean sw = false;
     
-    String id_admin = (String)session.getAttribute("id_admin");
+    String id_admin = (String)session.getAttribute("identify");
     
     if (id_admin != null){
       sw = true;

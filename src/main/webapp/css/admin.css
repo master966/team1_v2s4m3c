@@ -1,7 +1,106 @@
+*{
+  font-family: ³ª´®°íµñ,NanumGothic;
+}
 .sidebar {
   width: 16%;
   height: 100%;
   position:fixed; 
   left:0px; 
-  background-color:#DDDDDD; 
+  background-color: #DDDDDD;
+  padding-top: 1%;
+  padding-left: 1%; 
+}
+.profile {
+  margin-left: 16%;
+  padding-top: 1%;
+  padding-left: 1%;
+  width: 84%;
+  height: 10%;
+  position: absolute;
+  background-color: #EEEEEE;
+}
+.content {
+  margin-left: 16%;
+  top: 10%;
+  width: 84%;
+  height: 90%;
+  position: absolute;
+  background-color: #AAAAAA; 
+}
+
+.backover {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #DDDDDD;
+}
+dt {
+  margin-top: 5%;
+  margin-bottom: 2%;
+}
+dd {
+  margin-left: 2%;
+}
+
+.loginform {
+  margin-top: 10%;
+  padding-top: 3%;
+  padding-left: 10%;
+  width: 100%;
+  height: 60%;
+  position: absolute;
+  background-color: #222222;
+  display: grid;
+  grid-template-rows: 10% 50%;
+  row-gap: 20%;
+  grid-template-columns: 50% 50%;
+  
+}
+
+.headtext {
+  font-size: 24px;
+  font-family: ³ª´®°íµñ,NanumGothic;
+  margin-bottom: 3%;
+  color: #EEEEEE;
+}
+
+.sameline{
+  display: inline;
+}
+
+.inputbox {
+  width: 80%;
+  height: 40px;
+  border: solid 2px #555555;
+  border-radius: 1px;
+}
+
+.rows_wrap {
+  width: 100%;
+}
+
+.input_row {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  margin-top: 2%;
+}
+
+.login_label {
+  color: #EEEEEE;
+}
+
+.btns_area {
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 60%;
+  height: 100%;
+}
+
+.ad_btn {
+  width: 30%;
+  height: 30%;
+  border: solid 1px #ffbb00;
+  border-radius: 2px;
+  background-color: #555555;
+  color: #ffffff;
 }

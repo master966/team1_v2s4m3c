@@ -32,7 +32,7 @@
 
 </head>
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/menu/side.jsp" flush='false' />
 
 <DIV class='title_line'>QNA 수정</DIV>
  
@@ -79,7 +79,7 @@
   
 </FORM>
  
-<jsp:include page="/menu/bottom.jsp" flush='false' />
+<jsp:include page="/menu/foot.jsp" flush='false' />
  
 </body>
 </html>

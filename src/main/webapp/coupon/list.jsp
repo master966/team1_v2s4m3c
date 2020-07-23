@@ -44,9 +44,9 @@ function list_add_view() {
         msg += "<td style='text-align: center;'>" + row.coupon_cost +"</td>";
         msg += "<td style='text-align: center;'>";
         msg += "<A href='./read_update.do?couponno=" + row.couponno + "'>";
-        msg += "<img src='../menu/images/create.png'></A>";
+        msg += "<img src='./images/create.png'></A>";
         msg += "<A href='./read_delete.do?couponno=" + row.couponno + "'>";
-        msg += "<img src='../menu/images/delete.png'></A>";
+        msg += "<img src='./images/delete.png'></A>";
         msg += "</td></tr>";
       }
       // alert(msg);
@@ -67,7 +67,7 @@ function list_add_view() {
 </head>
  
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/menu/side.jsp" flush='false' />
   <DIV class='title_line'>
     쿠폰 목록
    </DIV>
@@ -111,7 +111,7 @@ function list_add_view() {
       </DIV>  
   </div>
  
-<jsp:include page="/menu/bottom.jsp" flush='false' />
+<jsp:include page="/menu/foot.jsp" flush='false' />
 </body>
  
 </html>

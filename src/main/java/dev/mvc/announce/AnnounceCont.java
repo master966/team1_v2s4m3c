@@ -105,7 +105,7 @@ public class AnnounceCont {
     if(session.getAttribute("adminno") != null) {
       List<Announce_admin_VO> list = this.announceProc.list();
       mav.addObject("list", list);
-      mav.setViewName("/announce/list");
+      mav.setViewName("/announce/list_admin");
     } else {
       mav.addObject("needlogin", 1);
       mav.setViewName("redirect:/admini/login.do");

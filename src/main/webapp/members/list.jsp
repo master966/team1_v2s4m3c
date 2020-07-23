@@ -27,7 +27,7 @@
 </head> 
  
 <body>
-<jsp:include page="/team1_menu/topindex.jsp"  flush='false' />
+<jsp:include page="/menu/side.jsp"  flush='false' />
  
   <DIV class='title_line'>
     회원
@@ -117,7 +117,7 @@
   <button type='button' onclick="location.reload();">새로 고침</button>
 </DIV>
  
-<jsp:include page="/team1_menu/bottom_.jsp"  flush='false' />
+<jsp:include page="/menu/foot.jsp"  flush='false' />
 </body>
  
 </html>

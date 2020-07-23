@@ -93,7 +93,7 @@ function send(){
 </script>
 </head>
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/menu/side.jsp" flush='false' />
 
 <DIV class='title_line'>블랙리스트 등록</DIV>
  
@@ -136,7 +136,7 @@ function send(){
   
 </FORM>
  
-<jsp:include page="/menu/bottom.jsp" flush='false' />
+<jsp:include page="/menu/foot.jsp" flush='false' />
  
 </body>
 </html>

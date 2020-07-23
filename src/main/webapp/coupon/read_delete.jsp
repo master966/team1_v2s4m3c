@@ -24,7 +24,7 @@
 </head> 
  
 <body>
-<jsp:include page="/menu/top.jsp" />
+<jsp:include page="/menu/side.jsp" />
  <DIV class='title_line'>
     쿠폰 삭제
    </DIV>
@@ -84,5 +84,7 @@
     </table>
     <br><br>
   </div>
+  <jsp:include page="/menu/side.jsp" />
+  </body>
  
 </html> 

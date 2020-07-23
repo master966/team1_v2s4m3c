@@ -126,7 +126,7 @@ public class QnaCont {
       mav.addObject("list", list);
       int maxno = this.qnaProc.read_maxno();
       mav.addObject("maxno", maxno);
-      mav.setViewName("/qna/list");
+      mav.setViewName("/qna/list_admin");
     } else {
       mav.addObject("needlogin", 1);
       mav.setViewName("redirect:/admini/login.do");

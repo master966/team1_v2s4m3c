@@ -138,7 +138,8 @@ public class MembersCont {
       mav.addObject("list", list);
       mav.setViewName("/members/list");
     } else {
-      mav.setViewName("redirect:/admin/login_need.jsp");
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
     }
     
     return mav;

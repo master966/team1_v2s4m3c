@@ -13,8 +13,29 @@
 } */
 </style>
 <div class="sidebar">
-  에 뭐 대충 그렇단 얘기죠
+  <dl>
+    <dt>고객센터</dt>
+    <dd><a href='${root}/announce/list_admin.do'>공지사항</a></dd>
+    <dd><a href='${root}/qna/list_admin.do'>Q&amp;A</a></dd>
+    <dd><a href='${root}/question/list_all.do'>고객 문의</a></dd>
+    <dt>상품</dt>
+    <dd><a href='${root}/cate_gory/list.do'>상품 카테고리 관리</a></dd>
+    <dd><a href='${root}/product/list.do'>상품 관리 *</a></dd>
+    <dt>회원</dt>
+    <dd><a href='${root}/members/list.do'>회원 관리</a></dd>
+    <dd><a href='${root}/blacklist/list.do'>블랙리스트</a></dd>
+    <dt>서비스</dt>
+    <dd><a href='${root}/coupon/list.do'>쿠폰 관리</a></dd>
+    <dd><a href='${root}/orders/list.do'>결제 내역</a></dd>
+    <dt>레시피</dt>
+    <dd><a href='${root}/recipecategrp/list.do'>레시피 상위 카테고리 관리</a></dd>
+    <dd><a href='${root}/recipecate/list.do'>레시피 카테고리 관리</a></dd>
+    <dd><a href='${root}/recipe/list.do'>레시피 관리</a></dd>
+  </dl>
 </div>
-<DIV class='container' style='width: 1080px; margin:0px auto; background-color:#F4F4F4;'> 
-
+<!-- <DIV class='container' style='width: 1080px; margin:0px auto; background-color:#F4F4F4;'>  -->
+<div class='profile'>
+  <label>${sessionScope.nickname} (${sessionScope.name}) 님,</label>
+  <label><a href="${root}/admini/logout.do">로그아웃</a></label>
+</div>
 <DIV class='content'>

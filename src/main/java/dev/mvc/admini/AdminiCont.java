@@ -395,6 +395,7 @@ public class AdminiCont {
        session.setAttribute("adminno", adminiVO.getAdminno());
        session.setAttribute("identify", identify);
        session.setAttribute("name", adminiVO.getName());
+       session.setAttribute("nickname", adminiVO.getNickname());
        session.setAttribute("acclevel", adminiVO.getAcclevel());
        
        // -------------------------------------------------------------------
@@ -433,7 +434,7 @@ public class AdminiCont {
        response.addCookie(ck_passwd_save);
        // -------------------------------------------------------------------
        
-       mav.setViewName("redirect:/index.do");  
+       mav.setViewName("redirect:/admini/home.do");  
      } else {
        mav.setViewName("redirect:/admini/login_fail_msg.jsp");
      }

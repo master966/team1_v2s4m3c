@@ -9,6 +9,7 @@
 <title>Test Page</title>
 <link href="./css/style.css" rel='Stylesheet' type='text/css'>
  
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
@@ -19,15 +20,14 @@
     
 </head>
 <body>
-<%-- <jsp:include page="/menu/top.jsp" flush='false' /> --%>
 <jsp:include page="/menu/side.jsp"/>
 
 <div style='text-align:center; margin:0px auto;'>
 
   
   <DIV style='width: 70%; margin: 50px auto;'>
-    <c:if test="${sessionScope.id == null }"><a href='./members/login.do'>로그인</a>이 필요합니다.</c:if><br>
-    <IMG src='./menu/images/tenor.gif' style='width: 50%;'><br>
+    <c:if test="${sessionScope.identify == null }"><a href='./members/login.do'>로그인</a>이 필요합니다.</c:if><br>
+    <IMG src='${root}/menu/images/tenor.gif' style='width: 50%;'><br>
     준비중
   </DIV>
 </div>
@@ -42,8 +42,7 @@
   <DIV style='width: 94.8%; margin: 0px auto;'>
   </DIV>  
  
-<%-- <jsp:include page="/menu/bottom.jsp" flush='false' /> --%>
-<jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
+<jsp:include page="/menu/foot.jsp" flush='false' />
  
 </body>
 </html>

@@ -31,6 +31,9 @@
 </style>
 <div id="header">
   <div id="headcont">
+    <div style="position: absolute; left:0px;">
+      <a href="${root}/admini/home.do">[test] 관리자 페이지</a>
+    </div>
     <div id="utils">
       <c:choose>
       <c:when test="${sessionScope.id == null}">
