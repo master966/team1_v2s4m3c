@@ -35,6 +35,24 @@ public class AdminiCont {
   private AdminiProcInter adminiProc;
   
   /**
+   * 관리자 페이지
+   * @return
+   */
+  // http://localhost:9090/team1/admini/list.do
+  @RequestMapping(value="/admini/home.do", method=RequestMethod.GET)
+  public ModelAndView home(HttpSession session) {
+    ModelAndView mav = new ModelAndView();
+    if(session.getAttribute("adminno") != null) {
+      mav.setViewName("/admini/mainpage");
+    } else {
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
+    
+    return mav;
+  }
+  
+  /**
    * 계정 등록 폼
    * @return
    */

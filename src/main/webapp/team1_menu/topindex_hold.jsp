@@ -70,16 +70,16 @@
             <li><a href="${root}/product/list.do?goryno=5">만두·튀김·떡볶이</a></li>
             <li><a href="${root}/product/list.do?goryno=6">죽·스프</a></li>
           </ul></li>
-        <li ><a href="#">결제</a>
+        <li ><a href="#">신규 상품</a>
           <ul class="sub2">
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
+            <li><a href="#">#</a></li>
+            <li><a href="#">#</a></li>
           </ul></li>
-        <li><a href="#">마이 페이지</a>
+        <li><a href="#">베스트 상품</a>
           <ul class="sub3">
             <li><a href="#">#</a></li>
           </ul></li>
-        <li><a href="#">장바구니</a>
+        <li><a href="#">이번 주 인기</a>
           <ul class="sub4">
             <!-- <li><a href="#">#</a></li> -->
           </ul></li>
@@ -87,11 +87,11 @@
           <ul class="sub5">
             <!-- <li><a href="#">#</a></li> -->
           </ul></li>
-        <li><a href="${root}/recipe/list.do">배송</a>
+        <li><a href="${root}/recipe/list.do">이벤트</a>
           <ul class="sub6">
             <%-- <li><a href="${root}/recipe/list.do">레시피</a></li> --%>
           </ul></li>
-        <li><a href="#">이벤트</a>
+        <li><a href="#">사이트 소개</a>
           <ul class="sub7">
             <li><a href="#">#</a></li>
           </ul></li>

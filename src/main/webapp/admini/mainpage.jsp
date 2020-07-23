@@ -20,7 +20,7 @@
 </head>
 <body>
 <%-- <jsp:include page="/menu/top.jsp" flush='false' /> --%>
-<jsp:include page="/team1_menu/topindex.jsp"/>
+<jsp:include page="/menu/side.jsp"/>
 
 <div style='text-align:center; margin:0px auto;'>
 
