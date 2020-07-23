@@ -230,11 +230,11 @@ function undf(x){
             <td style='text-align: center; vertical-align:middle;'>
               <span id='p_price'>${basketVO.p_price}원</span></td>
             <td style='text-align: center; vertical-align:middle; font-size:0;'>
-                <button type="button" class="cnt_down"><img src='../menu/images/minus.png'
+                <button type="button" class="cnt_down"><img src='../team1_menu/images/minus.png'
                   style='width: 20px; height: 19px;'></button>
                 <input id='cnt' type='text' name='cnt' min='1' value='${basketVO.cnt}'
                    class="cnt" style="width:30%; display:inline-block;" readonly />
-                <button type="button" class="cnt_up"><img src='../menu/images/plus.png'
+                <button type="button" class="cnt_up"><img src='../team1_menu/images/plus.png'
                    style='width: 20px; height: 19px;'></button>
                  </td>
             <td style='text-align: center; vertical-align:middle;'>
@@ -259,7 +259,7 @@ function undf(x){
       </div>
     </div>
     <div class='div_basket_minus_plus_equal'>
-      <img src='../menu/images/plus.png'
+      <img src='../team1_menu/images/plus.png'
                   style='width: 24px; height: 22px; margin-top:65px;'>
     </div>
     <div class='div_basket_box'>
@@ -269,7 +269,7 @@ function undf(x){
       </div>
     </div>
     <div class='div_basket_minus_plus_equal'>
-    <img src='../menu/images/equle.png'
+    <img src='../team1_menu/images/equle.png'
                   style='width: 24px; height: 22px; margin-top:65px;'>
     
     </div>
