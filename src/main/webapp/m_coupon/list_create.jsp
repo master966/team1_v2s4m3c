@@ -8,7 +8,7 @@
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>쿠폰 등록</title>
  
-<link href="../css/style.css" rel="Stylesheet" type="text/css">
+<link href="../css/style_dy.css" rel="Stylesheet" type="text/css">
  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -23,12 +23,12 @@ $(function(){
 
 <c:forEach items="${list}" var="item">
   function create${item.couponno}(){
-  	var frm = $('#frm');
-  	var couponno = '${item.couponno}';
-  	var memberno = ${memberno };
-  	var params = 'couponno=' + couponno + '&memberno=' + memberno;
-  	alert('params : ' + params);
-  	$.ajax({
+    var frm = $('#frm');
+    var couponno = '${item.couponno}';
+    var memberno = ${memberno };
+    var params = 'couponno=' + couponno + '&memberno=' + memberno;
+    alert('params : ' + params);
+    $.ajax({
       url: './create.do',
       type: 'post',     // get
       cache: false,    // 응답 결과 임시 저장 취소
@@ -36,11 +36,11 @@ $(function(){
       dataType: 'json', // 응답 형식 : json, html, xml...
       data: params,  // 데이터
       success: function(rdata) { // 응답이 온 경우
-      	if (rdata.msg == 1){      		
+        if (rdata.msg == 1){            
          alert('이미 있는거잖아 새끼야');
-      	}else{
+        }else{
          alert('없으니까 줄게');
-      	}
+        }
       },
      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
@@ -59,7 +59,7 @@ $(function(){
 </head>
  
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/team1_menu/topindex.jsp" flush='false' />
   <DIV class='title_line'>
     쿠폰 목록
    </DIV>
@@ -116,7 +116,7 @@ $(function(){
     </table>
   </div>
  </FORM>
-<jsp:include page="/menu/bottom.jsp" flush='false' />
+<jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
 </body>
  
 </html>

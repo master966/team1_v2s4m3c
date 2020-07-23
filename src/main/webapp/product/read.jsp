@@ -111,7 +111,7 @@
     
   }  
 
-  /* //장바구니 등록
+   //장바구니 등록
    function product_cart(){
    var cnt = parseInt($('#quantity').val());
    var p_no = ${productVO.p_no};
@@ -142,7 +142,7 @@
    } 
    });
   
-   } */
+   }
 </script>
 </head>
 
