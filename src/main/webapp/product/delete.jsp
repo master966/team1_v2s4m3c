@@ -17,7 +17,7 @@
 </head> 
  
 <body>
-<jsp:include page="/team1_menu/topindex.jsp" flush='false' />
+<jsp:include page="/menu/side.jsp" flush='false' />
 
   <ASIDE style='float: right;'>
     <A href='./list.do?goryno=${param.goryno }'>목록</A>
@@ -41,7 +41,7 @@
       </div>   
   </FORM>
  
-<jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
+<jsp:include page="/menu/foot.jsp" flush='false' />
 </body>
  
 </html>

@@ -25,6 +25,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE goryno = #{goryno}
     ORDER BY p_no DESC
   </select>  
+  
+    <!-- 전체 목록 -->
+  <select id="list_all" resultType="ProductVO">
+    SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+              p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
+              searchword,file1, thumb1, size1
+    FROM product 
+    ORDER BY p_no DESC
+  </select>  
    
   <!-- cate_gory 별 product 목록: cate_gory + product inner join,  1 : 다, 통합 VO  사용X-->
   <select id="list_join_by_goryno" resultType="Cate_gory_Product_join" parameterType="int">

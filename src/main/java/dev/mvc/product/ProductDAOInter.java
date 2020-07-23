@@ -27,6 +27,12 @@ public interface ProductDAOInter {
   public List<ProductVO> list(int goryno);
   
   /**
+   * 전체 목록
+   * @return
+   */
+  public List<ProductVO> list_all();
+  
+  /**
    * 조회
    * @param p_no
    * @return

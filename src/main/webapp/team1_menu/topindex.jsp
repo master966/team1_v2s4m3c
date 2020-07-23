@@ -53,7 +53,7 @@
       </c:choose>
     </div>
     <div class="header_title">
-    <a href="${root}"> <img src="${root}/team1_menu/images/bob.png" class="top_logo" alt="꼬박꼬밥" /></a>
+    <a href="${root}/index.do"> <img src="${root}/team1_menu/images/bob.png" class="top_logo" alt="꼬박꼬밥" /></a>
     </div>
     <div class="sch_btn">
       <!-- 검색폼 -->

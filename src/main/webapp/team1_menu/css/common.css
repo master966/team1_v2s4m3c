@@ -13,7 +13,7 @@ body{overflow-x:hidden;}
 .container{margin:0px auto; position: relative; width:1080px;}
 
 /* �뼨轅명�∽옙沅� �뼨�먯삕占쎈き�뜝占� �뛾�룊�삕 嶺뚮씧�궞野껓옙 �뜝�럥占쎈낑�삕占쎈츩�뜝�럥諭� �넭怨룹굡�뜝�럥�늾�뵳占� */
-body{font-size: 14px;  color: #333333; background-color: #eeeeee; min-width: 1600px;}
+body{font-size: 14px;  color: #333333; background-color: #FFFFFF; min-width: 1600px;}
 select, input, textarea, button{font: 14px gulim, "援대┝", sans-serif; color: #333333;}
 a{color: #333333; text-decoration: none;}
 .fl{float:left;}

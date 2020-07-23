@@ -77,7 +77,7 @@ $(function(){
 <body>
   <c:set var="goryno" value="${cate_goryVO.goryno}" />
   <c:set var="p_no" value="${productVO.p_no}" />
-  <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
+  <jsp:include page="/menu/side.jsp" flush='false' />
   <input type='hidden' name='goryno' value='${cate_goryVO.goryno }'>
   <DIV class="main">
    <DIV class="content">
@@ -107,7 +107,7 @@ $(function(){
                     
         </c:when>
         <c:otherwise>
-          ${sessionScope.identify } <A href="./create.do?goryno=${cate_goryVO.goryno }">등록</A>
+          <A href="./create.do?goryno=${cate_goryVO.goryno }">등록</A>
         </c:otherwise>
       </c:choose>          
         
@@ -125,7 +125,6 @@ $(function(){
        </DIV> <!-- inner_listgoods -->
            <!-- 갤러리 Layout 시작 -->
     <c:forEach var="productVO" items="${list }" varStatus="status">
-    <c:if test="${productVO.p_printout == 'Y'}">
       <c:set var="p_no" value="${productVO.p_no }" />
       <c:set var="thumb1" value="${productVO.thumb1.toLowerCase() }" />
       <c:set var="p_name" value="${productVO.p_name}" />
@@ -142,7 +141,7 @@ $(function(){
           <c:when test="${size1 > 0}"> <!-- 파일이 존재하면 -->
             <c:choose> 
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <!-- 이미지 인경우 -->
-                <a href="./read.do?p_no=${p_no}">               
+                <a href="./read_admin.do?p_no=${p_no}">               
                   <IMG src="./storage/main_images/${thumb1 }" style='width: 266px; height: 356px;' >
                 </a><br>
               </c:when>
@@ -156,7 +155,6 @@ $(function(){
          </span>
        </div>
       </DIV>  
-    </c:if>
     </c:forEach>
     <!-- 갤러리 Layout 종료 -->      
       </DIV> <!-- list_goods -->
@@ -168,7 +166,7 @@ $(function(){
    </DIV> <!-- content -->
   </DIV> <!-- main -->
 
-  <jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
+  <jsp:include page="/menu/foot.jsp" flush='false' />
 </body>
 
 

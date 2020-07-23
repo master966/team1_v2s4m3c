@@ -32,6 +32,12 @@ public class ProductProc implements ProductProcInter {
     List<ProductVO> list = this.productDAO.list(goryno);
     return list;
   }
+  
+  @Override
+  public List<ProductVO> list_all() {
+    List<ProductVO> list = this.productDAO.list_all();
+    return list;
+  }
 
   @Override
   public ProductVO read(int p_no) {

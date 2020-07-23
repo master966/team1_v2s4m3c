@@ -99,7 +99,7 @@ public class ProductCont {
     if (cnt == 1) {
       this.cate_goryProc.increaseCnt(productVO.getGoryno());
     }
-    mav.setViewName("redirect:/product/list.do");
+    mav.setViewName("redirect:/product/list_admin.do");
     
     return mav;
   }
@@ -163,6 +163,56 @@ public class ProductCont {
   return mav;
   }    
   
+  /*
+   * @RequestMapping(value = "/", method = RequestMethod.GET) public String
+   * home(Locale locale, Model model) { System.out.println("씹?"); return "index";
+   * }
+   */
+   
+   
+  /**
+   * 목록 - 관리
+   * @param goryno
+   * @param searchword
+   * @param nowPage
+   * @return
+   */
+  @RequestMapping(value = "/product/list_admin.do", method = RequestMethod.GET)
+  public ModelAndView list_admin(
+  @RequestParam(value="goryno", defaultValue="1") int goryno,
+  @RequestParam(value="searchword", defaultValue="") String searchword,
+  @RequestParam(value="nowPage", defaultValue="1") int nowPage
+  ) { 
+    ModelAndView mav = new ModelAndView();
+    
+    // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("goryno", goryno);
+    map.put("searchword", searchword); 
+    map.put("nowPage", nowPage);  // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
+     
+    // 검색 목록
+    List<ProductVO> list = productProc.list_by_goryno_search_paging(map);
+    mav.addObject("list", list);
+    
+
+    // 검색된 레코드 갯수
+    int search_count = productProc.search_count(map);
+    mav.addObject("search_count", search_count);
+    
+    Cate_goryVO cate_goryVO = cate_goryProc.read(goryno);
+    mav.addObject("cate_goryVO", cate_goryVO);
+    
+    String paging = productProc.pagingBox("list.do", goryno, search_count, nowPage, searchword);
+    mav.addObject("paging", paging);
+    
+    mav.addObject("nowPage", nowPage);
+    
+    mav.setViewName("/product/list_admin");
+    
+    return mav;
+  }    
+  
   // http://localhost:9090/team1/product/read.do
   /**
    * 상품 조회
@@ -181,6 +231,25 @@ public class ProductCont {
     mav.setViewName("/product/read"); 
     return mav;
   } 
+  
+//http://localhost:9090/team1/product/read.do
+ /**
+  * 상품 조회
+  * @return
+  */
+ @RequestMapping(value="/product/read_admin.do", method=RequestMethod.GET )
+ public ModelAndView read_admin(int p_no) {
+   ModelAndView mav = new ModelAndView();
+
+   ProductVO productVO = this.productProc.read(p_no);
+   mav.addObject("productVO", productVO); 
+   
+   Cate_goryVO cate_goryVO = this.cate_goryProc.read(productVO.getGoryno());
+   mav.addObject("cate_goryVO", cate_goryVO); 
+   
+   mav.setViewName("/product/read_admin"); 
+   return mav;
+ } 
   
   // http://localhost:9090/team1/product/update.do
   /**
@@ -212,7 +281,7 @@ public class ProductCont {
     int cnt = this.productProc.update(productVO);
     mav.addObject("cnt", cnt); // request에 저장
     
-    mav.setViewName("redirect:/product/list.do");
+    mav.setViewName("redirect:/product/list_admin.do");
     return mav;
    }
 

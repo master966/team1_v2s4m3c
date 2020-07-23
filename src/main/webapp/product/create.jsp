@@ -27,8 +27,8 @@
 </head> 
  
 <body>
-<jsp:include page="/team1_menu/topindex.jsp" flush='false' />
-<DIV class="content">
+<jsp:include page="/menu/side.jsp" flush='false' />
+<DIV class="content_ad">
   <DIV class='title_line'>
     ${cate_goryVO.name }
   </DIV>
@@ -123,7 +123,7 @@
       <DIV class='content_bottom_menu'>
         <button type="submit" class="btn btn-info">등록</button>
         <button type="button" 
-                    onclick="location.href='./list.do?goryno=${param.goryno}'" 
+                    onclick="location.href='./list_all.do?goryno=${param.goryno}'" 
                     class="btn btn-info">취소[목록]</button>
       </DIV>
  
@@ -132,7 +132,7 @@
        </DIV> 
 
   
-<jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
+<jsp:include page="/menu/foot.jsp" flush='false' />
 </body>
  
 </html>

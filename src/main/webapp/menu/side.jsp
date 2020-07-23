@@ -20,7 +20,7 @@
     <dd><a href='${root}/question/list_all.do'>고객 문의</a></dd>
     <dt>상품</dt>
     <dd><a href='${root}/cate_gory/list.do'>상품 카테고리 관리</a></dd>
-    <dd><a href='${root}/product/list.do'>상품 관리 *</a></dd>
+    <dd><a href='${root}/product/list_admin.do'>상품 관리</a></dd>
     <dt>회원</dt>
     <dd><a href='${root}/members/list.do'>회원 관리</a></dd>
     <dd><a href='${root}/blacklist/list.do'>블랙리스트</a></dd>
@@ -32,6 +32,8 @@
     <dd><a href='${root}/recipecate/list.do'>레시피 카테고리 관리</a></dd>
     <dd><a href='${root}/recipe/list.do'>레시피 관리</a></dd>
   </dl>
+  
+  <div style='position:absolute; bottom:5%; font-size:150%;'><a href="${root}/index.do">홈페이지</a></div>
 </div>
 <!-- <DIV class='container' style='width: 1080px; margin:0px auto; background-color:#F4F4F4;'>  -->
 <div class='profile'>
