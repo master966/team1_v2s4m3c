@@ -58,15 +58,6 @@ public interface OrdersProcInter {
   public int update(OrdersVO ordersVO); // 수정 처리
   
   /**
-   * <!-- 패스워드 검사  -->
-   * <select id="passwd_check" parameterType="HashMap" resultType="int">
-   * @param hashMap
-   * @return
-   */
-
-  public int passwd_check(HashMap hashMap);
-  
-  /**
    * 삭제 처리
    * <xmp>
    * <delete id="delete" parameterType="int">
@@ -82,5 +73,12 @@ public interface OrdersProcInter {
    * @return
    */
   public List<OrdersVO> list_add_view(HashMap<String, Object> map);
+  
+  /**
+   * 회원번호별 더보기 버튼
+   * @param map
+   * @return
+   */
+  public List<OrdersVO> list_add_view_memberno(HashMap<String, Object> map);
   
 }

@@ -114,12 +114,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE p_no=#{p_no}
   </delete>  
   
-  
-<!--   <select id="read_for_basket" resultType="basketVO" parameterType="int">
-  SELECT p_no, p_name, p_price, thumb1, p_quantity
-  FROM product
-  WHERE p_no = #{p_no}
-  </select> -->
-  
-   
+<!-- 재고 수정(나중에 시온이에게 따로 보내주기)-->
+  <update id="update_p_quantity" parameterType="ProductVO">
+    UPDATE product
+      SET p_quantity=#{p_quantity}
+      WHERE p_no = #{p_no}
+   </update>
 </mapper>

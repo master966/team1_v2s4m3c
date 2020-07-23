@@ -48,53 +48,6 @@ public class Orders_detailCont {
   }
   
   /**
-   * 등록 처리
-   */
-  // http://localhost:9090/project/orders_detail/create.do
-  @RequestMapping(value="/orders_detail/create.do", method=RequestMethod.POST)
-  public ModelAndView create(int memberno, int ordersno, String pay_date) {
-    ModelAndView mav = new ModelAndView();
-    Orders_detailVO orders_detailVO = new Orders_detailVO();
-    int cnt = 0;
-    List<Orders_detailVO> list = this.basketProc.read_memberno_to_detail(memberno);
-    for(int i = 0; i<list.size(); i++) {
-      orders_detailVO = list.get(i);
-      orders_detailVO.setOrdersno(ordersno);
-      orders_detailVO.setPay_date(pay_date);
-      cnt = this.orders_detailProc.create(orders_detailVO);
-      System.out.println(orders_detailVO.getPay_date());
-    }
-    
-    if (cnt == 1) { 
-    mav.setViewName("redirect:/orders/create_msg.jsp"); // webapp/orders_detail/create.jsp
-    }
-    else {
-      mav.setViewName("redirect:/orders/create_msg.jsp");
-    }
-    return mav;
-  }
-  /*
-  *//**
-   * 등록처리
-   * @param orders_detailVO
-   * @return
-   *//*
-    // http://localhost:9090/project/orders_detail/create.do
-  @RequestMapping(value="/orders_detail/create.do", method=RequestMethod.POST)
-  public ModelAndView create(Orders_detailVO orders_detailVO) {
-    // Orders_detailVO orders_detailVO <FORM> 태그의 값으로 자동 생성됨
-    // request.setAttribute("orders_detailVO", orders_detailVO); 자동으로 실행이 됨
-    
-    ModelAndView mav = new ModelAndView();
-    int cnt = this.orders_detailProc.create(orders_detailVO);
-    mav.addObject("cnt", cnt);
-    
-    mav.setViewName("redirect:/orders_detail/create_msg.jsp");
-    
-    return mav; // forward
-  }
-  */
-  /**
    * 전체목록
    * @return
    */

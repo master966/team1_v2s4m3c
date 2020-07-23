@@ -46,12 +46,6 @@ public class Orders_detailProc implements Orders_detailProcInter {
     int cnt = this.orders_detailDAO.update(orders_detailVO);
     return cnt;
   }
-
-  @Override
-  public int passwd_check(HashMap hashMap) {
-    int passwd_cnt = this.orders_detailDAO.passwd_check(hashMap);
-    return passwd_cnt;
-  }
  
   @Override
   public int delete(int orders_detailno) {
