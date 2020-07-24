@@ -9,10 +9,6 @@
 
 <link href="../css/style_sol.css" rel="Stylesheet" type="text/css">
 
-<script type="text/javascript">
-jQuery.noConflict();
-</script>
-
 <script type="text/JavaScript"
           src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
