@@ -47,4 +47,23 @@ public interface RecipeProcInter {
    * @return
    */
   public List<Member_Recipe_join> list_by_rating_search_paging(HashMap<String, Object> map);
+  
+  
+  /**
+   * 삭제
+   * @param recipeno
+   * @return
+   */
+  public int delete(int recipeno);
+  
+
+  /**
+   * 수정
+   * @param recipeVO
+   * @return
+   */
+  public int update(RecipeVO recipeVO);
+  
+  
+  
 }

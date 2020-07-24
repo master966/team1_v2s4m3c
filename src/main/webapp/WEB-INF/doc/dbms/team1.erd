@@ -448,8 +448,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>153</x>
-                          <y>7</y>
+                          <x>204</x>
+                          <y>10</y>
                         </constraint>
                         <sourceConnections>
                           <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -2392,7 +2392,7 @@
   </children>
   <dommains/>
   <dialectName>Oracle</dialectName>
-  <logicalMode>true</logicalMode>
+  <logicalMode>false</logicalMode>
   <jarFile></jarFile>
   <jdbcDriver>sun.jdbc.odbc.JdbcOdbc</jdbcDriver>
   <jdbcUrl></jdbcUrl>

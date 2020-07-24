@@ -224,6 +224,18 @@ public class RecipeProc implements RecipeProcInter{
     
     return list;
   }
+
+  @Override
+  public int delete(int recipeno) {
+    int cnt = recipeDAO.delete(recipeno);
+    return cnt;
+  }
+
+  @Override
+  public int update(RecipeVO recipeVO) {
+    int cnt = recipeDAO.update(recipeVO);
+    return cnt;
+  }
   
   
   
