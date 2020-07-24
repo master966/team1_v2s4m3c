@@ -48,16 +48,15 @@
       <ul>
         <c:choose>
           <c:when test="${param.cnt == 0}">
-            <li class='li_none'>[${param.mname}] 회원 정보 삭제에 실패했습니다.</li>
+            <li class='li_none'>탈퇴에 실패했습니다.</li>
           </c:when>
           <c:otherwise>
-            <li class='li_none'>[${param.mname}] 회원 정보 삭제에 성공했습니다.</li>
+            <li class='li_none'>탈퇴 되었습니다.</li>
           </c:otherwise>
         </c:choose>
      
         <li class='li_none'>
-          [<A href='./list.do'>목록</A>]
-          [<A href='${pageContext.request.contextPath}/index.jsp'>확인</A>]
+          [<A href='${pageContext.request.contextPath}/home.jsp'>확인</A>]
         </li>
         
       </ul>

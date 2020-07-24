@@ -1,5 +1,6 @@
 package dev.mvc.members;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ import dev.mvc.admini.AdminiProcInter;
 import dev.mvc.blacklist.BlacklistProc;
 import dev.mvc.blacklist.BlacklistProcInter;
 import dev.mvc.blacklist.BlacklistVO;
+import dev.mvc.grade.GradeProcInter;
+import dev.mvc.grade.GradeVO;
 
 @Controller
 public class MembersCont {
@@ -38,6 +41,10 @@ public class MembersCont {
   @Qualifier("dev.mvc.members.MembersProc")
   private MembersProcInter membersProc = null;
   
+  @Autowired
+  @Qualifier("dev.mvc.grade.GradeProc")
+  private GradeProcInter gradeProc;
+  
   public MembersCont() {
     System.out.println("--> MembersCont created.");
   }
@@ -48,9 +55,14 @@ public class MembersCont {
    * @return
    */
   @RequestMapping(value="/members/create.do", method=RequestMethod.GET)
-  public ModelAndView create() {
+  public ModelAndView create(HttpSession session) {
     ModelAndView mav = new ModelAndView();
-    mav.setViewName("/members/create"); // webapp/members/create.jsp
+    
+    if(membersProc.isMember(session)) {
+      mav.setViewName("/home");
+    } else {
+      mav.setViewName("/members/create"); // webapp/members/create.jsp
+    }
    
     return mav;
   }
@@ -64,12 +76,14 @@ public class MembersCont {
   @RequestMapping(value="/members/checkID.do", method=RequestMethod.GET,
                   produces = "text/plain;charset=UTF-8")
   public String checkID(String id) {
+    
     int cnt = this.membersProc.checkID(id);
    
     JSONObject json = new JSONObject();
     json.put("cnt", cnt);
    
     return json.toString();
+
   }
   
   //localhost:9090/team1/members/checkNick.do?nickname=bmo
@@ -82,7 +96,6 @@ public class MembersCont {
                   produces = "text/plain;charset=UTF-8")
   public String checkNick(String nickname) {
     int cnt = this.membersProc.checkNick(nickname);
-    
    
     JSONObject json = new JSONObject();
     json.put("cnt", cnt);
@@ -162,47 +175,15 @@ public class MembersCont {
     ModelAndView mav = new ModelAndView();
     
     MembersVO membersVO = this.membersProc.read(memberno);
+    GradeVO gradeVO = this.gradeProc.read(membersVO.getGradeno());
+    
     mav.addObject("membersVO", membersVO);
+    mav.addObject("gradeVO", gradeVO);
     
     mav.setViewName("/members/read");
     
     return mav;
   }
-  
-  /**
-   * 전체 목록
-   * @return
-   */
-  //localhost:9090/team1/members/list.do
-/*  @RequestMapping(value="/members/list.do", method=RequestMethod.GET)
-  public ModelAndView list(){
-    ModelAndView mav = new ModelAndView();
-    
-    List<MembersVO> list = this.membersProc.list();
-    mav.addObject("list", list);
-    
-    mav.setViewName("/members/list"); // webapp/members/list.jsp
-    
-    return mav;
-  }*/
-  
-  /**
-   * 조회 http://localhost:9090/ojt/members/read.do?memberno=1
-   * @param memberno
-   * @return
-   */
-/*  @RequestMapping(value = "/members/read.do", method = RequestMethod.GET)
-  public ModelAndView read(int memberno) {
-    ModelAndView mav = new ModelAndView();
-
-    MembersVO membersVO = this.membersProc.read(memberno);
-    mav.addObject("membersVO", membersVO);
-
-    mav.setViewName("/members/read");
-
-    return mav;
-  }*/
-  
 
   /** 
    * 수정
@@ -210,43 +191,23 @@ public class MembersCont {
    * @return
    */
   @RequestMapping(value="/members/update.do", method=RequestMethod.POST)
-  public ModelAndView update(MembersVO membersVO){
-    
+  public ModelAndView update(MembersVO membersVO, HttpServletResponse response) throws Exception {
     ModelAndView mav = new ModelAndView();
     
     int cnt = this.membersProc.update(membersVO);
+    
     mav.addObject("cnt", cnt);
     mav.addObject("memberno", membersVO.getMemberno());
-    mav.addObject("url", "update_msg"); //delete_msg.jsp, redirect parameter 적용
     
-    mav.setViewName("redirect:/members/msg.do"); // webapp/members/udpate.jsp
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
+    out.println("<script>alert('회원정보가 수정되었습니다'); history.go(-1);</script>");
+    out.flush();
     
     return mav;
   }
 
 
-/*  
-  *//** 
-  * 수정
-  * @param membersVO
-  * @return
-  *//*
-  @ResponseBody
-  @RequestMapping(value="/members/update.do", method=RequestMethod.POST,
-                  produces = "text/plain;charset=UTF-8")
-  public String update(MembersVO membersVO, HttpSession session) {
-    
-    int memberno = (Integer)session.getAttribute("memberno");
-    
-    
-    int cnt = this.membersProc.update(membersVO);
-    
-    JSONObject json = new JSONObject();
-    json.put("membersVO", membersVO);
-    
-    return json.toString();
-  }
-  */
   /**
    * 회원 삭제
    * @param memberno
@@ -268,19 +229,36 @@ public class MembersCont {
    * @param membernVO
    * @return
    */
-  @RequestMapping(value="/members/delete.do", method=RequestMethod.POST)
-  public ModelAndView delete_proc(int memberno) {
+  @RequestMapping(value="/members/hack.do", method=RequestMethod.POST)
+  public ModelAndView hack(String put_passwd, 
+                           HttpSession session, 
+                           HttpServletResponse response) throws Exception {
     ModelAndView mav = new ModelAndView();
-
-    MembersVO membersVO = this.membersProc.read(memberno);
-
-    int cnt = membersProc.delete(memberno);
-    mav.addObject("cnt", cnt);
-    mav.addObject("mname", membersVO.getMname()); //redirect parameter 적용
-    mav.addObject("url", "delete_msg"); //delete_msg.jsp, redirect parameter 적용
-
-    mav.setViewName("redirect:/members/msg.do"); // webapp/members/delete.jsp
-
+    HashMap<Object, Object> map = new HashMap<Object, Object>();
+    
+    int memberno = (Integer)session.getAttribute("memberno");
+    
+    map.put("memberno", memberno);
+    map.put("passwd", put_passwd);
+    
+    System.out.println("memberno : " + memberno);
+    System.out.println("put_passwd : " + put_passwd);
+    
+    int cnt = this.membersProc.passwd_check(map);
+    
+    System.out.println("cnt : " + cnt);
+    if (cnt == 1) { // 비밀번호가 맞으면
+      this.membersProc.delete(memberno);
+      
+      mav.setViewName("/members/delete_msg"); // webapp/members/delete.jsp
+      session.invalidate();
+    } else { // 비밀번호가 틀리면
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>alert('비밀번호가 일치하지않습니다.'); history.go(-1);</script>");
+      out.flush();
+    }
+    
     return mav;
   }
   
@@ -300,83 +278,45 @@ public class MembersCont {
     
     return mav; // forward
   }
-/*  
-  *//**
-   * 패스워드를 변경합니다.
-   * @param memberno
-   * @return
-   *//*
-  @RequestMapping(value="/members/passwd_update.do", method=RequestMethod.GET)
-  public ModelAndView passwd_update(int memberno){
-    ModelAndView mav = new ModelAndView();
-    mav.setViewName("/members/passwd_update");
-    
-    return mav;
-  }
-  */
   
+  //localhost:9090/team1/members/myinfo.do
   /**
-  * 패스워드를 변경합니다.
-  * @param memberno
-  * @return
-  */
- @RequestMapping(value="/members/passwd_update.do", method=RequestMethod.GET,
-                 produces = "text/plain;charset=UTF-8")
- public String passwd_update(int memberno,HttpSession session){
-   
-   memberno = (Integer)session.getAttribute("memberno");
-   
-   JSONObject json = new JSONObject();
-   json.put("memberno", memberno);
-   
-   return json.toString();
- }
-  
-/*
-  *//**
-   * 패스워드 체크
-   * @param memberno 회원 번호
-   * @param passwd 비밀번호
-   * @return cnt 비밀번호가 일치하는 계정 개수
-   *//*
-  @RequestMapping(value="/members/passwd_check.do", method=RequestMethod.POST)
-  public ModelAndView passwd_check(int memberno, String passwd, String id) {
-    ModelAndView mav = new ModelAndView();
-    HashMap<Object, Object> map = new HashMap<Object, Object>();
-    map.put("memberno", memberno);
-    map.put("passwd", passwd);
-    map.put("id", id);
-    
-    int cnt = membersProc.passwd_check(map);
-    mav.addObject("cnt", cnt);
-
-    return mav;
-  }
-  */
-  
-  //localhost:9090/team1/members/checkEmail.do?email=aaa@gmail.com
-  /**
-   * 패스워드 체크, json출력
+   * 비밀번호 체크 후 맞으면 개인정보수정페이지로 넘어가기
    * @return cnt 비밀번호가 일치하는 계정 개수
    */
   @ResponseBody
-  @RequestMapping(value="/members/passwd_check.do", method=RequestMethod.POST,
+  @RequestMapping(value="/members/myinfo.do", method=RequestMethod.POST,
                   produces = "text/plain;charset=UTF-8")
-  public String passwd_check(String put_passwd, HttpSession session) {
-    
+  public ModelAndView myinfo(String put_passwd, 
+                             HttpSession session,
+                             HttpServletResponse response) throws Exception {
+    ModelAndView mav = new ModelAndView();
     HashMap<Object, Object> map = new HashMap<Object, Object>();
-    
-    int memberno = (Integer)session.getAttribute("memberno");
-    
+
+    int memberno = (Integer)session.getAttribute("memberno"); //session에 있는 memberno가 int memberno에 저장
+
     map.put("memberno", memberno);
+
     map.put("passwd", put_passwd);
-    
+
     int cnt = this.membersProc.passwd_check(map);
-    
-    JSONObject json = new JSONObject();
-    json.put("cnt", cnt);
-   
-    return json.toString();
+
+    mav.addObject("cnt", cnt);
+    mav.addObject("memberno", memberno);
+
+    MembersVO membersVO = this.membersProc.read(memberno);
+    mav.addObject("membersVO", membersVO);
+
+    if (cnt == 1) { // 비밀번호가 맞을 경우
+      mav.setViewName("/members/myinfoupdate"); // ./members/myinfoupdate.jsp
+    } else { // 비밀번호가 틀릴 경우
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>alert('비밀번호가 일치하지않습니다.'); history.go(-1);</script>");
+      out.flush();
+    }
+
+    return mav;
   }
   
   /**
@@ -387,26 +327,34 @@ public class MembersCont {
    * @return
    */
   @RequestMapping(value="/members/passwd_update.do", method=RequestMethod.POST)
-  public ModelAndView passwd_update(int memberno, String current_passwd, String new_passwd){
+  public ModelAndView passwd_update(int memberno, String passwd, String new_passwd,
+                                    HttpServletResponse response) throws Exception {
     ModelAndView mav = new ModelAndView();
     
     HashMap<Object, Object> map = new HashMap<Object, Object>();
     map.put("memberno", memberno);
-    map.put("passwd", current_passwd);
+    map.put("passwd", passwd);
     
     int cnt = membersProc.passwd_check(map);
     int update_cnt = 0; // 변경된 패스워드 수
-    
+    System.out.println("너passwd:"+passwd);
     if (cnt == 1) { //현재 패스워드가 일치하는 경우
       map.put("passwd", new_passwd);
       update_cnt = membersProc.passwd_update(map); //패스워드 변경
       mav.addObject("update_cnt", update_cnt); //변경된 레코드 개수 저장
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>alert('비밀번호가 변경되었습니다'); history.go(-1);</script>");
+      out.flush();
+    } else { //현재 비밀번호가 일치하지 않는 경우
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>alert('비밀번호가 일치하지않습니다'); history.go(-1);</script>");
+      out.flush();
     }
     
-    mav.addObject("cnt", cnt);
-    mav.addObject("url", "passwd_update_msg");
+    System.out.println("cnt:"+cnt);
     
-    mav.setViewName("redirect:/members/msg.do"); 
     
     return mav;
   }
@@ -417,15 +365,11 @@ public class MembersCont {
    * @return
    */
   @RequestMapping(value="/members/logout.do", method=RequestMethod.GET)
-  public ModelAndView logout(HttpSession session, String logout_url) {
+  public ModelAndView logout(HttpSession session) {
     ModelAndView mav = new ModelAndView();
     session.invalidate();
     
-    System.out.println("logout_url: " + logout_url);
-    String url = logout_url.substring(6, logout_url.length()-4);
-    System.out.println("url: " + url);
-    
-    mav.setViewName("redirect:" + url +".do");
+    mav.setViewName("redirect:/home.jsp");
     
     return mav;
   }
@@ -508,15 +452,14 @@ public class MembersCont {
       } else { // 이상 없으면 계속
         session.setAttribute("memberno", membersVO.getMemberno());
         session.setAttribute("id", id);
-        session.setAttribute("passwd", membersVO.getPasswd());
-        session.setAttribute("mname", membersVO.getMname());
+        session.setAttribute("passwd", membersVO.getNickname());
+        session.setAttribute("mname", membersVO.getNickname());
         session.setAttribute("nickname", membersVO.getNickname());
         session.setAttribute("email", membersVO.getEmail());
-        session.setAttribute("tel", membersVO.getTel());
         session.setAttribute("zipcode", membersVO.getZipcode());
         session.setAttribute("address1", membersVO.getAddress1());
         session.setAttribute("address2", membersVO.getAddress2());
-  
+        session.setAttribute("tel", membersVO.getTel());
         // -------------------------------------------------------------------
         // id 관련 쿠기 저장
         // -------------------------------------------------------------------
@@ -561,7 +504,7 @@ public class MembersCont {
         System.out.println("url: " + url );
         System.out.println("url_do: " + url_do); //  /product/list
         mav.setViewName("redirect:"+ url_do);
-        //mav.setViewName("redirect:/index.do");
+        //mav.setViewName("redirect:/home.do");
       }
     } else {
       mav.setViewName("redirect:/members/login_fail_msg.jsp");

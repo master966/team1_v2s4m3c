@@ -28,6 +28,11 @@ $(function(){ // 자동 실행
   $('#btn_send').on('click', send);
 });
 
+
+var idck = 0;
+var nickck = 0;
+var emailck = 0;
+
 function send() {
   var idCheck = RegExp(/^[A-Za-z0-9_\-]{4,20}$/);
   var passwdCheck = RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,20}$/);
@@ -42,7 +47,7 @@ function send() {
     $("#id").focus();
     return false;
   }
-  
+   
   //아이디 유효성 확인
   if(!idCheck.test($("#id").val())) {
     alert("잘못된 아이디 형식입니다");
@@ -147,43 +152,55 @@ function send() {
     $("#tel").val("");
     $("#tel").focus();
     return false;
-  }
-
+  } 
   
-  $('#frm').submit(); 
+  if(idck==0) {
+    alert("아이디 중복검사를 해주세요");
+    return false;
+  }
+  
+  if(nickck==0){
+    alert("닉네임 중복검사를 해주세요");
+    return false;
+  }
+  
+  if(emailck==0){
+    alert("이메일 중복검사를 해주세요");
+    return false;
+  }
+  
+  $('#frm').submit();
 }
 
 // jQuery ajax 요청
 function checkID(){
+
   var frm = $('#frm');
   var params = 'id=' + $('#id', frm).val();
-  //var params = $('#frm').serialize(); // 직렬화,  폼의 데이터를 키와 값의 구조로 조합
-  //var params = ''; 
-  /* alert('params: ' + params); // 값 확인용
-  return; */
   
-  $.ajax({// jQuery의 ajax함수 요청. {객체}
-    url: './checkID.do', //json 위치
-    type: 'get', // post or get
-    cache: false, // 응답받은것을 브라우저의 임시메모리에 저장 : false취소
-    async: true, // 비동기 통신
-    dataType: 'json', // 응답 형식 : json, html, xml...
-    data: params, // 보내는 데이터
+  $.ajax({
+    url: './checkID.do',
+    type: 'get',
+    cache: false, 
+    async: true,
+    dataType: 'json', 
+    data: params, 
     
-    success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
-      // alert(rdata);
-      var msg = "";
+    success: function(rdata) {
       
-      if (rdata.cnt > 0) {
-        $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
-        msg = "이미 사용중인 ID 입니다.";
-      } else {
-        $('#modal_content').attr('class', 'alert alert-success'); // CSS 변경
-        msg = "사용 가능한 ID 입니다.";
-        
-        //$.cookie('checkId', 'TRUE'); // Cookie 기록
-      }
-      
+
+        if (rdata.cnt > 0) { //이미 아이디가 존재 하면
+          $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
+          msg = "이미 사용중인 아이디입니다";
+          //$('#id').val() = "";
+          $('#id').focus();
+        } else { //아이디가 존재하지 않으면
+          $('#modal_content').attr('class', 'alert alert-success'); // CSS 변경
+          msg = "사용 가능한 아이디입니다";
+          
+          idck = 1;
+        }
+
       $('#modal_title').html('ID 중복 확인'); // 제목 
       $('#modal_content').html(msg);        // 내용
       $('#modal_panel').modal();              // 다이얼로그 출력
@@ -197,16 +214,6 @@ function checkID(){
     }
   }); 
 
- /*
-  // 처리중 출력
-  var gif = '';
-  gif +="<div style='margin: 0px auto; text-align: center;'>";
-  gif +="  <img src='./images/ani04.gif' style='width: 10%;'>";
-  gif +="</div>";
-  
-  $('#panel2').html(gif);
-  $('#panel2').show(); // 숨겨진 태그의 출력
- */
 }
 
 function checkNick(){
@@ -231,6 +238,8 @@ function checkNick(){
       } else {
         $('#modal_content').attr('class', 'alert alert-success'); // CSS 변경
         msg = "사용 가능한 닉네임 입니다.";
+        
+        nickck=1;
         
         //$.cookie('checkId', 'TRUE'); // Cookie 기록
       }
@@ -273,6 +282,7 @@ function checkEmail(){
         $('#modal_content').attr('class', 'alert alert-success'); // CSS 변경
         msg = "사용 가능한 이메일입니다.";
         
+        emailck=1;
         //$.cookie('checkId', 'TRUE'); // Cookie 기록
       }
       
@@ -292,12 +302,14 @@ function checkEmail(){
 }
 
 
+
+
 </script>
 
 
 </head>
 <body>
-<jsp:include page="/team1_menu/topindex.jsp"  flush='false' />
+<jsp:include page="/team1_menu/topindex.jsp" flush='false' />
 <div class="form_join">
   <FORM name='frm' id='frm' method='POST' action='./create.do' class="form-horizontal">
  
@@ -498,6 +510,7 @@ function checkEmail(){
 </div>
 
 <jsp:include page="/team1_menu/bottom_.jsp"  flush='false' />
+
 </body>
 
 </html>

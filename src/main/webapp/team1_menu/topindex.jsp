@@ -64,7 +64,7 @@
             <li><a href="#"></a></li>
             <li><a href="#"></a></li>
           </ul></li>
-        <li><a href="#">마이 페이지</a>
+        <li><a href="${root}/members/myinfo.jsp">마이 페이지</a>
           <ul class="sub3">
             <li><a href="#">#</a></li>
           </ul></li>

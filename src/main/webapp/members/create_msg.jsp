@@ -6,7 +6,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>꼬박꼬밥</title>
  
 <link href="../css/style_sol.css" rel="Stylesheet" type="text/css">
 <script type="text/JavaScript"
@@ -19,30 +19,16 @@
 </head> 
 <body>
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
- 
-  <DIV class='title_line'>
-    회원
-  </DIV>
-
-  <ASIDE style='float: left;'>
-      <A href='./members/list.do'>회원 목록</A>  
-  </ASIDE>
-  <ASIDE style='float: right;'>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>회원 가입</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>목록</A>
-  </ASIDE> 
-
-  <div class='menu_line'></div>
- 
-<DIV class='message'>
-  <fieldset class='fieldset_basic'>
+<div id="content">
+ <div style="height:180px"></div>
+ <div class="layout_wrapper">
+ <div class="indiv">
+ <div class="joincomplete">
+ <div class="xans_member">
     <UL>
       <c:choose>
         <c:when test="${param.cnt == 1 }">
-          <LI class='li_none'>회원가입이 완료되었습니다.</LI>
+          <LI class='li_none'><p class="desc">회원가입이 완료되었습니다.</p></LI>
         </c:when>
         <c:otherwise>
           <LI class='li_none'>회원 가입에 실패했습니다.</LI>
@@ -54,7 +40,7 @@
         <br>
           <c:choose>
             <c:when test="${param.cnt == 1 }">
-              <button type='button' onclick="location.href='./login.do'">로그인</button>
+              <button type='button' class="btn_default" onclick="location.href='./login.do'">로그인</button>
             </c:when>
           <c:otherwise>
             <button type='button' onclick="history.back()">다시 시도</button>
@@ -62,10 +48,11 @@
         </c:choose>
       </LI>
      </UL>
-  </fieldset>
- 
-</DIV>
- 
+</div>
+</div>
+</div>
+</div>
+</div>
 <jsp:include page="/team1_menu/bottom_.jsp"  flush='false' />
 </body>
  
