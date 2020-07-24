@@ -26,14 +26,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY p_no DESC
   </select>  
   
-    <!-- 전체 목록 -->
+    <!-- 전체 목록 + 검색 + 페이징-->
   <select id="list_all" resultType="ProductVO">
-    SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+    <!-- SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
               p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
               searchword,file1, thumb1, size1
     FROM product 
-    ORDER BY p_no DESC
+    ORDER BY p_no DESC -->
+    SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+              p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
+              searchword,file1, thumb1, size1, r
+     FROM (
+                SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+                     p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
+                     searchword,file1, thumb1, size1, rownum as r
+                FROM (
+                          SELECT p_no, goryno, p_name, p_printout, p_date, p_price, p_unit,
+                                   p_capacity, p_delivery, p_allergy_info, p_expiration_date, p_detailed, p_quantity,
+                                   searchword,file1, thumb1, size1
+                          FROM product
+                          <choose>
+                            <when test="searchword == null or searchword == ''"> <!-- 검색하지 않는 경우 -->
+                            </when>
+                            <otherwise>
+                              (p_name LIKE '%' || #{searchword} || '%' 
+                                                        OR p_detailed LIKE '%' || #{searchword} || '%' 
+                                                        OR searchword LIKE '%' || #{searchword} || '%')
+                            </otherwise>
+                          </choose>
+                          ORDER BY p_no DESC
+                )
+     )
+     WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>
   </select>  
+  
+  <!-- 전체 검색 레코드 갯수 -->
+   <select id="search_all_count" resultType="int" parameterType="HashMap">
+     SELECT COUNT(*) as cnt
+     FROM product
+     <choose>
+       <when test="searchword == null or searchword == ''">
+       </when>
+       <otherwise>
+         (p_name LIKE '%' || #{searchword} || '%' 
+                                     OR p_detailed LIKE '%' || #{searchword} || '%' 
+                                     OR searchword LIKE '%' || #{searchword} || '%')
+       </otherwise>
+     </choose>
+   </select>  
    
   <!-- cate_gory 별 product 목록: cate_gory + product inner join,  1 : 다, 통합 VO  사용X-->
   <select id="list_join_by_goryno" resultType="Cate_gory_Product_join" parameterType="int">
@@ -114,7 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <update id="update" parameterType="ProductVO">
     UPDATE product
     SET p_name=#{p_name}, p_printout=#{p_printout}, p_price=#{p_price}, p_unit=#{p_unit}, p_capacity=#{p_capacity}, p_delivery=#{p_delivery}, p_allergy_info=#{p_allergy_info},
-        p_expiration_date=#{p_expiration_date}, p_detailed=#{p_detailed}, p_quantity=#{p_quantity}, searchword=#{searchword}
+        p_expiration_date=#{p_expiration_date}, p_detailed=#{p_detailed}, p_quantity=#{p_quantity}, searchword=#{searchword}, goryno=#{goryno}
     WHERE p_no = #{p_no}
   </update>   
   

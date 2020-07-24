@@ -146,8 +146,18 @@ $(function(){
                   <IMG src="./storage/main_images/${thumb1 }" style='width: 266px; height: 356px;' >
                 </a><br>
               </c:when>
+              <c:otherwise>
+                <a href="./read_admin.do?p_no=${p_no}">               
+                  <IMG src="./image/default_t.jpg" style='width: 100%; height: 50%;' >
+                </a><br>
+              </c:otherwise>
             </c:choose>
           </c:when>
+          <c:otherwise>
+            <a href="./read_admin.do?p_no=${p_no}">               
+              <IMG src="./image/default_t.jpg" style='width: 100%; height: 50%;' >
+            </a><br>
+          </c:otherwise>
         </c:choose>   
        <div class="info">
         <span class="name" style='width: 263px; height: 60.8px;' >${productVO.p_name} </span>

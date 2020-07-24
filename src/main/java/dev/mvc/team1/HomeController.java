@@ -47,24 +47,19 @@ public class HomeController {
   ) { 
   
     ModelAndView mav = new ModelAndView();
-    // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
     HashMap<String, Object> map = new HashMap<String, Object>();
-    map.put("goryno", goryno);
     map.put("searchword", searchword); 
     map.put("nowPage", nowPage);  // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
-     
+    
     // 검색 목록
-    List<ProductVO> list = productProc.list_all();
+    List<ProductVO> list = productProc.list_all(map);
     mav.addObject("list", list);
     
     // 검색된 레코드 갯수
-    int search_count = productProc.search_count(map);
+    int search_count = productProc.search_all_count(map);
     mav.addObject("search_count", search_count);
     
-    Cate_goryVO cate_goryVO = cate_goryProc.read(goryno);
-    mav.addObject("cate_goryVO", cate_goryVO);
-    
-    String paging = productProc.pagingBox("list.do", goryno, search_count, nowPage, searchword);
+    String paging = productProc.pagingBox("list.do", search_count, nowPage, searchword);
     mav.addObject("paging", paging);
     
     mav.addObject("nowPage", nowPage);

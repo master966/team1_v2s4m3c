@@ -88,7 +88,20 @@ $(function(){
         <span class="ico" style="display: block;">
          <IMG src="./image/lunchbox.png" style="width:100%">
         </span><!-- ico -->
-        <span class="tit">${cate_goryVO.name }</span><!-- tit -->       
+        <span class="tit">
+            <a href="./list_admin.do">
+              전체보기
+            </a>
+             /     
+          </span>
+        <c:forEach  var="cate_goryVO" items="${goryList }" varStatus="status"><!-- title -->
+          <span class="tit">
+            <a href="./list_admin.do?goryno=${status.index+1}">
+              ${cate_goryVO.name }
+            </a>
+            <c:if test="${status.index+1 < goryList.size()}"> / </c:if>    
+          </span>
+        </c:forEach>
        </DIV> <!-- ico_cate -->
        <ul class="list">
         <li data-start="17" data-end="76">
@@ -142,11 +155,21 @@ $(function(){
             <c:choose> 
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <!-- 이미지 인경우 -->
                 <a href="./read_admin.do?p_no=${p_no}">               
-                  <IMG src="./storage/main_images/${thumb1 }" style='width: 266px; height: 356px;' >
+                  <IMG src="./storage/main_images/${thumb1 }" style='width: 100%; height: 50%;' >
                 </a><br>
               </c:when>
+              <c:otherwise>
+                <a href="./read_admin.do?p_no=${p_no}">               
+                  <IMG src="./image/default_t.jpg" style='width: 100%; height: 50%;' >
+                </a><br>
+              </c:otherwise>
             </c:choose>
           </c:when>
+            <c:otherwise>
+              <a href="./read_admin.do?p_no=${p_no}">               
+                <IMG src="./image/default_t.jpg" style='width: 100%; height: 50%;' >
+              </a><br>
+            </c:otherwise>
         </c:choose>   
        <div class="info">
         <span class="name" style='width: 263px; height: 60.8px;' >${productVO.p_name} </span>

@@ -1,6 +1,9 @@
 *{
   font-family: ³ª´®°íµñ,NanumGothic;
 }
+body{
+  background-color: #AAAAAA;
+}
 .sidebar {
   width: 16%;
   height: 100%;
@@ -25,7 +28,6 @@
   width: 84%;
   height: 90%;
   position: absolute;
-  background-color: #AAAAAA; 
 }
 
 .backover {
@@ -69,7 +71,7 @@ dd {
 }
 
 .inputbox {
-  width: 80%;
+  width: 60%;
   height: 40px;
   border: solid 2px #555555;
   border-radius: 1px;
@@ -81,7 +83,7 @@ dd {
 
 .input_row {
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 20% 80%;
   margin-top: 2%;
 }
 

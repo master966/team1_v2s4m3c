@@ -140,12 +140,22 @@ $(function(){
           <c:when test="${size1 > 0}"> <!-- 파일이 존재하면 -->
             <c:choose> 
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <!-- 이미지 인경우 -->
-                <a href="./read.do?p_no=${p_no}">               
-                  <IMG src="./product/storage/main_images/${thumb1 }" style='width: 266px; height: 356px;' >
+                <a href="${root}/product/read.do?p_no=${p_no}">               
+                  <IMG src="${root}/product/storage/main_images/${thumb1 }" style='width: 266px; height: 356px;' >
                 </a><br>
               </c:when>
+              <c:otherwise>
+                <a href="${root}/product/read.do?p_no=${p_no}">               
+                  <IMG src="${root}/product/image/default_t.jpg" style='width: 100%; height: 50%;' >
+                </a><br>
+              </c:otherwise>
             </c:choose>
           </c:when>
+          <c:otherwise>
+            <a href="${root}/product/read.do?p_no=${p_no}">               
+              <IMG src="${root}/product/image/default_t.jpg" style='width: 100%; height: 50%;' >
+            </a><br>
+          </c:otherwise>
         </c:choose>   
        <div class="info">
         <span class="name" style='width: 263px; height: 60.8px;' >${productVO.p_name} </span>

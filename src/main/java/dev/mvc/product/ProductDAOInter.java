@@ -30,7 +30,7 @@ public interface ProductDAOInter {
    * 전체 목록
    * @return
    */
-  public List<ProductVO> list_all();
+  public List<ProductVO> list_all(HashMap<String, Object> map);
   
   /**
    * 조회
@@ -52,6 +52,13 @@ public interface ProductDAOInter {
    * @return
    */
   public int search_count(HashMap<String, Object> hashMap);
+  
+  /**
+   * 전체 검색 레코드 갯수
+   * @param hashMap
+   * @return
+   */
+  public int search_all_count(HashMap<String, Object> hashMap);
   
   /**
    * 검색 + 페이징 + 썸네일

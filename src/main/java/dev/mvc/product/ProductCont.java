@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.admini.AdminiProcInter;
 import dev.mvc.cate_gory.Cate_goryProcInter;
 import dev.mvc.cate_gory.Cate_goryVO;
 import dev.mvc.tool.Tool;
@@ -32,6 +33,10 @@ public class ProductCont {
   private ProductProcInter productProc;
   
   @Autowired
+  @Qualifier("dev.mvc.admini.AdminiProc")
+  private AdminiProcInter adminiProc;
+  
+  @Autowired
   @Qualifier("dev.mvc.viewfile.ViewfileProc")
   private ViewfileProcInter viewfileProc;
   
@@ -42,13 +47,17 @@ public class ProductCont {
    * @return
    */
   @RequestMapping(value="/product/create.do", method=RequestMethod.GET )
-  public ModelAndView create(int goryno) {
+  public ModelAndView create(HttpSession session, int goryno) {
     ModelAndView mav = new ModelAndView();
-   
-    Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
-    mav.addObject("cate_goryVO", cate_goryVO);
-    
-    mav.setViewName("/product/create");
+    if(adminiProc.isAdmin(session)) {
+      Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
+      mav.addObject("cate_goryVO", cate_goryVO);
+      
+      mav.setViewName("/product/create");
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     return mav;
   }
   
@@ -179,36 +188,63 @@ public class ProductCont {
    */
   @RequestMapping(value = "/product/list_admin.do", method = RequestMethod.GET)
   public ModelAndView list_admin(
-  @RequestParam(value="goryno", defaultValue="1") int goryno,
+    HttpSession session,
+  @RequestParam(value="goryno", defaultValue="0") int goryno,
   @RequestParam(value="searchword", defaultValue="") String searchword,
   @RequestParam(value="nowPage", defaultValue="1") int nowPage
   ) { 
     ModelAndView mav = new ModelAndView();
     
-    // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
-    HashMap<String, Object> map = new HashMap<String, Object>();
-    map.put("goryno", goryno);
-    map.put("searchword", searchword); 
-    map.put("nowPage", nowPage);  // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
-     
-    // 검색 목록
-    List<ProductVO> list = productProc.list_by_goryno_search_paging(map);
-    mav.addObject("list", list);
-    
-
-    // 검색된 레코드 갯수
-    int search_count = productProc.search_count(map);
-    mav.addObject("search_count", search_count);
-    
-    Cate_goryVO cate_goryVO = cate_goryProc.read(goryno);
-    mav.addObject("cate_goryVO", cate_goryVO);
-    
-    String paging = productProc.pagingBox("list.do", goryno, search_count, nowPage, searchword);
-    mav.addObject("paging", paging);
-    
-    mav.addObject("nowPage", nowPage);
-    
-    mav.setViewName("/product/list_admin");
+    if(adminiProc.isAdmin(session)) {
+      if(goryno != 0) { // 카테고리 지정할 경우
+        // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("goryno", goryno);
+        map.put("searchword", searchword); 
+        map.put("nowPage", nowPage);  // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
+         
+        // 검색 목록
+        List<ProductVO> list = productProc.list_by_goryno_search_paging(map);
+        mav.addObject("list", list);
+  
+        // 검색된 레코드 갯수
+        int search_count = productProc.search_count(map);
+        mav.addObject("search_count", search_count);
+      
+        List<Cate_goryVO> goryList = cate_goryProc.list();
+        mav.addObject("goryList", goryList);
+        
+        String paging = productProc.pagingBox("list.do", goryno, search_count, nowPage, searchword);
+        mav.addObject("paging", paging);
+        
+        mav.addObject("nowPage", nowPage);
+      } else { // 카테고리 지정 안할경우 전체목록 출력
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("searchword", searchword); 
+        map.put("nowPage", nowPage);  // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
+        
+        // 검색 목록
+        List<ProductVO> list = productProc.list_all(map);
+        mav.addObject("list", list);
+        
+        // 검색된 레코드 갯수
+        int search_count = productProc.search_all_count(map);
+        mav.addObject("search_count", search_count);
+        
+        List<Cate_goryVO> goryList = cate_goryProc.list();
+        mav.addObject("goryList", goryList);
+        
+        String paging = productProc.pagingBox("list.do", search_count, nowPage, searchword);
+        mav.addObject("paging", paging);
+        
+        mav.addObject("nowPage", nowPage);
+      }
+        
+      mav.setViewName("/product/list_admin");
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     
     return mav;
   }    
@@ -238,16 +274,21 @@ public class ProductCont {
   * @return
   */
  @RequestMapping(value="/product/read_admin.do", method=RequestMethod.GET )
- public ModelAndView read_admin(int p_no) {
+ public ModelAndView read_admin(HttpSession session, int p_no) {
    ModelAndView mav = new ModelAndView();
-
-   ProductVO productVO = this.productProc.read(p_no);
-   mav.addObject("productVO", productVO); 
-   
-   Cate_goryVO cate_goryVO = this.cate_goryProc.read(productVO.getGoryno());
-   mav.addObject("cate_goryVO", cate_goryVO); 
-   
-   mav.setViewName("/product/read_admin"); 
+   if(adminiProc.isAdmin(session)) {
+  
+     ProductVO productVO = this.productProc.read(p_no);
+     mav.addObject("productVO", productVO); 
+     
+     Cate_goryVO cate_goryVO = this.cate_goryProc.read(productVO.getGoryno());
+     mav.addObject("cate_goryVO", cate_goryVO); 
+     
+     mav.setViewName("/product/read_admin");
+   } else { // 로그인 안돼있을 경우
+     mav.addObject("needlogin", 1);
+     mav.setViewName("redirect:/admini/login.do");
+   }
    return mav;
  } 
   
@@ -257,14 +298,17 @@ public class ProductCont {
    * @return
    */
   @RequestMapping(value="/product/update.do", method=RequestMethod.GET )
-  public ModelAndView update(int p_no) {
+  public ModelAndView update(HttpSession session, int p_no) {
     ModelAndView mav = new ModelAndView();
-    
-    ProductVO productVO = this.productProc.update(p_no);
-    mav.addObject("productVO", productVO); // request.setAttribute("productVO", productVO);
-    
-    mav.setViewName("/product/update"); // webapp/product/update.jsp
-    
+    if(adminiProc.isAdmin(session)) {
+      ProductVO productVO = this.productProc.update(p_no);
+      mav.addObject("productVO", productVO); // request.setAttribute("productVO", productVO);
+      
+      mav.setViewName("/product/update"); // webapp/product/update.jsp
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     return mav;
   }  
   
@@ -285,14 +329,23 @@ public class ProductCont {
     return mav;
    }
 
+  /**
+   * 삭제 폼
+   * @param p_no
+   * @return
+   */
   @RequestMapping(value="/product/delete.do", method=RequestMethod.GET )
-  public ModelAndView delete_form(int p_no) {
+  public ModelAndView delete_form(HttpSession session, int p_no) {
     ModelAndView mav = new ModelAndView();
-
-    ProductVO productVO = this.productProc.read(p_no);
-    mav.addObject("productVO", productVO); 
-    
-    mav.setViewName("/product/delete"); 
+    if(adminiProc.isAdmin(session)) {
+      ProductVO productVO = this.productProc.read(p_no);
+      mav.addObject("productVO", productVO); 
+      
+      mav.setViewName("/product/delete"); 
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     return mav;
   } 
   
@@ -310,7 +363,7 @@ public class ProductCont {
     mav.addObject("cnt", cnt);
     
     if (cnt == 1) {
-      mav.setViewName("redirect:/product/list.do");
+      mav.setViewName("redirect:/product/list_admin.do");
     }
 
     return mav;

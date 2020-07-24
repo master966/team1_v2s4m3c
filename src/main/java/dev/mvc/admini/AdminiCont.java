@@ -453,7 +453,7 @@ public class AdminiCont {
      ModelAndView mav = new ModelAndView();
      session.invalidate(); // 모든 session 변수 삭제
      mav.addObject("url", "logout_msg");
-     mav.setViewName("redirect:/admini/msg.do");
+     mav.setViewName("redirect:/admini/login.do");
      
      return mav;
    }

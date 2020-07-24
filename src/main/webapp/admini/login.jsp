@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>Test Page</title>
@@ -68,7 +69,7 @@ function go_on_test2(){
   </div>
   
 </FORM>
- 
+ <div style='position:absolute; left: 10%; bottom:5%; font-size:150%;'><a href="${root}/index.do">홈페이지</a></div>
 </div>
 </body>
 </html>

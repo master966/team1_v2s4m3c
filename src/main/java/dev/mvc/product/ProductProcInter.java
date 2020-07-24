@@ -30,7 +30,7 @@ public interface ProductProcInter {
    * 전체 목록
    * @return
    */
-  public List<ProductVO> list_all();
+  public List<ProductVO> list_all(HashMap<String, Object> map);
 
   
   /**
@@ -55,6 +55,13 @@ public interface ProductProcInter {
   public int search_count(HashMap<String, Object> hashMap);  
   
   /**
+   * 전체 검색 레코드 갯수
+   * @param hashMap
+   * @return
+   */
+  public int search_all_count(HashMap<String, Object> hashMap);
+  
+  /**
    * 검색 + 페이징 + 썸네일
    * @param map
    * @return
@@ -62,7 +69,7 @@ public interface ProductProcInter {
   public List<ProductVO> list_by_goryno_search_paging(HashMap<String, Object> map);
   
   /**
-   * 
+   * 카테고리별 페이징 박스
    * @param listFile 목록 파일 명
    * @param goryno 카테고리 번호
    * @param search_count 검색 갯수
@@ -71,6 +78,17 @@ public interface ProductProcInter {
    * @return
    */
   public String pagingBox(String listFile, int goryno, int search_count, int nowPage, String searchword);
+  
+  /**
+   * 전체 페이징 박스
+   * @param listFile 목록 파일 명
+   * @param goryno 카테고리 번호
+   * @param search_count 검색 갯수
+   * @param nowPage 현재 페이지, 1부터 시작
+   * @param searchword 검색어
+   * @return
+   */
+  public String pagingBox(String listFile, int search_count, int nowPage, String searchword);
   
   /**
    * 수정 폼

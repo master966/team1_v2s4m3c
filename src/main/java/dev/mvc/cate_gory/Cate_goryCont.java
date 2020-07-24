@@ -2,6 +2,8 @@ package dev.mvc.cate_gory;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -9,11 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.admini.AdminiProcInter;
+
 @Controller
 public class Cate_goryCont {
   @Autowired
   @Qualifier("dev.mvc.cate_gory.Cate_goryProc")
   private Cate_goryProcInter cate_goryProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.admini.AdminiProc")
+  private AdminiProcInter adminiProc;
   
 //  public Cate_goryCont() {
 //    System.out.println("--> Cate_goryCont created.");
@@ -25,10 +33,14 @@ public class Cate_goryCont {
    * @return
    */
   @RequestMapping(value="/cate_gory/create.do", method = RequestMethod.GET)
-  public ModelAndView create() {
+  public ModelAndView create(HttpSession session) {
     ModelAndView mav = new ModelAndView();
-    mav.setViewName("/cate_gory/create");
-    
+    if(adminiProc.isAdmin(session)) {
+      mav.setViewName("/cate_gory/create");
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     return mav;
   }
   
@@ -60,13 +72,17 @@ public class Cate_goryCont {
    * @return
    */
   @RequestMapping(value="/cate_gory/list.do", method=RequestMethod.GET )
-  public ModelAndView list() {
+  public ModelAndView list(HttpSession session) {
     ModelAndView mav = new ModelAndView();
-    
-    List<Cate_goryVO> list = this.cate_goryProc.list();
-    mav.addObject("list", list);
-
-    mav.setViewName("/cate_gory/list"); 
+    if(adminiProc.isAdmin(session)) {
+      List<Cate_goryVO> list = this.cate_goryProc.list();
+      mav.addObject("list", list);
+  
+      mav.setViewName("/cate_gory/list"); 
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     return mav;
   }
   
@@ -75,17 +91,22 @@ public class Cate_goryCont {
    * 조회 + 수정폼
    */
   @RequestMapping(value="/cate_gory/read_update.do", method=RequestMethod.GET )
-  public ModelAndView read_update(int goryno) {
+  public ModelAndView read_update(HttpSession session, int goryno) {
     
     ModelAndView mav = new ModelAndView();
     
-    Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
-    mav.addObject("cate_goryVO", cate_goryVO);  
-    
-    List<Cate_goryVO> list = this.cate_goryProc.list();
-    mav.addObject("list", list);  
-
-    mav.setViewName("/cate_gory/read_update"); 
+    if(adminiProc.isAdmin(session)) {
+      Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
+      mav.addObject("cate_goryVO", cate_goryVO);  
+      
+      List<Cate_goryVO> list = this.cate_goryProc.list();
+      mav.addObject("list", list);  
+  
+      mav.setViewName("/cate_gory/read_update"); 
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     return mav; 
   }  
   
@@ -114,16 +135,20 @@ public class Cate_goryCont {
    * 조회 + 삭제폼
    */
   @RequestMapping(value="/cate_gory/read_delete.do", method=RequestMethod.GET )
-  public ModelAndView read_delete(int goryno) {
+  public ModelAndView read_delete(HttpSession session, int goryno) {
     ModelAndView mav = new ModelAndView();
-    
-    Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
-    mav.addObject("cate_goryVO", cate_goryVO);  
-    
-    List<Cate_goryVO> list = this.cate_goryProc.list();
-    mav.addObject("list", list); 
-
-    mav.setViewName("/cate_gory/read_delete"); 
+    if(adminiProc.isAdmin(session)) {
+      Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
+      mav.addObject("cate_goryVO", cate_goryVO);  
+      
+      List<Cate_goryVO> list = this.cate_goryProc.list();
+      mav.addObject("list", list); 
+  
+      mav.setViewName("/cate_gory/read_delete"); 
+    } else { // 로그인 안돼있을 경우
+      mav.addObject("needlogin", 1);
+      mav.setViewName("redirect:/admini/login.do");
+    }
     return mav; 
   }
   
