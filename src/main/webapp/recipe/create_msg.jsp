@@ -9,6 +9,7 @@
 <title>가ㄴ펴ㄴ시ㄱ</title>
  
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
+<link href="../css/style_br.css" rel="Stylesheet" type="text/css">
 <script type="text/JavaScript"
           src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -19,6 +20,7 @@
 </head> 
 <body>
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
+
 
 <DIV class='title_line'>알림</DIV>
 

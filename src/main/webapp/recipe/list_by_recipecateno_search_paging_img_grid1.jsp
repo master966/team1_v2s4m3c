@@ -23,6 +23,7 @@
 <body>
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
 
+
   <DIV class='title_line'>
     <%-- ${cateVO.name } --%>
   </DIV>
@@ -101,10 +102,11 @@
                 <c:choose> 
                   <c:when test="${file1.endsWith('jpg') || file1.endsWith('png') || file1.endsWith('gif')}"> <!-- 이미지 인경우 -->
                     <a href="./read.do?recipeno=${recipeno}">               
-                      <IMG src="./storage/main_images/${file1 }" style='width: 100%; height: 250px;'>
+                      <IMG src="./storage/main_images/${file1 }" style='width: 100%; height: 250px;
+                            border-radius: 7px; -moz-border-radius: 7px; -khtml-border-radius: 7px; -webkit-border-radius: 7px;'>
                     </a><br>
                     <b>${title}</b> <%-- (${contentsVO.cnt}) --%>
-                    <br>회원ID: ${nickname }<br> 
+                    <br><img src="./images/user.png" style="width:15px;"> ${nickname }<br> 
                     <c:choose>
                       <c:when test="${rating_sosu < 0.49 }">
                         <c:forEach var="i" begin="1" end="${rating_int }" step="1" >
@@ -135,7 +137,7 @@
                       </DIV>
                     </DIV>
                     <b>${title}</b> <%-- (${contentsVO.cnt}) --%>
-                    <br>회원ID: ${nickname }<br>
+                    <br><img src="./images/user.png" style="width:15px;"> ${nickname }<br> 
                     <c:choose>
                       <c:when test="${rating_sosu < 0.49 }">
                         <c:forEach var="i" begin="1" end="${rating_int }" step="1" >
@@ -168,7 +170,7 @@
                   <img src='./images/none1.png' style='width: 100%; height: 250px;'>
                 </a><br>
                 <b>${title}</b>
-                <br>회원ID: ${nickname}<br>                    
+                <br><img src="./images/user.png" style="width:15px;"> ${nickname }<br>                     
                 <c:choose>
                   <c:when test="${rating_sosu < 0.49 }">
                     <c:forEach var="i" begin="1" end="${rating_int }" step="1" >

@@ -291,7 +291,8 @@ function add_ingredseq(){
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
 
  
-<FORM name='frm' method='POST' action='./create.do' class="form-horizontal" enctype="multipart/form-data">
+<FORM name='frm' method='POST' action='./update.do' class="form-horizontal" enctype="multipart/form-data">
+  <input type="hidden" name="recipeno" value="${recipeVO.recipeno }">
   <input type="hidden" name="recipecategrpno" value="1">
   <input type="hidden" name="memberno" value="${sessionScope.memberno }">
   <input type="hidden" name="recipecateno" value="1">
@@ -311,7 +312,7 @@ function add_ingredseq(){
         <input type = "file" name ="file1MF" id = "file1MF" value ="" multiple = "multiple"
                 style = "display: none;">
         <input type = "text" name = "file2" id = "file2" style="display:none;">
-        <img src = "./images/camera.png" name="fileimg" id = "fileimg" onclick = 'document.getElementById("file1MF").click(); document.getElementById("file2").value = document.getElementById("file1MF").value'
+        <img src = "./storage/main_images/${recipeVO.file1 }" name="fileimg" id = "fileimg" onclick = 'document.getElementById("file1MF").click(); document.getElementById("file2").value = document.getElementById("file1MF").value'
               style="width:100%;" src='#'>
         
 
@@ -321,7 +322,7 @@ function add_ingredseq(){
       <div style="width:100%; height:90px;">
         <div class="col-sm-9">
           <p class="recipe_font col-sm-2">레시피 제목</p>
-          <input type="text" name="title" id="title" value="" class="form-control col-sm-10" 
+          <input type="text" name="title" id="title" value="${recipeVO.title }" class="form-control col-sm-10" 
                   placeholder="예) 소고기 미역국 끓이기1" style="width:510px; background-color:#F5F5F5;
                   vertical-align: middle;">
         </div>
@@ -331,7 +332,7 @@ function add_ingredseq(){
       <div style="width:100%; height:90px;">
         <div class="col-sm-9">
           <p class="recipe_font col-sm-2">요리 소개</p>
-          <textarea name="introdfood" id="introdfood" rows="3" class="form-control col-sm-10" placeholder="이 레시피의 탄생배경을 적어주세요. &#13;&#10;예) 남편의 생일을 맞아 소고기 미역국을 끓여봤어요. 어머니로부터 배운 미역국 레시피를 남평의 입맛에 맞게 고안했습니다." style="width:510px; background-color:#F5F5F5;"></textarea>
+          <textarea name="introdfood" id="introdfood" rows="3" class="form-control col-sm-10" placeholder="이 레시피의 탄생배경을 적어주세요. &#13;&#10;예) 남편의 생일을 맞아 소고기 미역국을 끓여봤어요. 어머니로부터 배운 미역국 레시피를 남평의 입맛에 맞게 고안했습니다." style="width:510px; background-color:#F5F5F5;">${recipeVO.introdfood }</textarea>
         </div>
         <div class="col-sm-3"></div>
       </div>
@@ -498,6 +499,7 @@ function add_ingredseq(){
         <button type="button" onclick="javascript:add_ingredmain()" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">묶음 추가!</button>
       </div><br><br>
       
+      
     </div>
   
     <!-- 요리 순서 시작 -->
@@ -521,7 +523,7 @@ function add_ingredseq(){
             <textarea placeholder="예)고기가 반쯤 익어갈 때 양파를 함께 볶아요." name="contents0" class="form-control" style="background-color:#F5F5F5;" rows="3"></textarea>
           </div>
           <div class="col-sm-2" id= "seq_div0">
-            <input type = "file" name ="file2MF" id = "file2MF0" value ="" multiple = "multiple"
+            <input type = "file" name ="file2MF" id = "file2MF0" value ="./storage/seq_images/${recipeseqVO.file_seq }" multiple = "multiple"
                 style = "display: none;">
             <input type = "text" name = "file_seq0" id = "file_seq0" style="display:none;">
             <img src = "./images/camera.png" name="file_img0" id = "file_img0" onclick = 'document.getElementById("file2MF0").click(); document.getElementById("file_seq0").value = document.getElementById("file2MF0").value'
@@ -596,7 +598,7 @@ function add_ingredseq(){
     </div>
   
     <DIV class="content_bottom_menu" style="padding-right: 20%;">
-      <button type="submit" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">등록</button>
+      <button type="submit" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">수정</button>
       <button type="button" onclick="location.href='./list.do'" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">목록</button>
     </DIV>
     

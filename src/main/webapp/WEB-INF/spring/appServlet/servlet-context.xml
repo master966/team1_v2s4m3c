@@ -46,6 +46,9 @@
   <context:component-scan base-package="dev.mvc.recipecate" /> <!-- CT -->
   <context:component-scan base-package="dev.mvc.recipe" /> <!-- CT -->
   <context:component-scan base-package="dev.mvc.recipeseq" /> <!-- CT -->
+  <context:component-scan base-package="dev.mvc.reciperepl" /> <!-- CT -->
+  <context:component-scan base-package="dev.mvc.rating" /> <!-- CT -->
+  
   
   <context:component-scan base-package="dev.mvc.cate_gory" /> <!-- Sun -->
   <context:component-scan base-package="dev.mvc.product" /> <!-- Sun -->

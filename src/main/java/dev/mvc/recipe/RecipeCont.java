@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileUploadException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.members.MembersProcInter;
 import dev.mvc.members.MembersVO;
+import dev.mvc.rating.RatingProcInter;
+import dev.mvc.rating.RatingVO;
 import dev.mvc.recipecate.RecipecateProcInter;
 import dev.mvc.recipecate.RecipecateVO;
 import dev.mvc.recipecategrp.RecipecategrpProcInter;
@@ -52,6 +56,10 @@ public class RecipeCont {
   @Autowired
   @Qualifier("dev.mvc.members.MembersProc")
   private MembersProcInter membersProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.rating.RatingProc")
+  private RatingProcInter ratingProc;
 
   public RecipeCont() {
     System.out.println("--> RecipeCont created.");
@@ -89,8 +97,7 @@ public class RecipeCont {
    * @return
    */
   @RequestMapping(value = "/recipe/create.do", method = RequestMethod.POST)
-  public ModelAndView create(HttpServletRequest request, RecipeVO recipeVO, 
-                                        @RequestParam("file2MF") MultipartFile[] file2MF) {
+  public ModelAndView create(HttpServletRequest request, RecipeVO recipeVO, MultipartFile[] file2MF, HttpSession session) {
     // HttpServletRequest request --> Spring 이 request 객체 만들어 자동 할당 --> setIp , IP
     // 추출
     ModelAndView mav = new ModelAndView();
@@ -122,7 +129,7 @@ public class RecipeCont {
     // -------------------------------------------------------------------
 
     
-  
+
     
     
     
@@ -253,7 +260,7 @@ public class RecipeCont {
       // 요리순서 이미지용 파일 전송 코드 종료
       // -------------------------------------------------------------------
       
-      
+
       
       
       
@@ -262,7 +269,7 @@ public class RecipeCont {
       recipeseqVO.setSize_seq(size_seq);
       recipeseqVO.setContents(contents);
       recipeseqVO.setRecipeno(recipeVO.getRecipeno());
-      recipeseqVO.setMemberno(1);
+      recipeseqVO.setMemberno((Integer)session.getAttribute("memberno"));
       recipeseqVO.setStep((i+1));
       this.recipeseqProc.create(recipeseqVO);
       
@@ -278,7 +285,7 @@ public class RecipeCont {
       // this.cateProc.increaseCnt(contentsVO.getCateno()); // 글수 증가
 
     }
-    mav.setViewName("redirect:/recipe/create_msg.jsp");
+    mav.setViewName("redirect:/recipe/list.do");
 
     return mav;
   }
@@ -440,7 +447,7 @@ public class RecipeCont {
    * @return
    */
   @RequestMapping(value="/recipe/read.do", method=RequestMethod.GET )
-  public ModelAndView read(int recipeno, HttpServletRequest request) {
+  public ModelAndView read(int recipeno, HttpServletRequest request, HttpSession session) {
     ModelAndView mav = new ModelAndView();
     
     recipeProc.hits(recipeno); // 조회수 증가
@@ -466,6 +473,25 @@ public class RecipeCont {
     
     mav.addObject("rating_int", rating_int);
     mav.addObject("rating_sosu", rating_sosu);
+    
+    //rating 
+    
+    if(session.getAttribute("memberno") != null) {
+      int memberno = (Integer)session.getAttribute("memberno");
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put("recipeno", recipeno);
+      map.put("memberno", memberno);
+      int check_rating = ratingProc.check_rating(map);
+      mav.addObject("check_rating", check_rating);
+      
+      HashMap<String, Object> map2 = new HashMap<String, Object>();
+      map2.put("recipeno", recipeno);
+      map2.put("memberno", recipeVO.getMemberno());
+      RatingVO ratingVO = ratingProc.read(map2);
+      mav.addObject("ratingVO", ratingVO);
+      
+    }
+     
     
     
     
@@ -501,13 +527,35 @@ public class RecipeCont {
   @ResponseBody
   @RequestMapping(value="/recipe/read_rating.do", method=RequestMethod.POST, 
                                                   produces = "text/plain;charset=UTF-8" )
-  public String read_rating(RecipeVO recipeVO, int index) {
+  public String read_rating(RecipeVO recipeVO, int index, HttpSession session) {
     int recipeno = recipeVO.getRecipeno();
     
     // 0 -> 0.5점 / 1 -> 1점 / 2 -> 1.5점 / 3 -> 2점 / ... ==> 나누기2 + 0.5
 
     System.out.println("index: " + index);
     double real_index_num = (double)index / 2 + 0.5; // 평점 0.5~ 5로 표준화
+    
+    // rating 저장
+    RatingVO ratingVO = new RatingVO();
+    int memberno = (Integer)session.getAttribute("memberno");
+    ratingVO.setMemberno(memberno);
+    ratingVO.setRecipeno(recipeno);
+    ratingVO.setRating(real_index_num);
+    ratingProc.create_rating(ratingVO);
+
+    
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("recipeno", recipeno);
+    map.put("memberno", memberno);
+    
+    ratingVO = ratingProc.read(map);
+    double real_rating = ratingVO.getRating();
+    
+    // rating 했는지 확인
+    int check_rating = ratingProc.check_rating(map);
+    
+    
+    
     System.out.println("real_index_num: " + real_index_num);
     double rating_sum = 0.0;
     rating_sum = rating_sum + real_index_num;
@@ -540,11 +588,373 @@ public class RecipeCont {
     obj.put("rating_sosu", rating_sosu);
     obj.put("rating_cnt", recipeVO.getRating_cnt());
     obj.put("real_index_num", real_index_num);
+    obj.put("check_rating", check_rating);
+    obj.put("real_rating", real_rating);
+    
     
     System.out.println(obj.toString());
     
     return obj.toString();     
   }
+  
+  
+//http://localhost:9090/team1/recipe/delete.do
+   /**
+  * 삭제 처리
+  * 
+  * @param recipeno
+  * @return
+  */
+  @RequestMapping(value = "/recipe/delete.do", method = RequestMethod.GET)
+  public ModelAndView delete(int recipeno, HttpServletRequest request) {
+    ModelAndView mav = new ModelAndView();
+    RecipeVO recipeVO = recipeProc.read(recipeno);
+    
+    // -------------------------------------------------------------------
+    // 메인 이미지 파일 삭제 코드 시작
+    // -------------------------------------------------------------------
+    Upload upload;
+    try {
+      upload = new Upload(request);
+      
+      String file1_old = ""; // main image
+      String thumb1_old = "";
+
+      String delDir = Tool.getRealPath(request, "/recipe/storage/main_images"); // 절대 경로
+      // 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+      
+      
+      file1_old = recipeVO.getFile1();
+      thumb1_old = recipeVO.getThumb1();
+      upload.deleteFile(delDir, file1_old);  
+      upload.deleteFile(delDir, thumb1_old);
+
+      //recipeseqProc.update(recipeseqVO);
+      
+      
+    } catch (FileUploadException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    // -------------------------------------------------------------------
+    // 메인 이미지 파일 삭제 코드 종료
+    // -------------------------------------------------------------------
+    
+    // -------------------------------------------------------------------
+    // 요리순서 이미지 파일 삭제 코드 시작
+    // -------------------------------------------------------------------
+    
+    try {
+      upload = new Upload(request);
+      
+      String file1_seq_old = ""; // main image
+      String thumb1_seq_old = "";
+
+      String delDir = Tool.getRealPath(request, "/recipe/storage/seq_images"); // 절대 경로
+      // 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+      
+      int num = recipeseqProc.count_by_recipeno(recipeno);
+      System.out.println("num? : " + num);
+      HashMap<String, Object> map = null;
+      RecipeseqVO recipeseqVO = new RecipeseqVO();
+      for(int i = 0; i < num; i++) {
+        map = new HashMap<String, Object>();
+        map.put("recipeno", recipeno);
+        map.put("step", i+1);
+        recipeseqVO = recipeseqProc.read_by_recipeno_step(map);
+        
+        file1_seq_old = recipeseqVO.getFile_seq();
+        thumb1_seq_old = recipeseqVO.getThumb_seq();
+        
+        System.out.println("file1_seq_old: " + file1_seq_old);
+        System.out.println("thumb1_seq_old: " + thumb1_seq_old);
+        
+        upload.deleteFile(delDir, file1_seq_old);  
+        upload.deleteFile(delDir, thumb1_seq_old);
+      }
+      
+      
+      //recipeseqProc.update(recipeseqVO);
+      
+      
+    } catch (FileUploadException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    // -------------------------------------------------------------------
+    // 요리순서 이미지 파일 삭제 코드 종료
+    // -------------------------------------------------------------------
+    
+    
+    
+    
+    int cnt_delete = this.recipeProc.delete(recipeno);
+    mav.addObject("cnt_delete", cnt_delete); // request에 저장
+  
+    if (cnt_delete == 1) {
+      mav.setViewName("redirect:/recipe/list.do"); // spring 재호출
+    } 
+    
+    return mav;
+  }
+  
+  
+  // http://localhost:9090/team1/recipe/update.do
+  /**
+   * 수정폼
+   * 
+   * @param recipeno
+   * @return
+   */
+  @RequestMapping(value = "/recipe/update.do", method = RequestMethod.GET)
+  public ModelAndView read_update(int recipeno) {
+
+    ModelAndView mav = new ModelAndView();
+
+    RecipeVO recipeVO = this.recipeProc.read(recipeno);
+    mav.addObject("recipeVO", recipeVO); // request 객체에 저장
+
+
+    mav.setViewName("/recipe/update"); 
+    return mav; // forward
+  }
+  
+  
+  // http://localhost:9090/team1/recipe/update.do
+  /**
+   * 수정 처리
+   * 
+   * @param recipeVO
+   * @return
+   */
+  @RequestMapping(value = "/recipe/update.do", method = RequestMethod.POST)
+  public ModelAndView update(RecipeVO recipeVO, HttpServletRequest request, 
+                             MultipartFile[] file2MF, HttpSession session) {
+    ModelAndView mav = new ModelAndView();
+
+
+    System.out.println(recipeVO.getRecipeno());
+    System.out.println(recipeVO.getTitle());
+    
+    
+    // 이전 파일
+    RecipeVO recipeVO_prev = recipeProc.read(recipeVO.getRecipeno());
+    
+    
+    
+    
+    String file1_old = recipeVO_prev.getFile1();  // main image
+    String thumb1_old = recipeVO_prev.getThumb1(); // thumb image
+    String file1_seq_old = ""; // main image
+    String thumb1_seq_old = ""; // thumb image
+    
+
+    
+    // new 파일 
+    String file1_new = recipeVO.getFile1();
+    String thumb1_new = recipeVO.getThumb1();
+    String file1_seq_new = "";
+    String thumb1_seq_new = "";
+    
+    
+
+    // -------------------------------------------------------------------
+    // 이전 메인 이미지 파일 삭제 코드 시작
+    // -------------------------------------------------------------------
+    Upload upload;
+    try {
+      upload = new Upload(request);
+      
+
+      String delDir = Tool.getRealPath(request, "/recipe/storage/main_images"); // 절대 경로
+      // 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+      
+      
+      upload.deleteFile(delDir, file1_old);  
+      upload.deleteFile(delDir, thumb1_old);
+
+      //recipeseqProc.update(recipeseqVO);
+      
+      
+    } catch (FileUploadException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    // -------------------------------------------------------------------
+    // 이전 메인 이미지 파일 삭제 코드 종료
+    // -------------------------------------------------------------------
+    
+    // -------------------------------------------------------------------
+    // 이전 요리순서 이미지 파일 삭제 코드 시작
+    // -------------------------------------------------------------------
+    
+    try {
+      upload = new Upload(request);
+      
+
+      String delDir = Tool.getRealPath(request, "/recipe/storage/seq_images"); // 절대 경로
+      // 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+      
+      int num = recipeseqProc.count_by_recipeno(recipeVO.getRecipeno());
+      System.out.println("num? : " + num);
+      HashMap<String, Object> map = null;
+      RecipeseqVO recipeseqVO = new RecipeseqVO();
+      for(int i = 0; i < num; i++) {
+        map = new HashMap<String, Object>();
+        map.put("recipeno", recipeVO.getRecipeno());
+        map.put("step", i+1);
+        recipeseqVO = recipeseqProc.read_by_recipeno_step(map);
+        
+        file1_seq_old = recipeseqVO.getFile_seq();
+        thumb1_seq_old = recipeseqVO.getThumb_seq();
+        
+        System.out.println("file1_seq_old: " + file1_seq_old);
+        System.out.println("thumb1_seq_old: " + thumb1_seq_old);
+        
+        upload.deleteFile(delDir, file1_seq_old);  
+        upload.deleteFile(delDir, thumb1_seq_old);
+      }
+      
+      
+      //recipeseqProc.update(recipeseqVO);
+      
+      
+    } catch (FileUploadException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    // -------------------------------------------------------------------
+    // 이전 요리순서 이미지 파일 삭제 코드 종료
+    // -------------------------------------------------------------------
+    
+    
+    
+    
+    //
+    
+    // -------------------------------------------------------------------
+    // new 메인 이미지용 파일 전송 코드 시작
+    // -------------------------------------------------------------------
+    String file1 = ""; // main image
+    String thumb1 = ""; // preview image
+
+    String upDir = Tool.getRealPath(request, "/recipe/storage/main_images"); // 절대 경로
+    // 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+    MultipartFile mf = recipeVO.getFile1MF();
+    System.out.println("mf:" + mf);
+    long size1 = mf.getSize(); // 파일 크기
+    if (size1 > 0) { // 파일 크기 체크
+      // mp3 = mf.getOriginalFilename(); // 원본 파일명, spring.jpg
+      // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
+      file1 = Upload.saveFileSpring(mf, upDir);
+
+      if (Tool.isImage(file1)) { // 이미지인지 검사
+        // thumb 이미지 생성후 파일명 리턴됨, width: 120, height: 80
+        thumb1 = Tool.preview(upDir, file1, 120, 80);
+      }
+
+    }
+    // -------------------------------------------------------------------
+    // new 메인 이미지용 파일 전송 코드 종료
+    // -------------------------------------------------------------------
+    recipeVO.setFile1(file1);
+    recipeVO.setThumb1(thumb1);
+    recipeVO.setSize1(size1);
+    
+    
+    
+    // -------------------------------------------------------------------
+    // new 요리순서 이미지용 파일 전송 코드 시작
+    // -------------------------------------------------------------------
+    String[] ingredseq_cnt_arr;
+    int ingredseq_cnt = 0;
+    
+    if(request.getParameterValues("ingredseq_cnt") == null) {
+      ingredseq_cnt = 0;
+    }else {
+      ingredseq_cnt_arr = request.getParameterValues("ingredseq_cnt"); // 1 2
+      ingredseq_cnt = Integer.parseInt(ingredseq_cnt_arr[ingredseq_cnt_arr.length-1]); // 2
+      
+    }
+    
+    System.out.println("잉그래드시퀀스_시엔티: " + ingredseq_cnt);
+    
+    HashMap<String, Object> map = null;
+    for(int i = 0; i <= ingredseq_cnt; i++) {
+      String contents = request.getParameter("contents"+i); // 내용0, 내용1, 내용2
+      
+      
+      map = new HashMap<String, Object>();
+      map.put("recipeno", recipeVO.getRecipeno());
+      map.put("step", i+1);
+      RecipeseqVO recipeseqVO = recipeseqProc.read_by_recipeno_step(map);
+      
+      String upDir_seq = Tool.getRealPath(request, "/recipe/storage/seq_images"); // 절대 경로
+      
+      //RecipeseqVO recipeseqVO = this.recipeseqProc.read(recipeVO.getRecipeno());
+     
+      // 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+      MultipartFile mf2 = file2MF[i];
+      long size_seq = mf2.getSize(); // 파일 크기
+      System.out.println("size_seq: " + size_seq);
+      if (size_seq > 0) { // 파일 크기 체크
+        // mp3 = mf.getOriginalFilename(); // 원본 파일명, spring.jpg
+        // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
+        file1_seq_new = Upload.saveFileSpring(mf2, upDir_seq);
+
+        if (Tool.isImage(file1_seq_new)) { // 이미지인지 검사
+          // thumb 이미지 생성후 파일명 리턴됨, width: 120, height: 80
+          thumb1_seq_new = Tool.preview(upDir_seq, file1_seq_new, 120, 80);
+        }
+
+      }
+      // -------------------------------------------------------------------
+      // 요리순서 이미지용 파일 전송 코드 종료
+      // -------------------------------------------------------------------
+      
+      System.out.println("1. " + file1_seq_new);
+      System.out.println("2. " + thumb1_seq_new);
+      System.out.println("3. " + size_seq);
+      System.out.println("4. " + contents);
+      System.out.println("5. " + recipeVO.getRecipeno());
+      System.out.println("6. " + (Integer)session.getAttribute("memberno"));
+      System.out.println("7. " + (i+1));
+      
+      
+      recipeseqVO.setFile_seq(file1_seq_new);
+      recipeseqVO.setThumb_seq(thumb1_seq_new);
+      recipeseqVO.setSize_seq(size_seq);
+      recipeseqVO.setContents(contents);
+      recipeseqVO.setRecipeno(recipeVO.getRecipeno());
+      recipeseqVO.setMemberno((Integer)session.getAttribute("memberno"));
+      recipeseqVO.setStep((i+1));
+      recipeseqProc.update_by_recipeno_step(recipeseqVO);
+    }
+    
+    
+    
+    
+    
+    // 업데이트
+    
+    int cnt = this.recipeProc.update(recipeVO);
+    mav.addObject("cnt", cnt); // request에 저장
+    
+    
+    
+
+    if (cnt == 1) {
+      // mav.setViewName("/cate/update_msg"); // webapp/cate/update_msg.jsp
+      mav.setViewName("redirect:/recipe/list.do"); // spring 재호출
+    } 
+
+    return mav;
+  }
+  
   
   
 }

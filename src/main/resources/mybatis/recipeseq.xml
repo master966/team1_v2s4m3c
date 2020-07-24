@@ -17,4 +17,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY step ASC
   </select>
   
+  <!-- recipeno 별 read -->
+  <select id="read" resultType="RecipeseqVO" parameterType="int">
+    SELECT recipeseqno, recipeno, memberno, contents, file_seq, thumb_seq, size_seq, step, recipeseqseqno
+    FROM recipeseq
+    WHERE recipeno = #{recipeno}
+  </select>
+  
+  <!-- recipeno 당 갯수 -->
+  <select id="count_by_recipeno" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt
+    FROM recipeseq
+    WHERE recipeno = #{recipeno}
+  </select>
+  
+  <!-- recipeno step 별 read -->
+  <select id="read_by_recipeno_step" resultType="RecipeseqVO" parameterType="HashMap">
+    SELECT recipeseqno, recipeno, memberno, contents, file_seq, thumb_seq, size_seq, step, recipeseqseqno
+    FROM recipeseq
+    WHERE recipeno = #{recipeno} and step = #{step}
+  </select>
+  
+  
+  <update id="update_by_recipeno_step" parameterType="RecipeseqVO">
+    UPDATE recipeseq
+    SET contents=#{contents}, file_seq=#{file_seq}, thumb_seq=#{thumb_seq}, size_seq=#{size_seq}
+    WHERE recipeno = #{recipeno} and step = #{step}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM recipeseq
+    WHERE recipeno = #{recipeno}
+  </delete>
+  
+  
 </mapper>
