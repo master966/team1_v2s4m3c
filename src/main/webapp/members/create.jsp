@@ -498,7 +498,6 @@ function checkEmail(){
 </div>
 
 <jsp:include page="/team1_menu/bottom_.jsp"  flush='false' />
-</div> <!-- container  -->
 </body>
 
 </html>
