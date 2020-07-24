@@ -32,6 +32,8 @@
   var emailck=0;
 
   function passwd_update() {
+    
+    if ($('#new_passwd').val() != ""){
     if ($('#new_passwd').val() != $('#new_passwd2').val()) {
       alert("새 비밀번호가 일치하지않습니다");
       $('#new_passwd2').val="";
@@ -40,6 +42,10 @@
     }
     
     $('#frm2').submit();
+    
+  } else {
+    alert("새 비밀번호를 입력해주세요");
+  }
     
   }
 

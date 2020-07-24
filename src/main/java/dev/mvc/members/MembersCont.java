@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admini.AdminiProcInter;
@@ -58,8 +59,8 @@ public class MembersCont {
   public ModelAndView create(HttpSession session) {
     ModelAndView mav = new ModelAndView();
     
-    if(membersProc.isMember(session)) {
-      mav.setViewName("/home");
+    if (membersProc.isMember(session) == true) {
+      mav.setViewName("redirect:/index.do");
     } else {
       mav.setViewName("/members/create"); // webapp/members/create.jsp
     }
@@ -337,7 +338,6 @@ public class MembersCont {
     
     int cnt = membersProc.passwd_check(map);
     int update_cnt = 0; // 변경된 패스워드 수
-    System.out.println("너passwd:"+passwd);
     if (cnt == 1) { //현재 패스워드가 일치하는 경우
       map.put("passwd", new_passwd);
       update_cnt = membersProc.passwd_update(map); //패스워드 변경
@@ -349,12 +349,9 @@ public class MembersCont {
     } else { //현재 비밀번호가 일치하지 않는 경우
       response.setContentType("text/html; charset=UTF-8");
       PrintWriter out = response.getWriter();
-      out.println("<script>alert('비밀번호가 일치하지않습니다'); history.go(-1);</script>");
+      out.println("<script>alert('현재 비밀번호가 일치하지않습니다'); history.go(-1);</script>");
       out.flush();
     }
-    
-    System.out.println("cnt:"+cnt);
-    
     
     return mav;
   }
