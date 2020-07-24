@@ -9,7 +9,7 @@
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>주문</title>
  
-<link href="../css/style.css" rel="Stylesheet" type="text/css">
+<link href="../css/style_dy.css" rel="Stylesheet" type="text/css">
  
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,26 +26,39 @@
   	$('#point_use').on('change', point_use);
   	$('#btn_DaumPostcode').on('click', DaumPostcode);
   });
+//숫자 1000단위 표현
+  function df(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  function undf(x){
+    return parseInt(x.replace(/,/g , ''));
+  }
   
   function total() {
     var cost = 0;
+    var p_price = 0;
     var accum = ${gradeVO.accum};
-    var deli_cost = parseInt($('#deli_cost', frm).text());
+    var deli_cost = undf($('#deli_cost', frm).text());
     var total_cost = 0;
     var point_use = parseInt($('#point_use', frm).val());
-    var coupon_cost = parseInt($('#coupon_cost', frm).text());
+    var coupon_cost = undf($('#coupon_cost', frm).text());
     <c:forEach items="${list}" var="item">
-    cost = parseInt($('#pay${item.basketno}', frm).text());
-    total_cost = total_cost + cost;
-   </c:forEach>
-   var point_acc =parseInt(total_cost * accum);
-   var total_pay = total_cost + deli_cost - coupon_cost - point_use;
-   $('#total_cost').text(total_cost+"원");
-   $('#point_acc').text(point_acc+"원");
-   $('#total_pay').text(total_pay+"원");
-   $('#h_total_cost').val(total_cost);
-   $('#h_point_acc').val(point_acc);
-   $('#h_total_pay').val(total_pay);
+      var p_price = undf($('#p_price${item.basketno}', frm).text());
+      cost = undf($('#pay${item.basketno}', frm).text());
+      $('#p_price${item.basketno}').text(df(p_price)+"원");
+      $('#pay${item.basketno}').text(df(cost)+"원");
+      total_cost = total_cost + cost;
+    </c:forEach>
+    var point_acc =parseInt(total_cost * accum);
+    var total_pay = total_cost + deli_cost - coupon_cost - point_use;
+    $('#total_cost').text(df(total_cost)+"원");
+    $('#point_acc').text(df(point_acc)+"원");
+    $('#total_pay').text(df(total_pay)+"원");
+    $('#deli_cost').text(df(deli_cost)+"원");
+    $('#h_total_cost').val(total_cost);
+    $('#h_point_acc').val(point_acc);
+    $('#h_total_pay').val(total_pay);
+    $('#h_deli_cost').val(deli_cost);
   }
   
   function coupon_name(){
@@ -68,8 +81,42 @@
         } else {
           alert("쿠폰을 선택하지 않습니다.")
         }
-        $('#coupon_cost').text(rdata.coupon_cost + "원");
+        $('#coupon_cost').text(df(rdata.coupon_cost) + "원");
         $('#h_coupon_cost').val(rdata.coupon_cost);
+        total();
+      },
+     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        var msg = 'ERROR<br><br>';
+        msg += '<strong>request.status</strong><br>'+request.status + '<hr>';
+        msg += '<strong>error</strong><br>'+error + '<hr>';
+        console.log(msg);
+      } 
+    }); 
+   }
+  // 주소 변경시 배송비 변경 시온
+  function address1(){
+    var frm = $('#frm');
+    var address = $('#address1', frm).val();
+    console.log(address);
+    var params = 'address=' + address;
+    alert('params : ' + params);
+    $.ajax({
+      url: './deli_cost.do',
+      type: 'post',     // get
+      cache: false,    // 응답 결과 임시 저장 취소
+      async: true,     // true : 비동기 통신
+      dataType: 'json', // 응답 형식 : json, html, xml...
+      data: params,  // 데이터
+      success: function(rdata) { // 응답이 온 경우
+        // alert(rdata);
+        if(rdata.deli_cost > 0){ 
+          alert(address+ "로 배송지가 변경되어서 " + rdata.deli_cost + "원으로 배송비가 변경되었습니다.. ");
+        } else {
+          alert("쿠폰을 선택하지 않습니다.")
+        }
+        $('#deli_cost').text(df(rdata.deli_cost) + "원");
+        $('#h_deli_cost').val(rdata.deli_cost);
         total();
       },
      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
@@ -99,18 +146,18 @@
 </head> 
  
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
- 
+<jsp:include page="/team1_menu/topindex.jsp" flush='false' />
+ <div class='content'>
 <DIV class='title_line'>주문(동방신기 아님ㅋ) 해보시든가</DIV>
 <DIV class='content_body'>
   <FORM id='frm'name='frm' method='POST' action='./create.do' class="form-horizontal">
-    <input type='hidden' name='memberno' id='memberno' value='1'>
+    <input type='hidden' name='memberno' id='memberno' value='${memberno}'>
     <input type='hidden' name='p_no' id='p_no' value='${p_no}'>
     <div class="sub_title_line" style="margin : 5px auto;">
       상품정보
     </div>
     <div>
-      <table class="table table-striped" style='width: 100%;'>
+      <table class="table" style='width: 100%;'>
       <colgroup>
         <col style="width: 10%;"></col>
         <col style="width: 20%;"></col>
@@ -204,7 +251,7 @@
           <c:otherwise>
             <td style="display:none;">
               <input type='number' id='point_use' name='point_use' value='0'
-                       class="form-control" style='width: 50%;'/>
+                       class="orders_input"/>
               </td>
             <td>
               <span>사용 가능한 포인트가 없습니다.</span>
@@ -215,8 +262,8 @@
         <tr>
           <th>배송비</th> 
         <td>
-          <span id='deli_cost'>3000원</span>
-          <input id ='h_deli_cost' type='hidden' name='deli_cost' value='3000'/>
+          <span id='deli_cost'>${deli_cost }</span>
+          <input id ='h_deli_cost' type='hidden' name='deli_cost' value='${deli_cost }'/>
           </td>
         </tr>
         <tr>
@@ -244,15 +291,15 @@
         <tr>
           <th class="col-xs-4">보내는 분*</th> 
         <td class="col-xs-8">
-      <input type='text' name='name_post' value='${membersVO.mname}' required="required" autofocus="autofocus"
-                 class="form-control" style='width: 50%;'/>
+      <input type='text' name='name_post' value='${membersVO.mname}' required="required"
+                  class="orders_input" readonly/>
         </td>
         </tr>
         <tr>
           <th class="col-xs-4">휴대폰*</th> 
         <td class="col-xs-8">
-      <input type='text' name='phon_post' value='${membersVO.tel}' required="required" autofocus="autofocus"
-                 class="form-control" style='width: 50%;'/>
+      <input type='text' name='phon_post' value='${membersVO.tel}' required="required"
+                 class="orders_input" readonly/>
         </td>
         </tr>
         </tbody>
@@ -266,22 +313,22 @@
           <th class="col-md-4">우편번호*</th> 
         <td class="col-md-8">
          <input type='text' id='zipcode' name='zipcode' value='${membersVO.zipcode }' required="required"
-                 class="form-control" style='width: 50%;'/><BR>
-         <input type="button" id="btn_DaumPostcode" value="우편번호 찾기" class="btn btn-info btn-md">
+                    class="orders_input" readonly/><BR>
+         <input type="button" id="btn_DaumPostcode" value="우편번호 찾기" class="btn_address">
         </td>
         </tr>
         <tr>
           <th class="col-md-4">주소*</th> 
         <td class="col-md-8">
       <input type='text' id='address1' name='address1' value='${membersVO.address1 }' required="required"
-                 class="form-control" style='width: 50%;'/>
+                 class="orders_input" style="width: 80%;" readonly/>
         </td>
         </tr>
         <tr>
           <th class="col-md-4">상세주소*</th> 
         <td class="col-md-8">
       <input type='text' name='address2' value='${membersVO.address2 }' required="required"
-                 class="form-control" style='width: 50%;'/>
+                 class="orders_input"/>
         </td>
         </tr>
         <!-- ----- DAUM 우편번호 API 시작 ----- -->
@@ -327,7 +374,7 @@
                         // 우편번호와 주소 정보를 해당 필드에 넣는다.
                         document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
                         document.getElementById('address1').value = fullAddr;
-        
+                        address1();
                         // iframe을 넣은 element를 안보이게 한다.
                         // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
                         element_wrap.style.display = 'none';
@@ -354,14 +401,14 @@
           <th class="col-md-4">수령인 이름*</th> 
         <td class="col-md-8">
         <input type='text' name='name_get' value='${membersVO.mname}' required="required"
-                   class="form-control" style='width: 50%;'/>
+                   class="orders_input"/>
         </td>
         </tr>
         <tr>
           <th>수령인 휴대폰*</th> 
         <td>
       <input type='text' name='phon_get' value='${membersVO.tel}' required="required"
-                 class="form-control" style='width: 80%;'/>
+                 class="orders_input"/>
         </td>
         </tr>
         <tr>
@@ -400,13 +447,14 @@
         </tr>
         </tbody>
     </table>
-   <div class="content_bottom_menu" style="padding-right: 20%;">
-     <button type="submit" class="btn btn-default">등록</button>
-     <button type="button" onclick="location.href='./list.do'" class="btn btn-default">목록</button>
+   <div class="content_bottom_menu" style="padding-bottom: 10px; text-align: right;">
+     <button type="submit" class="btn_delete">등록</button>
+     <button type="button" onclick="javascript:history.back()" class="btn_delete">장바구니 가기</button>
    </div>
 </FORM>
  </DIV>
-<jsp:include page="/menu/bottom.jsp" flush='false' />
+ </div>
+<jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
 </body>
  
 </html> 

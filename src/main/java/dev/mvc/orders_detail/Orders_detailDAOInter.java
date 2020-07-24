@@ -49,14 +49,6 @@ public interface Orders_detailDAOInter {
   public Orders_detailVO update(int orders_detailno); // 수정 폼
   
   public int update(Orders_detailVO orders_detailVO); // 수정 처리
-  
-  /**
-   * <!-- 패스워드 검사  -->
-   * <select id="passwd_check" parameterType="HashMap" resultType="int">
-   * @param hashMap
-   * @return
-   */
-  public int passwd_check(HashMap hashMap);
 
   /**
    * 삭제 처리

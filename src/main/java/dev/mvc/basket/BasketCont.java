@@ -25,10 +25,14 @@ import dev.mvc.basket.BasketProcInter;
 import dev.mvc.basket.BasketVO;
 import dev.mvc.coupon.CouponProcInter;
 import dev.mvc.coupon.CouponVO;
+import dev.mvc.deliverypay.DeliverypayProcInter;
+import dev.mvc.deliverypay.DeliverypayVO;
 import dev.mvc.grade.GradeProcInter;
 import dev.mvc.grade.GradeVO;
 import dev.mvc.m_coupon.M_couponProcInter;
 import dev.mvc.m_coupon.M_couponVO;
+import dev.mvc.members.MembersProcInter;
+import dev.mvc.members.MembersVO;
 import dev.mvc.product.ProductProcInter;
 import dev.mvc.product.ProductVO;
 import dev.mvc.tool.Tool;
@@ -57,12 +61,20 @@ public class BasketCont {
   @Qualifier("dev.mvc.product.ProductProc")
   private ProductProcInter productProc;
   
+  @Autowired
+  @Qualifier("dev.mvc.members.MembersProc")
+  private MembersProcInter membersProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.deliverypay.DeliverypayProc")
+  private DeliverypayProcInter deliverypayProc;
+  
   public BasketCont() {
     System.out.println("--> BasketCont created.");
   }
   
   /**
-   * 등록폼
+   * 등록폼 사용 x
    */
   // http://localhost:9090/project/basket/create.do
   @RequestMapping(value="/basket/create.do", method=RequestMethod.GET)
@@ -75,7 +87,7 @@ public class BasketCont {
   
   /**
    * 장바구니 등록
-   * @param cnt, pay, p_no
+   * @param cnt, pay, p_no, memberno
    * @return
    */
   // http://localhost:9090/project/basket/update_cnt.do
@@ -83,19 +95,20 @@ public class BasketCont {
   @RequestMapping(value="/basket/create.do", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
   public String create(int memberno,
                                 int cnt, int pay, int p_no) {
-    // int memberno = (int)session.getAttribute("memberno");
-    
+    // 회원 번호 별 장바구니 목록
     List<BasketVO> list = this.basketProc.read_memberno(memberno);
     int cnt2 = 0;
+    // 장바구니 등록을 위한 조회
     BasketVO basketVO = this.productProc.read_for_basket(p_no);
     String msg = "";
+    // 기존 장바구니 목록에 중복 상품있는지 확인
     for (int i = 0; i<list.size(); i++) {
       System.out.println(list.get(i).getP_no());
       if(p_no == list.get(i).getP_no()) {
         cnt2 = 1;
       }
     }
-    if (cnt2 == 0) {
+    if (cnt2 == 0) { // 없으면 등록
       basketVO.setPay(pay);
       basketVO.setCnt(cnt);
       basketVO.setP_no(p_no);
@@ -104,40 +117,18 @@ public class BasketCont {
       msg = basketVO.getP_name();
       
       this.basketProc.create(basketVO);
-    } else {
+    } else { // 있으면 등록 안함
       msg = "이미 장바구니에 있는 상품입니다.";
     }
     
     JSONObject json = new JSONObject();
     
+    // 출력할 메세지 전송
     json.put("msg", msg); 
     json.put("cnt2", cnt2); 
     
     return json.toString();
   }
-  
-  /**
-   * 등록처리
-   * @param basketVO
-   * @return
-   *//*
-    // http://localhost:9090/project/basket/create.do
-@RequestMapping(value="/basket/create.do", method=RequestMethod.POST)
-  public ModelAndView create(BasketVO basketVO) {
-    // BasketVO basketVO <FORM> 태그의 값으로 자동 생성됨
-    // request.setAttribute("basketVO", basketVO); 자동으로 실행이 됨
-    
-    ModelAndView mav = new ModelAndView();
-    int pay = basketVO.getCnt() * basketVO.getP_price();
-    basketVO.setPay(pay);
-    int cnt = this.basketProc.create(basketVO);
-    
-    mav.addObject("cnt", cnt);
-    
-    mav.setViewName("redirect:/basket/create_msg.jsp");
-    
-    return mav; // forward
-  }*/
 
   /**
    * 전체목록
@@ -157,7 +148,7 @@ public class BasketCont {
   }
   
   /**
-   * 조회
+   * 회원 번호 별 조회
    * @param memberno 조회할 장바구니의 멤버 번호
    * @return
    */
@@ -168,16 +159,34 @@ public class BasketCont {
     
     int memberno = (int)session.getAttribute("memberno");
     
+    // 회원 별 장바구니 리스트
     List<BasketVO> list = this.basketProc.read_memberno(memberno);
+    // 회원이 소유한 쿠폰 리스트
     List<M_couponVO> list_coupon = this.m_couponProc.read_member_coupon(memberno);
     
+    
+    MembersVO membersVO = this.membersProc.read(memberno);
+    // 배송비 관련
+    String adress = membersVO.getAddress1();
+    adress = adress.substring(0, 2);
+    int deli_cost = 0;
+    List<DeliverypayVO> list_deli_pay = this.deliverypayProc.list();
+    for (int i=0; i<list_deli_pay.size(); i++) {
+      if (adress.equals(list_deli_pay.get(i).getArea())) {
+        deli_cost = list_deli_pay.get(i).getDeliverypay();
+        System.out.println(list_deli_pay.get(i).getArea());
+      }
+    } // 시온
+    System.out.println(deli_cost);
    /* for (int i = 0; i<list.size(); i++) {
       System.out.println(list.get(i).getThumb1());
     }*/
     
-    GradeVO gradeVO = this.gradeProc.read(memberno);
+    // 회원 등급
+    GradeVO gradeVO = this.gradeProc.read(membersVO.getGradeno());
     String accum = Double.toString(gradeVO.getAccum() * 100) + "%";
     
+    mav.addObject("deli_cost", deli_cost);
     mav.addObject("accum", accum);
     mav.addObject("gradeVO", gradeVO);
     mav.addObject("list", list);
@@ -187,33 +196,6 @@ public class BasketCont {
     return mav;
   }
   
-//  /**
-//   * 할인 방법 수정 처리
-//   * @param basketVO
-//   * @return
-//   */
-//  // http://localhost:9090/project/basket/update.do
-//  @ResponseBody
-//  @RequestMapping(value="/basket/update_coupon.do", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-//  public String update_coupon(BasketVO basketVO) {
-//    /*String a = "";
-//    a = basketVO.getCoupon_name();
-//    System.out.println(a);*/
-//    if (basketVO.getCoupon_name().trim().length() > 0) {
-//      CouponVO couponVO = this.couponProc.read_by_coupon_name(basketVO.getCoupon_name());
-//      basketVO.setCoupon_cost(couponVO.getCoupon_cost());
-//    } else {
-//      basketVO.setCoupon_cost(0);
-//    }
-//    this.basketProc.update_coupon(basketVO);
-//    
-//    JSONObject json = new JSONObject();
-//    json.put("coupon_name", basketVO.getCoupon_name()); 
-//    json.put("coupon_cost", basketVO.getCoupon_cost()); 
-//    
-//    return json.toString();
-//  }
-//  
   /**
    * 수량 수정 처리
    * @param basketVO
@@ -258,7 +240,6 @@ public class BasketCont {
     
     return json.toString();
   }
-
   
     /**
      * 메시지

@@ -41,29 +41,11 @@ public class BasketProc implements BasketProcInter {
     list = this.basketDAO.read_memberno_to_detail(memberno);
     return list;
   }
-
-  @Override  
-  public int update_coupon(BasketVO basketVO) {
-    int cnt = this.basketDAO.update_coupon(basketVO);
-    return cnt;
-  }
   
   @Override
   public int update_cnt_pay(BasketVO basketVO) {
     int cnt = this.basketDAO.update_cnt_pay(basketVO);
     return cnt;
-  }
-  
-  @Override
-  public int update_point_use(BasketVO basketVO) {
-    int cnt = this.basketDAO.update_point_use(basketVO);
-    return cnt;
-  }
-
-  @Override
-  public int passwd_check(HashMap hashMap) {
-    int passwd_cnt = this.basketDAO.passwd_check(hashMap);
-    return passwd_cnt;
   }
  
   @Override

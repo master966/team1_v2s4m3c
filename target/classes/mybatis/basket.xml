@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES(#{basketno}, #{memberno}, #{p_no}, #{p_name}, #{cnt}, #{p_price}, #{pay}, #{thumb1}, #{p_quantity}, sysdate)
   </insert>
   
-  <select id="list_all" resultType="CouponVO">
+  <select id="list_all" resultType="BasketVO">
     SELECT basketno, memberno, p_no, p_name, cnt, p_price, basket_date, thumb1, pay, p_quantity, sysdate
     FROM basket
     </select>

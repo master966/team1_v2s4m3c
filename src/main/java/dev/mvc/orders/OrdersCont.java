@@ -1,5 +1,6 @@
 package dev.mvc.orders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +19,8 @@ import dev.mvc.basket.BasketProcInter;
 import dev.mvc.basket.BasketVO;
 import dev.mvc.coupon.CouponProcInter;
 import dev.mvc.coupon.CouponVO;
+import dev.mvc.deliverypay.DeliverypayProcInter;
+import dev.mvc.deliverypay.DeliverypayVO;
 import dev.mvc.grade.GradeProcInter;
 import dev.mvc.grade.GradeVO;
 import dev.mvc.m_coupon.M_couponProcInter;
@@ -30,6 +33,8 @@ import dev.mvc.orders_detail.Orders_detailProcInter;
 import dev.mvc.orders_detail.Orders_detailVO;
 import dev.mvc.points.PointsProcInter;
 import dev.mvc.points.PointsVO;
+import dev.mvc.product.ProductProcInter;
+import dev.mvc.product.ProductVO;
 
 
 @Controller
@@ -59,6 +64,10 @@ public class OrdersCont {
   private PointsProcInter pointsProc;
   
   @Autowired
+  @Qualifier("dev.mvc.product.ProductProc")
+  private ProductProcInter productProc;
+  
+  @Autowired
   @Qualifier("dev.mvc.members.MembersProc")
   private MembersProcInter membersProc;
   
@@ -66,12 +75,16 @@ public class OrdersCont {
   @Qualifier("dev.mvc.grade.GradeProc")
   private GradeProcInter gradeProc;
   
+  @Autowired
+  @Qualifier("dev.mvc.deliverypay.DeliverypayProc")
+  private DeliverypayProcInter deliverypayProc;
+  
   public OrdersCont() {
     System.out.println("--> OrdersCont created.");
   }
   
   /**
-   * 등록폼
+   * 주문 등록폼
    */
   // http://localhost:9090/project/orders/create.do
   @RequestMapping(value="/orders/create.do", method=RequestMethod.GET)
@@ -79,18 +92,28 @@ public class OrdersCont {
     ModelAndView mav = new ModelAndView();
     
     int memberno = (int)session.getAttribute("memberno");
-    
+    // 회원번호로 쿠폰, 장바구니, 등급가져오기
     List<BasketVO> list = this.basketProc.read_memberno(memberno);
-    
     MembersVO membersVO = this.membersProc.read(memberno);
-    
     GradeVO gradeVO = this.gradeProc.read(membersVO.getGradeno());
     List<M_couponVO> list_coupon = this.m_couponProc.read_member_coupon(memberno);
+    
     mav.addObject("list", list);
     mav.addObject("list_coupon", list_coupon);
     String p_no = "";
     // 적립률 %로 보여주기
     String accum = Double.toString(gradeVO.getAccum() * 100) + "%";
+    
+    // 배송비 관련
+    String adress = membersVO.getAddress1();
+    adress = adress.substring(0, 2);
+    int deli_cost = 0;
+    List<DeliverypayVO> list_deli_pay = this.deliverypayProc.list();
+    for (int i=0; i<list_deli_pay.size(); i++) {
+      if (adress.equals(list_deli_pay.get(i).getArea())) {
+        deli_cost = list_deli_pay.get(i).getDeliverypay();
+      }
+    } // 시온
     
     // 상품번호 합쳐서 저장
     for (int i = 0; i<list.size(); i++) {
@@ -98,6 +121,8 @@ public class OrdersCont {
     }
     p_no = p_no.substring(0, p_no.length()-1);
         
+    
+    mav.addObject("deli_cost", deli_cost);
     mav.addObject("accum", accum);
     mav.addObject("p_no", p_no);
     mav.addObject("membersVO", membersVO);
@@ -119,7 +144,6 @@ public class OrdersCont {
     // 주문 등록
     int cnt = this.ordersProc.create(ordersVO);
     
-    
     // 사용한 쿠폰 삭제
     if(ordersVO.getCoupon_cost() > 0) {
       CouponVO couponVO = this.couponProc.read_by_coupon_name(ordersVO.getCoupon_name());
@@ -128,18 +152,25 @@ public class OrdersCont {
       m_couponVO.setMemberno(ordersVO.getMemberno());
       this.m_couponProc.delete(m_couponVO);
     }
-    // 주문 상세 등록
+    // 주문 상세 등록, 상품 재고 변경
     Orders_detailVO orders_detailVO = new Orders_detailVO();
-    int cnt2 = 0;
+    int P_quantity = 0; // 시온
+    List<BasketVO> list_member = this.basketProc.read_memberno(ordersVO.getMemberno()); // 시온
     List<Orders_detailVO> list = this.basketProc.read_memberno_to_detail(ordersVO.getMemberno());
+    ProductVO productVO = new ProductVO();
     for(int i = 0; i<list.size(); i++) {
+      P_quantity = 0; // 시온
       orders_detailVO = list.get(i);
       orders_detailVO.setOrdersno(ordersVO.getOrdersno());
+      productVO.setP_no(list_member.get(i).getP_no()); // 시온
+      P_quantity = list_member.get(i).getP_quantity() - list.get(i).getCnt();  // 시온
+      productVO.setP_quantity(P_quantity); // 시온
+      this.productProc.update_p_quantity(productVO); // 시온
+      this.orders_detailProc.create(orders_detailVO);
       
-      cnt2 = this.orders_detailProc.create(orders_detailVO);
     }
     // 장바구니 삭제
-   // int cnt3 = this.basketProc.delete_memberno(ordersVO.getMemberno());
+    this.basketProc.delete_memberno(ordersVO.getMemberno());
     
     // 포인트 적립/사용 내역 등록
     MembersVO membersVO = this.membersProc.read(ordersVO.getMemberno());
@@ -155,23 +186,20 @@ public class OrdersCont {
     pointsVO.setOrdersno(ordersVO.getOrdersno());
     pointsVO.setContents(str_acc);
     pointsVO.setPoint_change(ordersVO.getPoint_acc());
-    int cnt4 = this.pointsProc.create_acc(pointsVO);
+    this.pointsProc.create_acc(pointsVO);
     if (ordersVO.getPoint_use() != 0) {
       String str_use = "[사용] 주문(" + ordersVO.getOrdersno() + ") 결제 시 사용";
       pointsVO.setContents(str_use);
       pointsVO.setPoint_change(ordersVO.getPoint_use());
-      int cnt5 = this.pointsProc.create_use(pointsVO);
-      mav.addObject("cnt5", cnt5);
+      this.pointsProc.create_use(pointsVO);
     }
     
-    mav.addObject("memberno", ordersVO.getMemberno());
     mav.addObject("cnt", cnt);
-    mav.addObject("cnt2", cnt2);
-    //mav.addObject("cnt3", cnt3);
-    mav.addObject("cnt4", cnt4);
+    mav.addObject("mname", membersVO.getMname());
     
-    mav.addObject("size", list.size());
-    mav.setViewName("redirect:/orders/create_msg.jsp");
+    mav.addObject("url", "create_msg");
+    
+    mav.setViewName("redirect:/orders/msg.do");
     return mav; // forward
   }
   
@@ -201,13 +229,7 @@ public class OrdersCont {
   public ModelAndView list(HttpSession session) {
     ModelAndView mav = new ModelAndView();
     
-    int memberno = (int)session.getAttribute("memberno");
-    
-    // List<OrdersVO> list = this.ordersProc.list();
-    List<OrdersVO> list = this.ordersProc.list_memberno(memberno);
-    mav.addObject("list", list); // requet.setAttribute("list", list);
-    
-    mav.setViewName("/orders/list"); // webapp/orders/create.jsp
+    mav.setViewName("/orders/list_memberno"); // webapp/orders/create.jsp
     return mav;
   }
   
@@ -274,10 +296,10 @@ public class OrdersCont {
   }
 
   /**
-  /* 쿠포 수정 처리
-  /* @param coupon_name
-  /* @return
-  /* 
+  * 쿠폰 수정 처리
+  * @param coupon_name
+  * @return
+  * 
    */
   // http://localhost:9090/project/basket/update.do
   @ResponseBody
@@ -295,6 +317,34 @@ public class OrdersCont {
    JSONObject json = new JSONObject();
    json.put("coupon_name", coupon_name); 
    json.put("coupon_cost", coupon_cost); 
+   
+   return json.toString();
+  }
+  
+  /**
+  * 배송비 수정, 시온
+  * @param coupon_name
+  * @return
+  * 
+   */
+  // http://localhost:9090/project/basket/update.do
+  @ResponseBody
+  @RequestMapping(value="/orders/deli_cost.do", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+  public String deli_cost(String address) {
+    int deli_cost = 0;
+  
+    // 배송비 관련
+    address = address.substring(0, 2);
+    List<DeliverypayVO> list_deli_pay = this.deliverypayProc.list();
+    for (int i=0; i<list_deli_pay.size(); i++) {
+      if (address.equals(list_deli_pay.get(i).getArea())) {
+        deli_cost = list_deli_pay.get(i).getDeliverypay();
+        System.out.println(list_deli_pay.get(i).getArea());
+      }
+    } // 시온
+    
+   JSONObject json = new JSONObject();
+   json.put("deli_cost", deli_cost); 
    
    return json.toString();
   }
@@ -377,6 +427,42 @@ public class OrdersCont {
       
       JSONObject obj = new JSONObject();
       obj.put("list", list);
+   
+      return obj.toString();
+    }
+    
+    /**
+     * 회원 별 더보기 버튼 페이징 목록
+     * http://localhost:9090/project/orders/list_add_view.do
+     * @param couponPage 댓글 페이지
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/orders/list_add_view_memberno.do",
+                                method = RequestMethod.GET,
+                                produces = "text/plain;charset=UTF-8")
+    public String list_add_view_memberno(int ordersPage, int memberno) {
+      
+      System.out.println("ordersPage: " + ordersPage);
+      
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put("ordersPage", ordersPage);
+      map.put("memberno", memberno);
+      List<OrdersVO> list = this.ordersProc.list_add_view_memberno(map);
+      List<Orders_detailVO> list_detaile = new ArrayList<>();
+      List<Object[]> name_list = new ArrayList<>();
+      for (int i = 0; i < list.size(); i++) {
+        list_detaile = this.orders_detailProc.list_ordersno(list.get(i).getOrdersno());
+        name_list.add(new Object[] {list_detaile.get(0).getP_name(), list_detaile.get(0).getThumb1(), list_detaile.size()});
+        /*name_list.add();
+        name_list.add();*/
+      }
+      
+      System.out.println(name_list);
+      
+      JSONObject obj = new JSONObject();
+      obj.put("list", list);
+      obj.put("name_list", name_list);
    
       return obj.toString();     
     }

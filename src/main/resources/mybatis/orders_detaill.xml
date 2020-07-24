@@ -9,15 +9,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       Spring이 내부적으로 자동으로 interface를 구현해줌. -->
 <mapper namespace="dev.mvc.orders_detail.Orders_detailDAOInter">
 
- <!-- 
-  insert: INSERT SQL 실행
-  id: Spring에서 호출시 사용
-  parameterType: 전달받는 데이터 객체
-  return: 등록한 레코드 갯수 리턴
-  SQL선언시 ';'은 삭제
-  #{}: ? 동일
-  #{name}: public String getName(){...
-   -->
   <insert id="create" parameterType="Orders_detailVO"> <!-- OrdersVO를 전달 받는다
     이 태그를 Spring이 참조하여 자동으로 DAO class를 생성함
     생성된 class는 MyBATIS를 호출하는 역할을 함
@@ -39,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE ordersno=#{ordersno }
   </select>
   
-  <!-- 조회, id: read, 입력: orders_detailno, 리턴: OrdersVO_detail -->
+  <!-- 조회, id: read, 입력: orders_detailno, 리턴: Orders_detailVO -->
   <select id="read" resultType="Orders_detailVO" parameterType="int">
     SELECT orders_detailno, ordersno, memberno, p_no, cnt, p_price, coupon,
                         coupon_cost, point_use, pay, point_acc, pay_how, thumb1, pay_date

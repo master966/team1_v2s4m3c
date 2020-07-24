@@ -52,12 +52,6 @@ public class OrdersProc implements OrdersProcInter {
     int cnt = this.ordersDAO.update(ordersVO);
     return cnt;
   }
-
-  @Override
-  public int passwd_check(HashMap hashMap) {
-    int passwd_cnt = this.ordersDAO.passwd_check(hashMap);
-    return passwd_cnt;
-  }
  
   @Override
   public int delete(int ordersno) {
@@ -83,6 +77,35 @@ public class OrdersProc implements OrdersProcInter {
     map.put("endNum", endNum);
     
     List<OrdersVO> list = ordersDAO.list_add_view(map);
+    String request = "";
+    
+    // 특수 문자 변경
+    for (OrdersVO ordersVO:list) {
+      request = ordersVO.getRequest();
+      request = Tool.convertChar(request);
+      ordersVO.setRequest(request);
+    }
+    return list;
+  }
+  
+  @Override
+  public List<OrdersVO> list_add_view_memberno(HashMap<String, Object> map){
+    int record_per_page = 2; // 한페이지당 2건
+    
+    // couponPage는 1부터 시작
+    int beginOfPage = ((Integer)map.get("ordersPage") - 1) * record_per_page; // 한페이지당 2건
+
+    int startNum = beginOfPage + 1; 
+    int endNum = beginOfPage + record_per_page;  // 한페이지당 2건
+    /*
+    1 페이지: WHERE r >= 1 AND r <= 2
+    2 페이지: WHERE r >= 3 AND r <= 4
+    3 페이지: WHERE r >= 5 AND r <= 6
+    */
+    map.put("startNum", startNum);
+    map.put("endNum", endNum);
+    
+    List<OrdersVO> list = ordersDAO.list_add_view_memberno(map);
     String request = "";
     
     // 특수 문자 변경

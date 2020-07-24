@@ -74,6 +74,7 @@ public class M_couponCont {
     List<M_couponVO> list = this.m_couponProc.read_member_coupon(m_couponVO.getMemberno());
     int msg = 0; 
     int a = 0;
+    // 이미 가진 쿠폰인지 중복 검사
     for (int i = 0;i < list.size();i++) {
       if(m_couponVO.getCouponno() == list.get(i).getCouponno()) {
         msg = 1;

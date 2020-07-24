@@ -94,11 +94,10 @@ public interface ProductProcInter {
   public int delete(int p_no);
   
   /**
-   * 장바구니 등록용 조회
-   * @param p_no
+   * 재고 수정 처리(나중에 시온이에게 따로 보내주기)
+   * @param productVO
    * @return
    */
-  // public BasketVO read_for_basket(int p_no);
-
+  public int update_p_quantity(ProductVO productVO);
 
 }

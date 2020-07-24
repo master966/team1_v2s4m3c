@@ -199,12 +199,10 @@ public class ProductProc implements ProductProcInter {
     return cnt;
   }
 
-  
-//  @Override
-//  public BasketVO read_for_basket(int p_no) {
-//    BasketVO basketVO = this.productDAO.read_for_basket(p_no);
-// 
-//    return basketVO;
-//  }  
-
+  @Override
+  public int update_p_quantity(ProductVO productVO) {
+    int cnt = 0;
+    cnt = this.productDAO.update_p_quantity(productVO);
+    return cnt;
+  }
 }

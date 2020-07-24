@@ -8,7 +8,7 @@
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>Resort world</title>
  
-<link href="../css/style.css" rel="Stylesheet" type="text/css">
+<link href="../css/style_dy.css" rel="Stylesheet" type="text/css">
 <script type="text/JavaScript"
           src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -18,7 +18,7 @@
 
 </head> 
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/team1_menu/topindex.jsp" flush='false' />
 
 <DIV class='title_line'>알림</DIV>
 
@@ -52,7 +52,7 @@
 
 </DIV>
 
-<jsp:include page="/menu/bottom.jsp" flush='false' />
+<jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
 </body>
 
 </html>
