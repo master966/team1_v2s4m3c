@@ -129,7 +129,7 @@ function regist() {
 </script>
 </head>
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/menu/side.jsp" flush='false' />
 
 <DIV class='title_line'>관리자 계정 등록</DIV>
  
