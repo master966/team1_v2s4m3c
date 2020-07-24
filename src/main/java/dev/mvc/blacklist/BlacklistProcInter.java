@@ -14,6 +14,10 @@ public interface BlacklistProcInter {
   
   public List<HashMap<Object, Object>> list();
   
+  public BlacklistVO read(int blacklistno);
+  
+  public BlacklistVO read_by_memberno(int memberno);
+  
   public int update_todate(int blacklistno, int plusdate);
   
   public int delete(int blacklistno);

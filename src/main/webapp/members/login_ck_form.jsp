@@ -41,8 +41,8 @@
       <input class="login_input2" type="password" name="passwd" size="20" tabindex="2" placeholder="비밀번호를 입력해주세요">
       <div class="checkbox_save">
        <label class="label_checkbox">
-        <input type="checkbox" name="id_save" value="Y">
-        ${ck_id_save == 'Y' ? "checked='checked'" : "" } 아이디 저장
+        <input type="checkbox" name="id_save" value="Y"
+        ${ck_id_save == 'Y' ? "checked='checked'" : "" }> 아이디 저장
         <input type='checkbox' name='passwd_save' value='Y' 
         ${ck_passwd_save == 'Y' ? "checked='checked'" : "" }> 비밀번호 저장
        </Label>

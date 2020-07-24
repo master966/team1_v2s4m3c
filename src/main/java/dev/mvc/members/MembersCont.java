@@ -20,12 +20,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admini.AdminiProcInter;
+import dev.mvc.blacklist.BlacklistProc;
+import dev.mvc.blacklist.BlacklistProcInter;
+import dev.mvc.blacklist.BlacklistVO;
 
 @Controller
 public class MembersCont {
   @Autowired
   @Qualifier("dev.mvc.admini.AdminiProc")
   private AdminiProcInter adminiProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.blacklist.BlacklistProc")
+  private BlacklistProcInter blacklistProc;
   
   @Autowired
   @Qualifier("dev.mvc.members.MembersProc")
@@ -493,68 +500,93 @@ public class MembersCont {
     if (count == 1) { // 로그인 성공
       // System.out.println(id + " 로그인 성공");
       MembersVO membersVO = membersProc.readById(id);
-      session.setAttribute("memberno", membersVO.getMemberno());
-      session.setAttribute("id", id);
-      session.setAttribute("passwd", membersVO.getPasswd());
-      session.setAttribute("mname", membersVO.getMname());
-      session.setAttribute("nickname", membersVO.getNickname());
-      session.setAttribute("email", membersVO.getEmail());
-      session.setAttribute("tel", membersVO.getTel());
-      session.setAttribute("zipcode", membersVO.getZipcode());
-      session.setAttribute("address1", membersVO.getAddress1());
-      session.setAttribute("address2", membersVO.getAddress2());
-
-      // -------------------------------------------------------------------
-      // id 관련 쿠기 저장
-      // -------------------------------------------------------------------
-      if (id_save.equals("Y")) { // id를 저장할 경우
-        Cookie ck_id = new Cookie("ck_id", id);
-        ck_id.setMaxAge(60 * 60 * 72 * 10); // 30 day, 초단위
-        response.addCookie(ck_id);
-      } else { // N, id를 저장하지 않는 경우
-        Cookie ck_id = new Cookie("ck_id", "");
-        ck_id.setMaxAge(0);
-        response.addCookie(ck_id);
-      }
-      // id를 저장할지 선택하는  CheckBox 체크 여부
-      Cookie ck_id_save = new Cookie("ck_id_save", id_save);
-      ck_id_save.setMaxAge(60 * 60 * 72 * 10); // 30 day
-      response.addCookie(ck_id_save);
-      // -------------------------------------------------------------------
-
-      // -------------------------------------------------------------------
-      // Password 관련 쿠기 저장
-      // -------------------------------------------------------------------
-      if (passwd_save.equals("Y")) { // 패스워드 저장할 경우
-        Cookie ck_passwd = new Cookie("ck_passwd", passwd);
-        ck_passwd.setMaxAge(60 * 60 * 72 * 10); // 30 day
-        response.addCookie(ck_passwd);
-      } else { // N, 패스워드를 저장하지 않을 경우
-        Cookie ck_passwd = new Cookie("ck_passwd", "");
-        ck_passwd.setMaxAge(0);
-        response.addCookie(ck_passwd);
-      }
-      // passwd를 저장할지 선택하는  CheckBox 체크 여부
-      Cookie ck_passwd_save = new Cookie("ck_passwd_save", passwd_save);
-      ck_passwd_save.setMaxAge(60 * 60 * 72 * 10); // 30 day
-      response.addCookie(ck_passwd_save);
-      // -------------------------------------------------------------------
-
-
-      
-       
-      String url = request.getParameter("login_url").toString();
-      String url_do = url.substring(27,url.length());
-      System.out.println("url: " + url );
-      System.out.println("url_do: " + url_do); //  /product/list
-      mav.setViewName("redirect:"+ url_do);
-      //mav.setViewName("redirect:/index.do");
+      int black_check = blacklistProc.isexists(membersVO.getMemberno());
+      if(black_check >= 1) { // 블랙리스트 검사
+        BlacklistVO blacklistVO = blacklistProc.read_by_memberno(membersVO.getMemberno());
+        mav.addObject("blacklistno", blacklistVO.getBlacklistno());
+        mav.setViewName("redirect:/members/blacked_msg.do");
+      } else { // 이상 없으면 계속
+        session.setAttribute("memberno", membersVO.getMemberno());
+        session.setAttribute("id", id);
+        session.setAttribute("passwd", membersVO.getPasswd());
+        session.setAttribute("mname", membersVO.getMname());
+        session.setAttribute("nickname", membersVO.getNickname());
+        session.setAttribute("email", membersVO.getEmail());
+        session.setAttribute("tel", membersVO.getTel());
+        session.setAttribute("zipcode", membersVO.getZipcode());
+        session.setAttribute("address1", membersVO.getAddress1());
+        session.setAttribute("address2", membersVO.getAddress2());
+  
+        // -------------------------------------------------------------------
+        // id 관련 쿠기 저장
+        // -------------------------------------------------------------------
+        if (id_save.equals("Y")) { // id를 저장할 경우
+          Cookie ck_id = new Cookie("ck_id", id);
+          ck_id.setMaxAge(60 * 60 * 72 * 10); // 30 day, 초단위
+          response.addCookie(ck_id);
+        } else { // N, id를 저장하지 않는 경우
+          Cookie ck_id = new Cookie("ck_id", "");
+          ck_id.setMaxAge(0);
+          response.addCookie(ck_id);
+        }
+        // id를 저장할지 선택하는  CheckBox 체크 여부
+        Cookie ck_id_save = new Cookie("ck_id_save", id_save);
+        ck_id_save.setMaxAge(60 * 60 * 72 * 10); // 30 day
+        response.addCookie(ck_id_save);
+        // -------------------------------------------------------------------
+  
+        // -------------------------------------------------------------------
+        // Password 관련 쿠기 저장
+        // -------------------------------------------------------------------
+        if (passwd_save.equals("Y")) { // 패스워드 저장할 경우
+          Cookie ck_passwd = new Cookie("ck_passwd", passwd);
+          ck_passwd.setMaxAge(60 * 60 * 72 * 10); // 30 day
+          response.addCookie(ck_passwd);
+        } else { // N, 패스워드를 저장하지 않을 경우
+          Cookie ck_passwd = new Cookie("ck_passwd", "");
+          ck_passwd.setMaxAge(0);
+          response.addCookie(ck_passwd);
+        }
+        // passwd를 저장할지 선택하는  CheckBox 체크 여부
+        Cookie ck_passwd_save = new Cookie("ck_passwd_save", passwd_save);
+        ck_passwd_save.setMaxAge(60 * 60 * 72 * 10); // 30 day
+        response.addCookie(ck_passwd_save);
+        // -------------------------------------------------------------------
+  
+  
         
+         
+        String url = request.getParameter("login_url").toString();
+        String url_do = url.substring(27,url.length());
+        System.out.println("url: " + url );
+        System.out.println("url_do: " + url_do); //  /product/list
+        mav.setViewName("redirect:"+ url_do);
+        //mav.setViewName("redirect:/index.do");
+      }
     } else {
       mav.setViewName("redirect:/members/login_fail_msg.jsp");
     }
 
     return mav;
+  }
+  
+  /**
+   * 제재 알림
+   * @param memberno
+   * @return
+   */
+  @RequestMapping(value="/members/blacked_msg.do", method=RequestMethod.GET)
+  public ModelAndView blacked_msg(int blacklistno){
+    ModelAndView mav = new ModelAndView();
+    BlacklistVO blacklistVO = blacklistProc.read(blacklistno);
+    String id = membersProc.read(blacklistVO.getMemberno()).getId();
+    String admin = adminiProc.read(blacklistVO.getAdminno()).getNickname();
+    mav.addObject("id", id);
+    mav.addObject("admin", admin);
+    mav.addObject("blacklistVO", blacklistVO);
+    mav.setViewName("/members/blacked_msg");
+    
+    return mav; // forward
   }
   
   

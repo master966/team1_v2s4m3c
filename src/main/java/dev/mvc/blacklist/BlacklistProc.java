@@ -43,6 +43,18 @@ public class BlacklistProc implements BlacklistProcInter {
   }
 
   @Override
+  public BlacklistVO read(int blacklistno) {
+    BlacklistVO vo = this.BlacklistDAO.read(blacklistno);
+    return vo;
+  }
+  
+  @Override
+  public BlacklistVO read_by_memberno(int memberno) {
+    BlacklistVO vo = this.BlacklistDAO.read_by_memberno(memberno);
+    return vo;
+  }
+  
+  @Override
   public int update_todate(int blacklistno, int plusdate) {
     int cnt = this.BlacklistDAO.update_todate(blacklistno, plusdate);
     return cnt;

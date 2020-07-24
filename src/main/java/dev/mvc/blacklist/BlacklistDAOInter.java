@@ -17,6 +17,10 @@ public interface BlacklistDAOInter {
   
   public List<HashMap<Object, Object>> list();
   
+  public BlacklistVO read(int blacklistno);
+  
+  public BlacklistVO read_by_memberno(int memberno);
+  
   public int update_todate(@Param("blacklistno") int blacklistno, @Param("plusdate") int plusdate);
   
   public int delete(int blacklistno);

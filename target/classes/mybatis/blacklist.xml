@@ -44,6 +44,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY fromdate DESC
   </select>
   
+  <select id="read" resultType="BlacklistVO">
+    SELECT blacklistno, reason, fromdate, todate, memberno, adminno
+    FROM blacklist
+    WHERE blacklistno = #{blacklistno}
+  </select>
+  
+  <select id="read_by_memberno" resultType="BlacklistVO">
+    SELECT blacklistno, reason, fromdate, todate, memberno, adminno
+    FROM blacklist
+    WHERE memberno = #{memberno}
+  </select>
+  
   <update id="update_todate" parameterType="int">
     UPDATE blacklist 
     SET todate=todate+#{plusdate}
