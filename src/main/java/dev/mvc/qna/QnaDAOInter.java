@@ -49,5 +49,10 @@ public interface QnaDAOInter {
    */
   public int changeisview(Map<Object, Object> map);
   
+  /**
+   * qnano 최대값 산출
+   * @return
+   */
   public int read_maxno();
+  
 }

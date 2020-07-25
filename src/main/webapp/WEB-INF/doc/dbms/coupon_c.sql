@@ -18,7 +18,7 @@ CREATE SEQUENCE coupon_seq
     CACHE 2                         -- 2번은 메모리에서만 계산
     NOCYCLE;                       -- 다시 1부터 생성되는것을 방지
     
-COMMENT ON TABLE coupon is '상품';
+COMMENT ON TABLE coupon is '쿠폰목록';
 COMMENT ON COLUMN coupon.couponno is '쿠폰 번호';
 COMMENT ON COLUMN coupon.coupon_name is '쿠폰 이름';
 COMMENT ON COLUMN coupon.coupon_cost is '쿠폰 가격';

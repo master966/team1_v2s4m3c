@@ -47,12 +47,14 @@ public class ProductCont {
    * @return
    */
   @RequestMapping(value="/product/create.do", method=RequestMethod.GET )
-  public ModelAndView create(HttpSession session, int goryno) {
+  public ModelAndView create(HttpSession session, 
+      @RequestParam(value="goryno", defaultValue="0") int goryno) {
     ModelAndView mav = new ModelAndView();
     if(adminiProc.isAdmin(session)) {
-      Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
-      mav.addObject("cate_goryVO", cate_goryVO);
-      
+      if(goryno != 0) {
+        Cate_goryVO cate_goryVO = this.cate_goryProc.read(goryno);
+        mav.addObject("cate_goryVO", cate_goryVO);
+      }
       mav.setViewName("/product/create");
     } else { // 로그인 안돼있을 경우
       mav.addObject("needlogin", 1);
@@ -210,6 +212,9 @@ public class ProductCont {
         // 검색된 레코드 갯수
         int search_count = productProc.search_count(map);
         mav.addObject("search_count", search_count);
+        
+        Cate_goryVO nowgory = cate_goryProc.read(goryno);
+        mav.addObject("nowgory", nowgory);
       
         List<Cate_goryVO> goryList = cate_goryProc.list();
         mav.addObject("goryList", goryList);

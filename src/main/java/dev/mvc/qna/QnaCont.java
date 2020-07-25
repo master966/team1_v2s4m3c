@@ -260,7 +260,7 @@ public class QnaCont {
       map.put("qnano", qnano);
       map.put("isview", this.qnaProc.read(qnano).getIsview());
       this.qnaProc.changeisview(map);
-      mav.setViewName("redirect:/qna/list.do");
+      mav.setViewName("redirect:/qna/list_admin.do");
     } else {
       mav.addObject("needlogin", 1);
       mav.setViewName("redirect:/admini/login.do");

@@ -24,13 +24,13 @@ COMMENT ON COLUMN answer.andate is '등록일';
 
 -- 등록
 INSERT INTO answer(answerno, questionno, adminno, antitle, ancontent, andate)
-VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), 1, 1, '답변', '나도몰라요', sysdate)
+VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), 1, 1, '답변', '나도몰라요', sysdate);
 
 INSERT INTO answer(answerno, questionno, adminno, antitle, ancontent, andate)
-VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), 2, 1, '답변드립니다', '죄송합니다', sysdate)
+VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), 2, 1, '답변드립니다', '죄송합니다', sysdate);
 
 INSERT INTO answer(answerno, questionno, adminno, antitle, ancontent, andate)
-VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), 3, 1, 'ㅇㅅㅇ?', '뀨우우', sysdate)
+VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), 3, 1, 'ㅇㅅㅇ?', '뀨우우', sysdate);
 
 -- 목록
 SELECT answerno, questionno, adminno, antitle, ancontent, andate

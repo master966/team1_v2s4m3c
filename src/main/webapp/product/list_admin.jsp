@@ -90,14 +90,26 @@ $(function(){
         </span><!-- ico -->
         <span class="tit">
             <a href="./list_admin.do">
+              <c:if test="${param.goryno == null }">
+                <span style='color: #ffc933;'>
+              </c:if>
               전체보기
+              <c:if test="${param.goryno == null }">
+                </span>
+              </c:if>
             </a>
              /     
           </span>
         <c:forEach  var="cate_goryVO" items="${goryList }" varStatus="status"><!-- title -->
           <span class="tit">
             <a href="./list_admin.do?goryno=${status.index+1}">
+              <c:if test="${cate_goryVO.name == nowgory.name }">
+                <span style='color: #ffc933;'>
+              </c:if>
               ${cate_goryVO.name }
+              <c:if test="${cate_goryVO.name == nowgory.name }">
+                </span>
+              </c:if>
             </a>
             <c:if test="${status.index+1 < goryList.size()}"> / </c:if>    
           </span>
@@ -120,7 +132,12 @@ $(function(){
                     
         </c:when>
         <c:otherwise>
-          <A href="./create.do?goryno=${cate_goryVO.goryno }">등록</A>
+          <c:if test="${param.goryno == null }">
+            <A href="./create.do">등록</A>
+          </c:if>
+          <c:if test="${param.goryno != null }">
+            <A href="./create.do?goryno=${param.goryno }">등록</A>
+          </c:if>
         </c:otherwise>
       </c:choose>          
         

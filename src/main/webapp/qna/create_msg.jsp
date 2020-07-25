@@ -53,12 +53,8 @@
           </c:otherwise>
         </c:choose>
         
-        <button type='button' 
-                    onclick="location.href='../'"
-                    class="btn btn-primary">홈으로</button>
-         
          <button type='button' 
-                    onclick="location.href='./list.do'"
+                    onclick="location.href='./list_admin.do'"
                     class="btn btn-primary">목록</button>
       </LI>
      </UL>

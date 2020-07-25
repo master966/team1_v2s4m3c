@@ -37,10 +37,10 @@
         상품 등록
   </ASIDE>
   <ASIDE style='float: right;'>
-    <A href='./list.do?goryno=${param.goryno }'>목록</A>
+    <A href='./list_admin.do?goryno=${param.goryno }'>목록</A>
     <!-- <span class='menu_divide' >│</span> --> 
   </ASIDE> 
- 
+ <br><br>
   <div class='menu_line'></div>
   <DIV style='width: 100%;'>
     <FORM name='frm' method='POST' action='./create.do' class="form-horizontal"
@@ -48,7 +48,8 @@
                
       <!-- FK adminno, goryno 지정 -->
       <input type='hidden' name='adminno' id='adminno' value='${sessionScope.adminno }'>
-      <select name='goryno' class='form-control' style='width:30%;'>
+      <select name='goryno' class='form-control' style='width:30%;' required="required">
+        <option value="" selected disabled hidden>==선택하세요==</option>
         <option value='1'>샐러드·도시락</option>
         <option value='2'>간편식·냉동식품</option>
         <option value='3'>밥류·면식품·즉석식품</option>
@@ -112,7 +113,7 @@
       
       <div class="form-group">   
         <div class="col-md-12"> 썸네일 이미지를 선택해주세요.
-          <input type='file' class="form-control" name='file1MF' id='file1MF' multiple="multiple">
+          <input type='file' class="form-control" name='file1MF' id='file1MF' multiple="multiple" style='width: 50%;'>
         </div>
       </div>
       
@@ -124,7 +125,7 @@
       
       <div>
                공개 <input type="radio" name='p_printout' value='Y'> /
-               비공개(판매하지 않는 상품) <input type="radio" name='p_printout' value='N'>
+               비공개(판매하지 않는 상품) <input type="radio" name='p_printout' value='N' checked='checked'>
       </div>
       
       <DIV class='content_bottom_menu'>

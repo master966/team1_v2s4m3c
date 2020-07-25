@@ -37,6 +37,11 @@ public interface AdminiDAOInter {
    */
   public int read_min_adminno();
   
+  /**
+   * adminno 조회
+   * @param adminno
+   * @return
+   */
   public int check_adno(int adminno);
   
   /**
@@ -65,11 +70,31 @@ public interface AdminiDAOInter {
    */
   public int nickcheckdup(HashMap<Object, Object> map);
   
+  /**
+   * 로그인
+   * @param map
+   * @return
+   */
   public int login(Map<Object, Object> map);
   
+  /**
+   * ID로 조회
+   * @param identify
+   * @return
+   */
   public AdminiVO readById(String identify);
   
+  /**
+   * 권한 상승
+   * @param adminno
+   * @return
+   */
   public int acclevel_up(int adminno);
   
+  /**
+   * 권한 강등
+   * @param adminno
+   * @return
+   */
   public int acclevel_down(int adminno);
 }

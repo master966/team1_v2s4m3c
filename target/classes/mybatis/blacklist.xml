@@ -34,7 +34,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   
   <!-- 블랙리스트 -->
-  <!-- ※ 등급 테이블이랑 join해서 등급명으로 바꿀 것 -->
   <select id="list" resultType="HashMap">
     SELECT b.blacklistno, b.reason, b.fromdate, b.todate, b.memberno, b.adminno,
               m.memberno, m.id, m.mname, m.nickname, m.mdate, m.gradeno, 

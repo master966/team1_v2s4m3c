@@ -29,10 +29,10 @@
       </c:when>
       <c:otherwise>
       <div style='display: table-cell; vertical-align: middle;'>
-        <img src="${root}/team1_menu/images/profile.png" style="width:40px;">
+        <a href="${root}/members/myinfo.jsp"><img src="${root}/team1_menu/images/profile.png" style="width:40px;"></a>
       </div>
       <div style='display: table-cell; vertical-align: middle;'>
-          ${sessionScope.nickname} 님
+          <a href="${root}/members/myinfo.jsp">${sessionScope.nickname} 님</a>
           <a href="${root}/members/logout.do?logout_url=${pageContext.request.requestURI}" style='margin-top: 5px;'>로그아웃</a>
       </div>
       </c:otherwise>
@@ -78,7 +78,7 @@
           <ul class="sub5">
             <!-- <li><a href="#">#</a></li> -->
           </ul></li>
-        <li><a href="${root}/recipe/list.do">배송</a>
+        <li><a href="${root}/delivery/list.do">배송</a>
           <ul class="sub6">
             <%-- <li><a href="${root}/recipe/list.do">레시피</a></li> --%>
           </ul></li>

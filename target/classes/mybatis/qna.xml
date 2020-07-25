@@ -38,7 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  </update>
  
  <select id="read_maxno" resultType="int">
-   SELECT MAX(qnano) as maxno
-   FROM qna
+     SELECT NVL(MAX(qnano), 0) as maxno
+     FROM qna
  </select>
+ 
 </mapper>
