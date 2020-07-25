@@ -89,11 +89,11 @@ dd{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 /* 한칸 당 37px */
 #gnb ul.sub1{height: 222px; width: 142px; text-align: center;}
 #gnb ul.sub2{height: 0px; width: 142px; text-align: center;}
-#gnb ul.sub3{height: 0px; width: 142px; text-align: center;}
-#gnb ul.sub4{height: 0px; width: 142px; text-align: center;}
+#gnb ul.sub3{height: 108px; width: 142px; text-align: center;}
+#gnb ul.sub4{height: 36px; width: 142px; text-align: center;}
 #gnb ul.sub5{height: 0px; width: 142px; text-align: center;}
 #gnb ul.sub6{height: 0px; width: 142px; text-align: center;}
-#gnb ul.sub7{height: 0px; width: 142px; text-align: center;}
+#gnb ul.sub7{height: 36px; width: 142px; text-align: center;}
 #gnb ul.sub8{height: 111px; width: 142px; text-align: center;}
 
 /* �뜝�럩�쓧嶺뚳퐦�삕 嶺뚮∥��占쎈� �뜝�럩寃ュ뜝�럥�뿴 */

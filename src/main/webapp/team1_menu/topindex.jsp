@@ -66,11 +66,13 @@
           </ul></li>
         <li><a href="${root}/members/myinfo.jsp">마이 페이지</a>
           <ul class="sub3">
-            <li><a href="#">#</a></li>
+            <li><A href='${root}/orders/list_memberno.do'>주문 목록 봐 보든가</A></li>
+            <li><A href='${root}/m_coupon/list_member.do'>내가 가진 쿠폰</A></li>
+            <li><A href='${root}/points/read.do'>포인트 사용내역</A></li>
           </ul></li>
         <li><a href="#">장바구니</a>
           <ul class="sub4">
-            <!-- <li><a href="#">#</a></li> -->
+            <li><A href='${root}/basket/read.do'>장바구니 봐 보든가</A></li>
           </ul></li>
         <li><a href="${root}/recipe/list.do">뭐먹을LAB</a>
           <ul class="sub5">
@@ -82,7 +84,7 @@
           </ul></li>
         <li><a href="#">이벤트</a>
           <ul class="sub7">
-            <li><a href="#">#</a></li>
+            <li><A href='${root}/m_coupon/list_create.do'>쿠폰을 받아볼까?</A></li>
           </ul></li>
         <li><a href="#">고객센터</a>
           <ul class="sub8">

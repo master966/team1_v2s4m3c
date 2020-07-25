@@ -23,13 +23,43 @@ CREATE SEQUENCE deliverypay_seq
   NOCYCLE;                     -- 다시 1부터 생성되는 것을 방지
 
 INSERT INTO deliverypay(deliverypayno, area, deliverypay)
-VALUES(deliverypay_seq.nextval, '서울', 2500);
+VALUES(deliverypay_seq.nextval, '강원', 7000);
 
 INSERT INTO deliverypay(deliverypayno, area, deliverypay)
-VALUES(deliverypay_seq.nextval, '제주', 4000);
+VALUES(deliverypay_seq.nextval, '제주', 7000);
 
 INSERT INTO deliverypay(deliverypayno, area, deliverypay)
-VALUES(deliverypay_seq.nextval, '기타지역', 10000);
+VALUES(deliverypay_seq.nextval, '경상', 5000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '전라', 5000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '서울', 3000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '경기', 3000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '인천', 3000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '충청', 3000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '부산', 5000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '대구', 5000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '광주', 5000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '울산', 5000);
+
+INSERT INTO deliverypay(deliverypayno, area, deliverypay)
+VALUES(deliverypay_seq.nextval, '세종', 3000);
 
 
 SELECT * FROM deliverypay;

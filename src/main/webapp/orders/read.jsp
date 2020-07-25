@@ -53,22 +53,24 @@ $(function(){ // 자동실행
           </li>
           <li class="li_none">
             <DIV>
-              <table class="table table-striped" style='width: 100%;'>
+              <table class="table" style='width: 100%;'>
       <colgroup>
-        <col style="width: 15%;"></col>
-        <col style="width: 30%;"></col>
-        <col style="width: 15%;"></col>
-        <col style="width: 15%;"></col>
+        <col style="width: 10%;"></col>
         <col style="width: 25%;"></col>
+        <col style="width: 20%;"></col>
+        <col style="width: 10%;"></col>
+        <col style="width: 20%;"></col>
+        <col style="width: 15%;"></col>
       </colgroup>
       <%-- table 컬럼 --%>
       <thead>
         <tr>
-          <th style='text-align: center;'>상품 번호</th>
-          <th style='text-align: center;'>상품 이름</th>
-          <th style='text-align: center;'>상품 가격</th>
-          <th style='text-align: center;'>수량</th>
-          <th style='text-align: center;'>총 가격</th>
+          <th style='text-align: center; color:#666; font-weight: 800;'>상품 번호</th>
+          <th style='text-align: center; color:#666; font-weight: 800;'>썸네일</th>
+          <th style='text-align: center; color:#666; font-weight: 800;'>상품 이름</th>
+          <th style='text-align: center; color:#666; font-weight: 800;'>상품 가격</th>
+          <th style='text-align: center; color:#666; font-weight: 800;'>수량</th>
+          <th style='text-align: center; color:#666; font-weight: 800;'>총 가격</th>
         </tr>
       
       </thead>
@@ -76,13 +78,15 @@ $(function(){ // 자동실행
       <tbody>
         <c:forEach var="Orders_detailVO" items="${list }">
           <tr>
-            <td style='text-align: center;'>${Orders_detailVO.p_no}</td>
-            <td style='text-align: center;'>${Orders_detailVO.p_name}</td> 
+            <td style='text-align: center; vertical-align:middle;'>${Orders_detailVO.p_no}</td>
             <td style='text-align: center;'>
+                <img src="../product/storage/main_images/${Orders_detailVO.thumb1 }" style='width:150px; height:100px'></td>
+            <td style='text-align: center; vertical-align:middle;'>${Orders_detailVO.p_name}</td> 
+            <td style='text-align: center; vertical-align:middle;'>
               <span>${Orders_detailVO.p_price}원</span></td>
-            <td style='text-align: center;'>
+            <td style='text-align: center; vertical-align:middle;'>
               <span>${Orders_detailVO.cnt}개</span></td>
-            <td style='text-align: center;'>
+            <td style='text-align: center ; vertical-align:middle;'>
             <span>${Orders_detailVO.pay}원</span></td>
           </tr>
         </c:forEach>

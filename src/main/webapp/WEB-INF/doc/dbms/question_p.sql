@@ -1,4 +1,4 @@
-DROP TABLE question IF EXISTS;
+DROP TABLE question;
 /**********************************/
 /* Table Name: 고객센터질문 */
 /**********************************/
