@@ -36,7 +36,7 @@
                             dev.mvc.grade, dev.mvc.members,
                             dev.mvc.cate_gory, dev.mvc.product, dev.mvc.review, dev.mvc.viewfile,
                             dev.mvc.recipecategrp, dev.mvc.recipecate, dev.mvc.recipe, 
-                            dev.mvc.recipeseq, dev.mvc.reciperepl, dev.mvc.rating
+                            dev.mvc.recipeseq, dev.mvc.reciperepl, dev.mvc.rating, dev.mvc.wish
                             " />
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
   </bean>

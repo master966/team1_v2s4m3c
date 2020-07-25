@@ -57,6 +57,7 @@
   
   <context:component-scan base-package="dev.mvc.grade" /> <!-- Sol -->
   <context:component-scan base-package="dev.mvc.members" /> <!-- Sol -->
+  <context:component-scan base-package="dev.mvc.wish" /> <!-- Sol -->
   
     <!-- FORM의 FILE 태그를 읽어 MultipartFile 객체로 변환 -->
   <beans:bean id="multipartResolver"
