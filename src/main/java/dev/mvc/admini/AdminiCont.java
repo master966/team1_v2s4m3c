@@ -58,10 +58,14 @@ public class AdminiCont {
    */
   // http://localhost:9090/team1/admini/create.do
   @RequestMapping(value="/admini/create.do", method=RequestMethod.GET)
-  public ModelAndView create() {
+  public ModelAndView create(HttpSession session) {
     ModelAndView mav = new ModelAndView();
-    mav.setViewName("/admini/create");
-    
+    if((int)session.getAttribute("acclevel") <= 1) {
+      mav.setViewName("/admini/create");
+    } else {
+      mav.addObject("url", "need_acclevel");
+      mav.setViewName("redirect:/admini/msg.do");
+    }
     return mav;
   }
   
@@ -468,7 +472,7 @@ public class AdminiCont {
  public ModelAndView acclevel_up(HttpSession session, int adminno){
    ModelAndView mav = new ModelAndView();
    AdminiVO vo = this.adminiProc.read(adminno);
-   if(vo.getAcclevel() < 1 && (int)session.getAttribute("acclevel") <= vo.getAcclevel()) {
+   if(vo.getAcclevel() > 1 && (int)session.getAttribute("acclevel") <= vo.getAcclevel()) {
      this.adminiProc.acclevel_up(adminno);
    }
    mav.setViewName("redirect:/admini/list.do");
@@ -486,7 +490,7 @@ public class AdminiCont {
  public ModelAndView acclevel_down(HttpSession session, int adminno){
    ModelAndView mav = new ModelAndView();
    AdminiVO vo = this.adminiProc.read(adminno);
-   if(vo.getAcclevel() > 3 && (int)session.getAttribute("acclevel") <= vo.getAcclevel()) {
+   if(vo.getAcclevel() < 3 && (int)session.getAttribute("acclevel") <= vo.getAcclevel()) {
      this.adminiProc.acclevel_down(adminno);
    }
    mav.setViewName("redirect:/admini/list.do");

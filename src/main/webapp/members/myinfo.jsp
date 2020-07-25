@@ -21,32 +21,8 @@
 <script type="text/javascript">
 
 $(function(){
-  $('#btn_passwd_check').on('click', passwd_check);
+  $('#btn_send').on('click', send);
 })
-
-function passwd_check() {
-  var params = 'put_passwd=' + $('#put_passwd').val();
-  
-  $.ajax({
-    url: './passwd_check.do',
-    type: 'post',
-    cache: false,
-    async: true,
-    dataType: 'json',
-    data: params,
-    
-    success: function(rdata){
-      if(rdata.cnt == 1){
-        window.location.href = "./myinfoupdate.jsp";
-      } else {
-        alert("비밀번호가 일치하지 않습니다");
-      }
-    },
-    error:function(request, status, error){ 
-      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    }
-  })
-};
 
 </script>
 
@@ -55,6 +31,8 @@ function passwd_check() {
 <body>
 <jsp:include page="/team1_menu/topindex.jsp"  flush='false' />
 <div id="content" class="content">
+<form method="post" id="passwd_check" action="./myinfo.do">
+   <input type='hidden' name='memberno' id='memberno' value='${sessionScope.memberno }'>  
  <div class="page_article">
   <div id="snb" class="snb">
    <h2 class="tit_snb">마이 페이지</h2>
@@ -70,7 +48,7 @@ function passwd_check() {
           적립금</a></li>
      <li class="li_myinfo"><a href="#none" class="a_myinfo">
            쿠폰</a></li>
-     <li class="li_myinfo"><a href="/team1/mypage/myinfo.jsp" class="a_myinfo">
+     <li class="li_myinfo"><a href="/team1/members/myinfo.jsp" class="a_myinfo">
            개인 정보 수정</a></li>
      </ul>
     </div> <!-- inner_snb -->
@@ -104,11 +82,7 @@ function passwd_check() {
 </tr>
 </tbody>
      </table>
-     <button id="btn_passwd_check" class="btn_active">확인</button>
-
-
-
-
+     <button id="btn_send" class="btn_active">확인</button>
 
     </div> <!-- filed_pw -->
    
@@ -116,7 +90,7 @@ function passwd_check() {
    
   </div> <!-- section_myinfo -->
  </div> <!-- page_article -->
-
+</form>
 </div> <!-- content -->
  <br><br><br><br><br><br><br><br>
 <jsp:include page="/team1_menu/bottom_.jsp" flush='false' />

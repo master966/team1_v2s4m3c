@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "dev.mvc.reciperepl.RecipereplDAOInter">
+ 
+  
+  <insert id="create" parameterType="RecipereplVO">
+    <selectKey keyProperty="recipereplno" resultType="int" order="BEFORE">
+      SELECT reciperepl_seq.nextVal FROM dual
+    </selectKey>
+    INSERT INTO reciperepl(recipereplno, memberno, recipeno, contents, rdate)
+    VALUES(#{recipereplno}, #{memberno}, #{recipeno}, #{contents}, sysdate)
+  </insert>
+  
+  <select id="list" resultType="RecipereplVO">
+    SELECT recipereplno, memberno, recipeno, contents, rdate
+    FROM reciperepl
+    ORDER BY recipereplno DESC
+  </select>
+
+  <select id="list_by_recipeno" resultType="RecipereplVO" parameterType="int">
+    SELECT recipereplno, memberno, recipeno, contents, rdate
+    FROM reciperepl
+    WHERE recipeno=#{recipeno}
+    ORDER BY recipereplno DESC
+  </select>
+
+  <select id="list_by_recipeno_join" resultType="RecipereplMembersVO" parameterType="int">
+    SELECT m.nickname,
+               r.recipereplno, r.memberno, r.recipeno, r.contents, r.rdate
+    FROM members m, reciperepl r
+    WHERE (m.memberno = r.memberno) AND r.recipeno=#{recipeno}
+    ORDER BY r.recipereplno DESC
+  </select>
+  
+
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM reciperepl
+    WHERE recipereplno=#{recipereplno}
+  </delete>
+  
+  <!-- 더보기 버튼 페이징 구현 -->
+  <select id="list_by_recipeno_join_add_view" resultType="RecipereplMembersVO" 
+             parameterType="HashMap">
+    SELECT nickname, recipereplno, memberno, recipeno, contents, rdate, r
+    FROM (
+            SELECT nickname, recipereplno, memberno, recipeno, contents, rdate, rownum as r
+            FROM (
+                    SELECT m.nickname,
+                               r.recipereplno, r.memberno, r.recipeno, r.contents, r.rdate
+                    FROM members m,  reciperepl r
+                    WHERE (m.memberno = r.memberno) AND r.recipeno=#{recipeno}
+                    ORDER BY r.recipereplno DESC
+            )
+    )
+    WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>
+  </select>
+
+  <select id="read" resultType="RecipereplMembersVO" parameterType="int">
+    SELECT m.nickname,
+             r.recipereplno, r.memberno, r.recipeno, r.contents, r.rdate
+    FROM members m,  reciperepl r
+    WHERE (m.memberno = r.memberno) AND recipereplno=#{recipereplno}
+  </select>
+    
+</mapper> 

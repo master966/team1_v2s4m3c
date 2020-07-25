@@ -12,20 +12,6 @@
 <link rel="stylesheet" type="text/css" href="${root}/team1_menu/css/base.css" media="all" />
 <link rel="stylesheet" type="text/css" href="${root}/team1_menu/css/main.css" media="all" />
 
-<script type="text/javascript" src="${root}/team1_menu/js/jquery-1.10.2.min.js"></script>
-<!-- 제이쿼리 라이이브러리 연동 -->
-<script type="text/javascript" src="${root}/team1_menu/js/jquery.easing.1.3.min.js"></script>
-<script type="text/javascript" src="${root}/team1_menu/js/swipe.js"></script>
-<!-- 터치 슬라이드 플러그인 연동 -->
-<script type="text/javascript" src="${root}/team1_menu/js/jquery.bxslider.min.js"></script>
-<!-- bxSlider 플러그인 연동 -->
-<script type="text/javascript" src="${root}/team1_menu/js/jquery-ui-1.10.4.custom.min.js"></script>
-<!-- UI 플러그인 연동 -->
-<script type="text/javascript" src="${root}/team1_menu/js/jquery.cookie.js"></script>
-<!-- 쿠키 플러그인 연동 -->
-<script type="text/javascript" src="${root}/team1_menu/js/common.js"></script>
-<script type="text/javascript" src="${root}/team1_menu/js/main.js"></script>
-<script src="${root}/team1_menu/js/DB_springMove_fn.js"></script>
 
 <style>
 </style>
@@ -78,7 +64,7 @@
             <li><a href="#"></a></li>
             <li><a href="#"></a></li>
           </ul></li>
-        <li><a href="#">마이 페이지</a>
+        <li><a href="${root}/members/myinfo.jsp">마이 페이지</a>
           <ul class="sub3">
             <li><a href="#">#</a></li>
           </ul></li>

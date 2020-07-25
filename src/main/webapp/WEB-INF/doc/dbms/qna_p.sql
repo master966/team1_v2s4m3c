@@ -1,7 +1,7 @@
 /**********************************/
 /* Table Name: 자주묻는질문 */
 /**********************************/
-DROP TABLE qna
+DROP TABLE qna;
 CREATE TABLE qna(
 		qnano NUMERIC(10) NOT NULL PRIMARY KEY,
 		adminno NUMERIC(10),

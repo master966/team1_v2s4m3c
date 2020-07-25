@@ -14,6 +14,14 @@ CREATE TABLE answer(
   FOREIGN KEY (questionno) REFERENCES question (questionno)
 );
 
+COMMENT ON TABLE answer is '고객센터답변';
+COMMENT ON COLUMN answer.answerno is '답변번호';
+COMMENT ON COLUMN answer.questionno is '질문번호';
+COMMENT ON COLUMN answer.adminno is '관리자번호';
+COMMENT ON COLUMN answer.antitle is '제목';
+COMMENT ON COLUMN answer.ancontent is '내용';
+COMMENT ON COLUMN answer.andate is '등록일';
+
 -- 등록
 INSERT INTO answer(answerno, questionno, adminno, antitle, ancontent, andate)
 VALUES((SELECT NVL(MAX(answerno), 0)+1 as answerno FROM answer), 1, 1, '답변', '나도몰라요', sysdate)

@@ -14,6 +14,11 @@
 </style>
 <div class="sidebar">
   <dl>
+    <dt>관리자</dt>
+    <c:if test="${sessionScope.acclevel == 1}">
+      <dd><a href='${root}/admini/create.do'>관리자 계정 생성</a></dd>
+    </c:if>
+    <dd><a href='${root}/admini/list.do'>관리자 목록</a></dd>
     <dt>고객센터</dt>
     <dd><a href='${root}/announce/list_admin.do'>공지사항</a></dd>
     <dd><a href='${root}/qna/list_admin.do'>Q&amp;A</a></dd>

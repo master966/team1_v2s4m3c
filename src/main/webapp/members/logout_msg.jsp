@@ -6,7 +6,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>꼬박꼬밥</title>
  
 <link href="../css/style_sol.css" rel="Stylesheet" type="text/css">
  
@@ -35,7 +35,7 @@
         <li class='li_none'>이용해 주셔서감사합니다.</li>
         <li class='li_none'>
           <button type="submit" class="btn btn-primary btn-md"
-            onclick="location.href='${pageContext.request.contextPath}/index.do'">확인</button>
+            onclick="location.href='${pageContext.request.contextPath}/home.do'">확인</button>
         </li>
         
       </ul>

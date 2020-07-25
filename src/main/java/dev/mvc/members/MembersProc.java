@@ -119,5 +119,5 @@ public class MembersProc implements MembersProcInter {
     int cnt = this.membersDAO.update_points(membersVO);
     
     return cnt;
-  }; 
+  }
 }

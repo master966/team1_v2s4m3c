@@ -96,7 +96,7 @@ function add_ingred(cnt){
     'placeholder="예)???" style="width:180px; background-color:#F5F5F5; height:40px; margin-bottom:10px;' +
     'vertical-align: middle;"><br>' +
   '<div class="col-sm-1">' +  
-    '<A href="javascript:remove_ingred('+(cnt2)+')"><img src="./images/forbidden.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
+    '<A href="javascript:remove_ingred('+(cnt2)+')"><img src="./images/delete.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
   '</div>' +          
 '</div>';
   var ingre = "#ingre" + cnt;
@@ -125,7 +125,7 @@ function add_ingredmain(){
           'placeholder="예)300g" style="width:180px; background-color:#F5F5F5; height:40px; margin-bottom:10px;' +
           'vertical-align: middle;"><br>' +
         '<div class="col-sm-1">' +  
-          '<A href="javascript:remove_ingred('+(cnt2+1)+')"><img src="./images/forbidden.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
+          '<A href="javascript:remove_ingred('+(cnt2+1)+')"><img src="./images/delete.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
         '</div>' +
       '</div>' +
       '<A href="javascript:add_ingred('+cnt+')"><img src="./images/add.png" style="width:20px;"></A>' +
@@ -138,7 +138,7 @@ function add_ingredmain(){
           'placeholder="예)1T" style="width:180px; background-color:#F5F5F5; height:40px; margin-bottom:10px;' +
           'vertical-align: middle;"><br>' +
         '<div class="col-sm-1">' +  
-          '<A href="javascript:remove_ingred('+(cnt2+2)+')"><img src="./images/forbidden.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
+          '<A href="javascript:remove_ingred('+(cnt2+2)+')"><img src="./images/delete.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
         '</div>' +
       '</div>' +    
       '<div id="ingred_div'+(cnt2+3)+'" style="width:100%; height:50px; display:inline-block;">' +
@@ -149,7 +149,7 @@ function add_ingredmain(){
           'placeholder="예)1T" style="width:180px; background-color:#F5F5F5; height:40px; margin-bottom:10px;' +
           'vertical-align: middle;"><br>' +
         '<div class="col-sm-1">' +  
-          '<A href="javascript:remove_ingred('+(cnt2+3)+')"><img src="./images/forbidden.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
+          '<A href="javascript:remove_ingred('+(cnt2+3)+')"><img src="./images/delete.png" style="width:15px; vertical-align: middle; text-align: center;"></A>' +         
         '</div>' +         
       '</div>' +    
      '</div>';
@@ -289,6 +289,7 @@ function add_ingredseq(){
  
 <body>
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
+
  
 <FORM name='frm' method='POST' action='./create.do' class="form-horizontal" enctype="multipart/form-data">
   <input type="hidden" name="recipecategrpno" value="1">
@@ -433,7 +434,7 @@ function add_ingredseq(){
     
     <!-- 요리 재료 시작 -->
     <div class="recipe_container2" style="margin-top:50px; display:table;">
-      <p style="text-align:left; font:10px;">재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.</p>
+      <p style="text-align:left; font:10px; padding-left:30px;">재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.</p>
       <div style="width:100%; overflow:hidden; height:auto; ">
         <div class="col-sm-10" style="display:table-cell;">
         
@@ -454,7 +455,7 @@ function add_ingredseq(){
                       placeholder="예)300g" style="width:180px; background-color:#F5F5F5; height:40px; margin-bottom:10px; 
                       vertical-align: middle;">
                 <div class="col-sm-1">
-                  <A href = 'javascript:remove_ingred(0)'><img src="./images/forbidden.png" style="width:15px; vertical-align: middle; text-align: center;"></A>
+                  <A href = 'javascript:remove_ingred(0)'><img src="./images/delete.png" style="width:15px; vertical-align: middle; text-align: center;"></A>
                 </div>
               </div>
               <div style="display:inline">
@@ -468,7 +469,7 @@ function add_ingredseq(){
                       placeholder="예)1T" style="width:180px; background-color:#F5F5F5; height:40px; margin-bottom:10px; 
                       vertical-align: middle;">
                 <div class="col-sm-1">
-                  <A href = 'javascript:remove_ingred(1)'><img src="./images/forbidden.png" style="width:15px; vertical-align: middle; text-align: center;"></A>
+                  <A href = 'javascript:remove_ingred(1)'><img src="./images/delete.png" style="width:15px; vertical-align: middle; text-align: center;"></A>
                 </div>
               </div>          
   
@@ -480,7 +481,7 @@ function add_ingredseq(){
                       placeholder="예)1T" style="width:180px; background-color:#F5F5F5; height:40px; margin-bottom:10px; 
                       vertical-align: middle;">
                 <div class="col-sm-1">
-                  <A href = 'javascript:remove_ingred(2)'><img src="./images/forbidden.png" style="width:15px; vertical-align: middle; text-align: center;"></A>
+                  <A href = 'javascript:remove_ingred(2)'><img src="./images/delete.png" style="width:15px; vertical-align: middle; text-align: center;"></A>
                 </div>
               </div>               
                 
@@ -493,17 +494,17 @@ function add_ingredseq(){
         </div>
       </div>
      
-      <div style="width:100%">
-        <button type="button" onclick="javascript:add_ingredmain()">묶음 추가!</button>
-      </div>
+      <div style="width:100%"><br><br>
+        <button type="button" onclick="javascript:add_ingredmain()" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">묶음 추가!</button>
+      </div><br><br>
       
     </div>
   
     <!-- 요리 순서 시작 -->
     <div class="recipe_container2" style="margin-top:20px; display:table; padding-bottom: 40px;">
       <div>
-        <span style="font-size: 18px; display:block; text-align: left;">요리 순서</span>
-        <div style="font-size:11px; text-align: left;">
+        <span style="font-size: 18px; display:block; text-align: left; padding-left:50px;">요리 순서</span>
+        <div style="font-size:11px; text-align: left; padding-left:50px;">
         <br>요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.<br>
         예) 10분간 익혀주세요 ▷ 10분간 약한불로 익혀주세요.<br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;마늘편은 익혀주세요 ▷ 마늘편을 충분히 익혀주셔야 매운 맛이 사라집니다.<br>
@@ -595,8 +596,8 @@ function add_ingredseq(){
     </div>
   
     <DIV class="content_bottom_menu" style="padding-right: 20%;">
-      <button type="submit" class="btn btn-success">등록</button>
-      <button type="button" onclick="location.href='./list.do'" class="btn btn-success">목록</button>
+      <button type="submit" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">등록</button>
+      <button type="button" onclick="location.href='./list.do'" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">목록</button>
     </DIV>
     
   </div> 

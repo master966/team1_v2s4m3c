@@ -6,12 +6,12 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>꼬박꼬밥</title>
  
 <link href="../css/style_sol.css" rel="Stylesheet" type="text/css">
 <script type="text/JavaScript"
           src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -58,7 +58,7 @@
           </LI>
           <LI class='li_none'>
             <button type='button' 
-                        onclick="locate.herf='${pageContext.request.contextPath}/index.jsp'"
+                        onclick="locate.herf='${pageContext.request.contextPath}/home.jsp'"
                         class="btn btn-info">확인</button>
             <button type='button' 
                         onclick="location.href='./list.do'"

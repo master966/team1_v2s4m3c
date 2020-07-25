@@ -81,8 +81,8 @@ CREATE SEQUENCE m_coupon_seq
     
 COMMENT ON TABLE m_coupon is '상품';
 COMMENT ON COLUMN m_coupon.m_couponno is '회원별 쿠폰 번호';
-COMMENT ON COLUMN m_coupon.coupon_name is '회원 번호';
-COMMENT ON COLUMN m_coupon.coupon_cost is '쿠폰 번호';
+COMMENT ON COLUMN m_coupon.memberno is '회원 번호';
+COMMENT ON COLUMN m_coupon.couponno is '쿠폰 번호';
 
 INSERT INTO m_coupon(m_couponno, memberno, couponno)
 VALUES(m_coupon_seq.nextval, 1, 1);

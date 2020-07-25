@@ -27,16 +27,17 @@
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
-    <property name="typeAliasesPackage" 
-                   value="dev.mvc.admini, dev.mvc.announce, dev.mvc.qna,
+    <property name="typeAliasesPackage"
+      value="dev.mvc.admini, dev.mvc.announce, dev.mvc.qna,
                             dev.mvc.blacklist, dev.mvc.question, dev.mvc.answer,
                             dev.mvc.coupon, dev.mvc.basket, dev.mvc.m_coupon,
                             dev.mvc.orders, dev.mvc.orders_detail, dev.mvc.points,
                             dev.mvc.delivery, dev.mvc.deliverypay, dev.mvc.deliverystate, dev.mvc.change,
                             dev.mvc.grade, dev.mvc.members,
                             dev.mvc.cate_gory, dev.mvc.product, dev.mvc.review, dev.mvc.viewfile,
-                            dev.mvc.recipecategrp, dev.mvc.recipecate, dev.mvc.recipe, dev.mvc.recipeseq
-                            "/>
+                            dev.mvc.recipecategrp, dev.mvc.recipecate, dev.mvc.recipe, 
+                            dev.mvc.recipeseq, dev.mvc.reciperepl, dev.mvc.rating
+                            " />
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
   </bean>
   

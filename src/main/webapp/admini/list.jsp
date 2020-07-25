@@ -19,7 +19,7 @@
 
 </head>
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/menu/side.jsp" flush='false' />
 <style>th, td {padding:5px 10px;}</style>
 <div style='width:100%; margin:20px auto; text-align:center;'>
   <table class="table" style='width: 80%; margin:50px auto;'>

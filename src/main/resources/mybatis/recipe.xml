@@ -134,4 +134,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                              
   </select>
   
+  
+  
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM recipe
+    WHERE recipeno = #{recipeno}
+  </delete>
+  
+  
+  <update id="update" parameterType="RecipeVO">
+    UPDATE recipe
+    SET title=#{title}, introdfood=#{introdfood}, category=#{category}, infofood=#{infofood}, ingredfood=#{ingredfood}, 
+        seqfood=#{seqfood}, youtube=#{youtube}, tip=#{tip}, word=#{word}, file1=#{file1}, thumb1=#{thumb1}, size1=#{size1}
+    WHERE recipeno = #{recipeno}
+  </update>
+  
+  
 </mapper>

@@ -98,7 +98,7 @@ public interface MembersProcInter {
   /**
    * 로그인된 회원 계정인지 검사
    * @param session
-   * @return true:관리자
+   * @return true:회원
    */
   public boolean isMember(HttpSession session);
   

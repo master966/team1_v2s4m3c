@@ -23,49 +23,11 @@
   });
   
   function send() {
-
-    var passwdCheck = RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,20}$/);
     var mnameCheck = RegExp(/^[가-힣]{2,6}$/);
     var nickCheck = RegExp(/^[가-힣a-zA-Z0-9]{2,10}$/);
     var emailCheck = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
     var telCheck = RegExp(/^01[0179][0-9]{7,8}$/);
-    
-    //비밀번호 공백일 경우 비밀번호 그대로
-    if($("#current_passwd").val()=="") {
-      $("#current_passwd").val()=='current_passwd';
-    }
-    
-    //아이디 비밀번호 같을 경우 확인
-    if($("#id").val() == $("#current_passwd").val()){
-      alert("아이디와 비밀번호가 같습니다");
-      $("#current_passwd").val("");
-      $("#current_passwd").focus();
-      return false;
-    }
-    
-    //새로운 비밀번호 유효성 검사 
-    if(!passwdCheck.test($("#new_passwd").val())) {
-      alert("잘못된 비밀번호입니다");
-      $("#new_passwd").val("");
-      $("#new_passwd").focus();
-      return false;
-    }
-    
-    //비밀번호 확인란 공백 확인
-    if($("#new_passwd2").val() == "") {
-      alert("비밀번호 확인란을 입력해주세요")
-      $("#new_passwd2").focus();
-      return false;
-    }
 
-    //비밀번호 서로 확인
-    if ($('#new_passwd').val() != $('#new_passwd2').val()) {
-      alert("동일한 비밀번호를 입력해주세요")
-      $("#new_passwd2").val("");
-      $("#new_passwd2").focus();
-      return false;
-    }
-    
     //이름 공백 검사
     if($("#mname").val() == "") {
       alert("이름을 입력해주세요");
@@ -133,16 +95,15 @@
 </head> 
 <body>
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
-<div class="form_join">
+<div id="content" class="content">
+   <div class="head_article">
+    <h2 class="tit_mypage">개인 정보 확인 / 수정 (관계자용)</h2>
+   </div> <!-- head_article -->
+    <div class="field_pw">
+    <div>
+<FORM name='frm' id='frm' method='POST' action='./update.do' class="form-horizontal">
+    <input type='hidden' name='memberno' id='memberno' value='${membersVO.memberno }'>
 
-
-    
-  <FORM name='frm' id='frm' method='POST' action='./update.do' 
-              onsubmit="return send();" class="form-horizontal">
-    <input type='hidden' name='memberno' id='memberno' value='${membersVO.memberno }'>          
- 
- 
- 
 <table class="tbl_comm">
  <tbody>
  
@@ -150,27 +111,6 @@
    <th class="th_id">아이디</th>
    <td class="td_id">
    <input class="join_input" type="text" name="id" id="id" required="required" value="${membersVO.id }" readonly >
-   </td>
-  </tr>
-  
-    <tr>
-   <th class="th_passwd">현재 비밀번호</th>
-   <td class="td_passwd">
-   <input class="join_input" type="password" name="current_passwd" id="current_passwd" required="required">
-   </td>
-  </tr>
-  
-  <tr>
-   <th class="th_passwd">새로운 비밀번호</th>
-   <td class="td_passwd">
-   <input class="join_input" type="password" name="new_passwd" id="new_passwd" required="required">
-   </td>
-  </tr>
-  
-  <tr class="tr_passwd2">
-   <th class="th_passwd2">새로운 비밀번호확인</th>
-   <td class="td_passwd2">
-   <input class="join_input" type="password" name="new_passwd2" id="new_passwd2" required="required" >
    </td>
   </tr>
   
@@ -208,7 +148,7 @@
   <tr>
    <th class="th_passwd2">우편번호</th>
    <td class="td_passwd2">
-   <input class="join_input" type="text" name="zipcode" id="zipcode" value="${membersVO.zipcode } ">
+   <input class="join_input" type="text" name="zipcode" id="zipcode" value="${membersVO.zipcode }">
    <a class="btn_default" id="btn_DaumPostcode">우편번호 찾기</a>
    </td>
   </tr>
@@ -226,7 +166,8 @@
    <input class="join_input" type="text" name="address2" id="address2" value="${membersVO.address2 }">
    </td>
   </tr>
-  
+
+<!--   
   <tr class="tr_birth">
    <th class="th_birth">생년월일</th>
    <td class="td_birth">
@@ -237,9 +178,17 @@
    </div>
    </td>
   </tr>
-  
- </tbody>
+   -->
+   
+    </tbody>
 </table>
+</FORM>
+</div>
+
+<div id="form_submit" class="form_submit">
+
+     <button id="btn_update" class="update_btn">개인정보수정</button>
+</div>
 
    <!-- Modal -->
   <div class="modal fade" id="modal_panel" role="dialog">
@@ -336,8 +285,8 @@
 <button type="button" class="btn_join" id="btn_send" >회원정보수정</button>
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 </div>
-   
-  </FORM>
+
+ </div>
  </div>
 <jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
 </body>

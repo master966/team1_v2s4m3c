@@ -43,8 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <update id="update" parameterType="MembersVO">
     UPDATE members
-    SET passwd=#{passwd}, mname=#{mname}, nickname=#{nickname}, email=#{email}, tel=#{tel}, zipcode=#{zipcode}, 
-        address1=#{address1}, address2=#{address2}, birth=#{birth}
+    SET mname=#{mname}, nickname=#{nickname}, email=#{email}, tel=#{tel}, zipcode=#{zipcode}, 
+        address1=#{address1}, address2=#{address2}
     WHERE memberno = #{memberno}
   </update>
   
@@ -72,9 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </update>
   
   <select id="login" resultType="int" parameterType="Map">
-  SELECT COUNT(memberno) as cnt
-  FROM members
-  WHERE id=#{id} AND passwd=#{passwd}
+    SELECT COUNT(memberno) as cnt
+    FROM members
+    WHERE id=#{id} AND passwd=#{passwd}
   </select>
   
   <select id="readById" resultType="MembersVO" parameterType="String">

@@ -10,7 +10,7 @@ CREATE TABLE question(
 		askcont CLOB NOT NULL,
 		state VARCHAR(1) DEFAULT 'N' NOT NULL,
 		askdate DATE NOT NULL,
-  FOREIGN KEY (memberno) REFERENCES member (memberno)
+  FOREIGN KEY (memberno) REFERENCES members (memberno)
 );
 
 COMMENT ON TABLE question is '고객센터질문';
