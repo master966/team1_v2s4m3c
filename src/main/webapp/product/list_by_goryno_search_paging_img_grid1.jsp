@@ -137,25 +137,25 @@ $(function(){
       </c:if>
       
       <!-- 하나의 이미지 -->
-      <DIV style='width: auto; float: left; margin: 0.5%; padding: 0.5%; background-color: #FFFFFF;'>
+      <DIV style='width: 270px; float: left; padding: 0px; background-color: #FFFFFF;'>
         <c:choose>
           <c:when test="${size1 > 0}"> <!-- 파일이 존재하면 -->
             <c:choose> 
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <!-- 이미지 인경우 -->
                 <a href="./read.do?p_no=${p_no}">               
-                  <IMG src="./storage/main_images/${thumb1 }" style='width: 266px; height: 356px;' >
+                  <IMG src="./storage/main_images/${thumb1 }" style='width: 260px; height: 356px;' >
                 </a><br>
               </c:when>
               <c:otherwise>
                 <a href="./read_admin.do?p_no=${p_no}">               
-                  <IMG src="./image/default_t.jpg" style='width: 100%; height: 50%;' >
+                  <IMG src="./image/default_t.jpg" style='width: 260px; height: 356px;' >
                 </a><br>
               </c:otherwise>
             </c:choose>
           </c:when>
           <c:otherwise>
             <a href="./read_admin.do?p_no=${p_no}">               
-              <IMG src="./image/default_t.jpg" style='width: 100%; height: 50%;' >
+              <IMG src="./image/default_t.jpg" style='width: 260px; height: 356px;' >
             </a><br>
           </c:otherwise>
         </c:choose>   

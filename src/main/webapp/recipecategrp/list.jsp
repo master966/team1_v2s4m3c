@@ -25,12 +25,15 @@
 </head> 
  
 <body>
-<jsp:include page="/menu/top.jsp" />
+<jsp:include page="/menu/side.jsp" />
  
   <DIV class='title_line'>
+  레시피 상위 카테고리
   </DIV>
  
- 
+ <div style="text-align:right;">
+  <button type="button" class="btn btn-primary" onclick="location.href='./create.do'">추가</button>
+</div>
   
 <TABLE class='table table-hover' >
   <colgroup>
@@ -87,7 +90,7 @@
 </TABLE>
  
  
-<jsp:include page="/menu/bottom.jsp" />
+<jsp:include page="/menu/foot.jsp" />
 </body>
  
 </html> 

@@ -25,7 +25,7 @@
 </head> 
  
 <body>
-<jsp:include page="/menu/top.jsp" />
+<jsp:include page="/menu/side.jsp" />
  
   <DIV class='title_line'>
   </DIV>
@@ -103,7 +103,7 @@
 </TABLE>
  
  
-<jsp:include page="/menu/bottom.jsp" />
+<jsp:include page="/menu/foot.jsp" />
 </body>
  
 </html> 

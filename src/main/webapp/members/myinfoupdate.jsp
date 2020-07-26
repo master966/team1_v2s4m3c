@@ -249,7 +249,7 @@
    <h2 class="tit_snb">마이 페이지</h2>
    <div class="inner_snb">
     <ul class="list_menu">
-     <li class="li_myinfo"><a href="#none" class="a_myinfo">
+     <li class="li_myinfo"><a href="/team1/orders/list_memberno.do" class="a_myinfo">
           주문내역</a></li>
      <li class="li_myinfo"><a href="#none" class="a_myinfo">
           위시리스트</a></li>
@@ -257,7 +257,7 @@
           상품후기</a></li>
      <li class="li_myinfo"><a href="#none" class="a_myinfo">
           적립금</a></li>
-     <li class="li_myinfo"><a href="#none" class="a_myinfo">
+     <li class="li_myinfo"><a href="/team1/m_coupon/list_member.do?memberno=${sessionScope.memberno}" class="a_myinfo">
            쿠폰</a></li>
      <li class="li_myinfo"><a href="/team1/members/myinfo.jsp" class="a_myinfo">
            개인 정보 수정</a></li>

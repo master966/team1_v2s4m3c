@@ -14,6 +14,7 @@
 </style>
 <div class="sidebar">
   <dl>
+    <dd><a href='${root}/admini/home.do'>HOME</a></dd>
     <dt>관리자</dt>
     <c:if test="${sessionScope.acclevel == 1}">
       <dd><a href='${root}/admini/create.do'>관리자 계정 생성</a></dd>

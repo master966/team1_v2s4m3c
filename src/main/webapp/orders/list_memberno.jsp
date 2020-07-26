@@ -88,10 +88,12 @@ function list_add_view() {
   <DIV class='title_line'>
     주문 목록
    </DIV>
+<div style="text-align:right;">
+  <button type="button" onclick="history.back();" class="btn btn-primary"> 이전</button>
+</div>
   <div class="sub_title_line" style="margin : 5px auto;">
       상품정보
     </div>
-  
   <div style='width: 100%;'>
       <%-- ul 내용 --%>
       <ul id='orders_list' data-ordersPage='1' class="list_order">

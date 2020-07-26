@@ -1149,7 +1149,7 @@
     box-sizing: border-box;
     padding: 0;
     word-break: break-all;
-    width: 1050px;
+    width: 1080px;
     margin: 0 auto;  
   }
   
@@ -1329,7 +1329,7 @@
     font-weight: 400;
     letter-spacing: 0;
     overflow: hidden;
-    padding: 0 29px;    
+    /* padding: 0 29px; */    
     }
     
     .inner_listgoods{

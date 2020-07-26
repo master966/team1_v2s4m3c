@@ -77,52 +77,23 @@ $(function(){
   <c:set var="p_no" value="${productVO.p_no}" />
   <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
   <input type='hidden' name='goryno' value='${cate_goryVO.goryno }'>
+   <div id="banner" style="text-align:center; margin:0px;">
+    <a href="${root}/event/read.jsp">
+      <img src="${root}/css/images/banner.jpg">
+    </a>
+   </div>
   <DIV class="main">
-   <DIV class="content">
+   <DIV class="content" style="margin-top: 120px;">
+   
+   <!-- 1 번째 라인업 -->
     <DIV class="page_aticle">
-     <DIV class="lnb_menu">
-      <DIV class="inner_lnb">
-       <DIV class="ico_cate">
-        <span class="ico" style="display: block;">
-         <IMG src="./product/image/lunchbox.png" style="width:100%">
-        </span><!-- ico -->
-        <span class="tit">${cate_goryVO.name }</span><!-- tit -->       
-       </DIV> <!-- ico_cate -->
-       <ul class="list">
-        <li data-start="17" data-end="76">
-         <a class="on">전체보기</a><!-- on -->
-        </li>
-        <li class="bg" style="top: 78px; width: 68px; left: 29px; opacity: 1;"> </li> <!-- bg -->       
-       </ul> <!-- list -->
-      </DIV> <!-- inner_lnb -->
-     </DIV> <!-- lnb_menu -->
-     <DIV class="page_section section_goodlist">
-      <DIV class="list_abillity">
-       <DIV class="sort_menu"> 
-        <DIV class="name_select"> 
-       <c:choose>
-        <c:when test="${sessionScope.identify == null}">
-                    
-        </c:when>
-        <c:otherwise>
-          ${sessionScope.identify } <A href="./create.do?goryno=${cate_goryVO.goryno }">등록</A>
-        </c:otherwise>
-      </c:choose>          
-        
-        </DIV> <!-- name_select -->
-       </DIV> <!-- sort_menu -->
-      </DIV><!-- list_abillity -->
+       <DIV class="ico_cate" style="text-align:center; margin-bottom: 60px;">
+        <span style="margin: 0px auto; font-size:26px; font-weight: bold;">신규상품</span>
+       </DIV>
+      <!-- 상품 리스트 시작하는 부분 -->
       <DIV class="list_goods">
-       <DIV class="inner_listgoods">
-        <ul class="list">
-         <li>
-          <DIV class="item">
-          </DIV> <!-- item -->
-         </li>
-        </ul> <!-- list -->
-       </DIV> <!-- inner_listgoods -->
            <!-- 갤러리 Layout 시작 -->
-    <c:forEach var="productVO" items="${list }" varStatus="status">
+    <c:forEach var="productVO" items="${list }" varStatus="status" end="7">
     <c:if test="${productVO.p_printout == 'Y'}">
       <c:set var="p_no" value="${productVO.p_no }" />
       <c:set var="thumb1" value="${productVO.thumb1.toLowerCase() }" />
@@ -135,25 +106,25 @@ $(function(){
       </c:if>
       
       <!-- 하나의 이미지 -->
-      <DIV style='width: auto; float: left; margin: 0.5%; padding: 0.5%; background-color: #FFFFFF;'>
+      <DIV style='width: 270px; float: left; padding: 0px; background-color: #FFFFFF;'>
         <c:choose>
           <c:when test="${size1 > 0}"> <!-- 파일이 존재하면 -->
             <c:choose> 
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <!-- 이미지 인경우 -->
                 <a href="${root}/product/read.do?p_no=${p_no}">               
-                  <IMG src="${root}/product/storage/main_images/${thumb1 }" style='width: 266px; height: 356px;' >
+                  <IMG src="${root}/product/storage/main_images/${thumb1 }" style='width: 260px; height: 356px;' >
                 </a><br>
               </c:when>
               <c:otherwise>
                 <a href="${root}/product/read.do?p_no=${p_no}">               
-                  <IMG src="${root}/product/image/default_t.jpg" style='width: 100%; height: 50%;' >
+                  <IMG src="${root}/product/image/default.jpg" style='width: 260px; height: 356px;' >
                 </a><br>
               </c:otherwise>
             </c:choose>
           </c:when>
           <c:otherwise>
             <a href="${root}/product/read.do?p_no=${p_no}">               
-              <IMG src="${root}/product/image/default_t.jpg" style='width: 100%; height: 50%;' >
+              <IMG src="${root}/product/image/default.jpg" style='width: 260px; height: 356px;' >
             </a><br>
           </c:otherwise>
         </c:choose>   
@@ -169,10 +140,74 @@ $(function(){
     <!-- 갤러리 Layout 종료 -->      
       </DIV> <!-- list_goods -->
       <DIV class="layout-pagination">
-    <DIV class='pagediv'>${paging }</DIV> <!-- pagediv -->
+    <%-- <DIV class='pagediv'>${paging }</DIV> <!-- pagediv --> --%>
     </DIV><!-- </DIV> -->
-     </DIV> <!-- page_section section_goodlist -->
     </DIV> <!-- page_aticle -->
+    
+    
+    <!-- 2번째 라인업 -->
+        <DIV class="page_aticle" style="margin-top: 120px;">
+       <DIV class="ico_cate" style="text-align:center; margin-bottom: 60px;">
+        <a href="${root}/product/list.do?goryno=1"><span style="margin: 0px auto; font-size:26px; font-weight: bold;">샐러드·도시락 ></span></a>
+       </DIV>
+      <!-- 상품 리스트 시작하는 부분 -->
+      <DIV class="list_goods">
+           <!-- 갤러리 Layout 시작 -->
+    <c:set var="go1" value="0" />
+    <c:forEach var="productVO" items="${list }" varStatus="status">
+    <c:if test="${productVO.p_printout == 'Y' && go1 <= 7}"> <!-- 조건1 시작 -->
+    <c:if test="${productVO.goryno == 1 }">  <!-- 조건2 시작 -->
+      <c:set var="p_no" value="${productVO.p_no }" />
+      <c:set var="thumb1" value="${productVO.thumb1.toLowerCase() }" />
+      <c:set var="p_name" value="${productVO.p_name}" />
+      <c:set var="p_date" value="${productVO.p_date}" />
+      <c:set var="file1" value="${productVO.file1}" />
+      <c:set var="size1" value="${productVO.size1}" />
+
+      <c:if test="${status.index % 4 == 0 && status.index != 0 }">
+      </c:if>
+      <!-- 하나의 이미지 -->
+      <DIV style='width: 270px; float: left; padding: 0px; background-color: #FFFFFF;'>
+        <c:choose>
+          <c:when test="${size1 > 0}"> <!-- 파일이 존재하면 -->
+            <c:choose> 
+              <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <!-- 이미지 인경우 -->
+                <a href="${root}/product/read.do?p_no=${p_no}">               
+                  <IMG src="${root}/product/storage/main_images/${thumb1 }" style='width: 260px; height: 356px;' >
+                </a><br>
+              </c:when>
+              <c:otherwise>
+                <a href="${root}/product/read.do?p_no=${p_no}">               
+                  <IMG src="${root}/product/image/default.jpg" style='width: 260px; height: 356px;' >
+                </a><br>
+              </c:otherwise>
+            </c:choose>
+          </c:when>
+          <c:otherwise>
+            <a href="${root}/product/read.do?p_no=${p_no}">               
+              <IMG src="${root}/product/image/default.jpg" style='width: 260px; height: 356px;' >
+            </a><br>
+          </c:otherwise>
+        </c:choose>   
+       <div class="info">
+        <span class="name" style='width: 263px; height: 60.8px;' >${productVO.p_name} </span>
+        <span class="cost">
+            <span class="price" id="price${productVO.p_no }">${productVO.p_price }</span>
+         </span>
+       </div>
+      </DIV>  
+      <c:set var="go1" value="${go1 + 1 }" />
+    </c:if> <!-- 조건2 끝 -->
+    </c:if> <!-- 조건1 끝 -->
+    </c:forEach>
+    <!-- 갤러리 Layout 종료 -->      
+      </DIV> <!-- list_goods -->
+      <DIV class="layout-pagination">
+    <%-- <DIV class='pagediv'>${paging }</DIV> <!-- pagediv --> --%>
+    </DIV><!-- </DIV> -->
+    </DIV> <!-- page_aticle -->
+    
+    
    </DIV> <!-- content -->
   </DIV> <!-- main -->
  

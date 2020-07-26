@@ -29,6 +29,7 @@
       </c:when>
       <c:otherwise>
       <div style='display: table-cell; vertical-align: middle;'>
+        <a href="${root}/basket/read.do"><img src="${root}/team1_menu/images/basket.png" style="width:40px;"></a>
         <a href="${root}/members/myinfo.jsp"><img src="${root}/team1_menu/images/profile.png" style="width:40px;"></a>
       </div>
       <div style='display: table-cell; vertical-align: middle;'>
@@ -82,7 +83,7 @@
           <ul class="sub6">
             <%-- <li><a href="${root}/recipe/list.do">레시피</a></li> --%>
           </ul></li>
-        <li><a href="#">이벤트</a>
+        <li><a href="${root}/event/list.jsp">이벤트</a>
           <ul class="sub7">
             <li><A href='${root}/m_coupon/list_create.do'>쿠폰을 받아볼까?</A></li>
           </ul></li>

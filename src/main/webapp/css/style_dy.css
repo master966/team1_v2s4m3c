@@ -439,6 +439,29 @@ A:active { /* A 태그를 클릭한 상태 */
     line-height: 20px;
     letter-spacing: -.3px;
   }
+    .btn_orders_disabled{
+    box-sizing: border-box;
+    padding: 0;
+    font: inherit;
+    overflow: visible;
+    border-radius: 0;
+    text-transform: none;
+    cursor: pointer;
+    max-width: 100%;
+    outline: none;
+    font-family: noto sans;
+    font-weight: 400;
+    display: block;
+    width: 200px;
+    height: 48px;
+    margin: 0 auto;
+    border: solid 1px #dddddd;
+    background-color: none;
+    font-size: 14px;
+    color: #fff;
+    line-height: 20px;
+    letter-spacing: -.3px;
+  }
   .delete_div{
     color: #4c4c4c;
     font-size: 12px;

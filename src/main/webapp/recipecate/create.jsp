@@ -28,7 +28,7 @@
 </head> 
  
 <body>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<jsp:include page="/menu/side.jsp" flush='false' />
  
 <FORM name='frm' method='POST' action='./create.do' class="form-horizontal">
    <input type="hidden" name="recipecategrpno" value="1">
@@ -92,7 +92,7 @@
 
 
 
-<jsp:include page="/menu/bottom.jsp" flush='false' />
+<jsp:include page="/menu/foot.jsp" flush='false' />
 </body>
  
 </html>  

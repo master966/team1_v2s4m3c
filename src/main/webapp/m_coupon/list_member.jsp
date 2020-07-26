@@ -32,7 +32,7 @@ $(function(){
   쿠폰 목록
   </ASIDE>
   <ASIDE style='float: right;'>
-    <A href='./read_create.do'>쿠폰 등록</A>
+    <!-- <A href='./read_create.do'>쿠폰 등록</A> -->
     <span class='top_menu_sep'>&nbsp;</span>
     <A href="javascript:location.reload();">새로고침</A>   
   </ASIDE> 
@@ -76,6 +76,9 @@ $(function(){
     </table>
   </div>
  </FORM>
+ <div style="text-align:center;">
+ <button type="button" onclick="history.back();" class="btn btn-primary"> 이전</button>
+ </div>
 <jsp:include page="/team1_menu/bottom_.jsp" flush='false' />
 </body>
  
