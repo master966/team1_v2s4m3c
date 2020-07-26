@@ -3,6 +3,7 @@
 /**********************************/
 DROP TABLE recipecate;
 DROP TABLE recipecategrp;
+DROP TABLE recipecategrp CASCADE CONSTRAINTS;
 CREATE TABLE recipecategrp(
 		recipecategrpno               		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
 		name                          		VARCHAR2(100)		 NOT NULL,
@@ -29,7 +30,19 @@ CREATE SEQUENCE recipecategrp_seq
   
   
 INSERT INTO recipecategrp(recipecategrpno, name, seqno, visible, rdate)
-VALUES(recipecategrp_seq.nextval, 'ㅋㅋ', 1, 'Y', sysdate);
+VALUES(recipecategrp_seq.nextval, '종류별', 1, 'Y', sysdate);
+
+INSERT INTO recipecategrp(recipecategrpno, name, seqno, visible, rdate)
+VALUES(recipecategrp_seq.nextval, '상황별', 2, 'Y', sysdate);
+
+INSERT INTO recipecategrp(recipecategrpno, name, seqno, visible, rdate)
+VALUES(recipecategrp_seq.nextval, '재료별', 3, 'Y', sysdate);
+
+INSERT INTO recipecategrp(recipecategrpno, name, seqno, visible, rdate)
+VALUES(recipecategrp_seq.nextval, '방법별', 4, 'Y', sysdate);
+
+delete from recipecategrp
+where recipecategrpno = 1;
   
 SELECT * FROM recipecategrp;
 commit;  
