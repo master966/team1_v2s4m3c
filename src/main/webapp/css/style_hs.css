@@ -1571,7 +1571,6 @@ word-break: break-all;
 font-family: 'Noto Sans';
 font-weight: 400;
 letter-spacing: 0;
-border-top: 1px solid #e3e3e3;
 vertical-align: middle;
 padding: 22px 0 23px;
 line-height: 19px;
@@ -1595,3 +1594,31 @@ padding: 22px 0 23px;
 line-height: 19px;
 text-align: left;
 }
+
+  .review_btn{
+    word-break: break-all;
+    box-sizing: border-box;
+    padding: 0;
+    font: inherit;
+    margin: 0;
+    text-transform: none;
+    -webkit-appearance: button;
+    cursor: pointer;
+    max-width: 100%;
+    outline: none;
+    font-family: noto sans;
+    overflow: hidden;
+    float: right;
+    width: 128px;
+    height: 24px;
+    margin-right: 12px;
+    border: 1px solid #D5D5D5;
+    border-radius: 3px;
+    background: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    color: #BDBDBD;
+    line-height: 22px;
+    letter-spacing: -.1px;
+    text-align: center;
+  }

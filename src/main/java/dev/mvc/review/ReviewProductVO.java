@@ -1,10 +1,10 @@
 package dev.mvc.review;
 /*
-SELECT p.p_no,
-       r.reviewno, r.title, r.nickname, r.rdate
-FROM product p,  review r
-WHERE p.p_no = r.p_no AND AND r.p_no=#{p_no}
-ORDER BY r.reviewno DESC
+  SELECT p.p_no,
+             r.reviewno, r.title, r.rdate, m.nickname, r.file1
+  FROM product p,  review r, members m
+  WHERE (p.p_no = r.p_no) AND r.p_no=1
+  ORDER BY r.reviewno DESC
  */
 public class ReviewProductVO {
   private int p_no;

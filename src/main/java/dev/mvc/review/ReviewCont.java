@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.xml.ws.RequestWrapper;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import dev.mvc.cate_gory.Cate_goryProcInter;
 import dev.mvc.cate_gory.Cate_goryVO;
 import dev.mvc.members.MembersProcInter;
+import dev.mvc.members.MembersVO;
 import dev.mvc.product.ProductProcInter;
 import dev.mvc.product.ProductVO;
 import dev.mvc.tool.Tool;
@@ -44,21 +48,28 @@ public class ReviewCont {
   
   //http://localhost:9090/team1/review/create.do
   /**
-   * µî·Ï Æû
+   * 
+   * @param session
+   * @param memberno
    * @param p_no
    * @return
    */
   @RequestMapping(value="/review/create.do", method=RequestMethod.GET)
-  public ModelAndView create(int p_no) {
+  public ModelAndView create(HttpSession session,
+      @RequestParam(value="memberno", defaultValue="0") int memberno, int p_no){
     ModelAndView mav = new ModelAndView();
-
-    ProductVO productVO = this.productProc.read(p_no);
-    mav.addObject("productVO", productVO);
-
-    Cate_goryVO cate_goryVO = this.cate_goryProc.read(productVO.getGoryno());
-    mav.addObject("cate_goryVO", cate_goryVO);
-    mav.setViewName("/review/create");
-
+    if(membersProc.isMember(session)) {
+      if(memberno != 0) {
+        ProductVO productVO = this.productProc.read(p_no);
+        mav.addObject("productVO", productVO); 
+        MembersVO membersVO = this.membersProc.read(memberno);
+        mav.addObject("membersVO", membersVO); 
+      }
+      mav.setViewName("/review/create");
+    } else {
+      mav.setViewName("redirect:/members/login.do");
+    }
+    System.out.println(session.getAttribute("memberno"));
     return mav;    
   }
 
@@ -89,7 +100,6 @@ public class ReviewCont {
     reviewVO.setFile1(file1);
     reviewVO.setThumb1(thumb1);
     reviewVO.setSize1(size1);
-    System.out.println(reviewVO.getMemberno());
     int cnt = this.reviewProc.create(reviewVO);
     mav.addObject("cnt", cnt);
 
@@ -100,7 +110,7 @@ public class ReviewCont {
     if (cnt == 1) {
     mav.addObject("p_no", reviewVO.getP_no());
     }
-    mav.setViewName("redirect:/review/list.do");
+    mav.setViewName("redirect:/product/read.do");
 
     return mav;
   }
