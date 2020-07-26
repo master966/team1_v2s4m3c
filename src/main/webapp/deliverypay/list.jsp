@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>배송비 목록</title>
+<title>꼬박꼬밥</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link href="../css/style.css" rel="Stylesheet" type="text/css">

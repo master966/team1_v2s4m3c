@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <jsp:include page="/menu/meta.jsp" flush='false' />
-<title>꼬박꼬밥 관리자 페이지</title>
+<title>꼬박꼬밥</title>
 <link href="../css/style.css" rel='Stylesheet' type='text/css'>
  
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
