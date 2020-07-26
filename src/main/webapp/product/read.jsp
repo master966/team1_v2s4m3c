@@ -116,7 +116,11 @@
    var cnt = parseInt($('#quantity').val());
    var p_no = ${productVO.p_no};
    var pay =undf(($('#total').text()));
-   var memberno = ${memberno};
+   var memberno = '${memberno}';
+   if (memberno == ''){
+  	 alert('로그인시 이용가능합니다.');
+  	 return
+   }
    var params = 'p_no=' + p_no + '&cnt=' + cnt + '&pay=' + pay + '&memberno=' + memberno;
    alert(params);
    $.ajax({
