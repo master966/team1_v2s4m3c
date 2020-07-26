@@ -20,7 +20,7 @@
       </div>
     </div>
     <!-- id="happy_call" -->
-
+    <br><br>
     <div id="inner_footer">
       <h3 class="footer_logo">
         <a href="#"><img src="${root}/team1_menu/images/bob.png" style="width: 14%;" alt=""></a>

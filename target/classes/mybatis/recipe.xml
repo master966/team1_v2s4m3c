@@ -28,13 +28,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="list_by_recipecateno_search_paging" 
               resultType="Member_Recipe_join" parameterType="HashMap">
      SELECT m_memberno, m_nickname,
-                    recipeno, memberno, recipecateno, title, recom, hits, replycnt, file1, thumb1, size1, rating, rating_cnt, rating_sum, r
+                    recipeno, memberno, recipecateno, title, category, recom, hits, replycnt, file1, thumb1, size1, rating, rating_cnt, rating_sum, r
      FROM (
                 SELECT m_memberno, m_nickname,
-                                     recipeno, memberno, recipecateno, title, recom, hits, replycnt, file1, thumb1, size1, rating, rating_cnt, rating_sum, rownum as r
+                                     recipeno, memberno, recipecateno, title, category, recom, hits, replycnt, file1, thumb1, size1, rating, rating_cnt, rating_sum, rownum as r
                 FROM (
                           SELECT m.memberno as m_memberno, m.nickname as m_nickname,
-                                     c.recipeno, c.memberno, c.recipecateno, c.title, c.recom, c.hits, c.replycnt, c.file1, c.thumb1, c.size1, c.rating, c.rating_cnt, c.rating_sum
+                                     c.recipeno, c.memberno, c.recipecateno, c.title, c.category, c.recom, c.hits, c.replycnt, c.file1, c.thumb1, c.size1, c.rating, c.rating_cnt, c.rating_sum
                           FROM members m, recipe c
                           <choose>
                             <when test="word == null or word == ''">
@@ -45,7 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                                         OR c.introdfood LIKE '%' || #{word} || '%' 
                                                         OR c.ingredfood LIKE '%' || #{word} || '%'
                                                         OR c.tip LIKE '%' || #{word} || '%'
-                                                        OR c.word LIKE '%' || #{word} || '%')
+                                                        OR c.word LIKE '%' || #{word} || '%'
+                                                        OR c.category LIKE '%' || #{word} || '%')
                             </otherwise>
                           </choose>
                           ORDER BY c.recipeno DESC
@@ -69,10 +70,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                   OR introdfood LIKE '%' || #{word} || '%' 
                                   OR ingredfood LIKE '%' || #{word} || '%'
                                   OR tip LIKE '%' || #{word} || '%'
-                                  OR word LIKE '%' || #{word} || '%')
+                                  OR word LIKE '%' || #{word} || '%'
+                                  OR category LIKE '%' || #{word} || '%')
        </otherwise>
      </choose>
    </select> 
+   
+   
+  
+   
    
    
   <!-- 평점 카운트 증가 -->

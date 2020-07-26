@@ -74,6 +74,9 @@ public class RecipeCont {
   @RequestMapping(value = "/recipe/create.do", method = RequestMethod.GET)
   public ModelAndView create(RecipeVO recipeVO) {
     ModelAndView mav = new ModelAndView();
+    
+
+    
     mav.setViewName("/recipe/create"); 
 
     return mav;
@@ -169,6 +172,9 @@ public class RecipeCont {
     System.out.println(result);
     recipeVO.setIngredfood(result);
     
+   
+    
+    
     
     int cnt = this.recipeProc.create(recipeVO); // Call By Reference로 전송
     // Spring <----> contentsVO <----> MyBATIS
@@ -235,8 +241,9 @@ public class RecipeCont {
     
     mav.addObject("cnt", cnt);
     mav.addObject("recipeno", recipeno); // request에 저장
-    mav.addObject("recipecateno", recipeVO.getRecipecateno());
+    
 
+    
     mav.setViewName("redirect:/recipe/list.do");
 
     return mav;
@@ -282,6 +289,7 @@ public class RecipeCont {
     RecipecategrpVO recipecategrpVO = recipecategrpProc.read(recipecateVO.getRecipecategrpno());
     mav.addObject("recipecategrpVO", recipecategrpVO);
 
+    mav.addObject("list_cate", recipecateProc.list_seqno_asc());
     /*
      * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 
      * 현재 페이지: 11 / 22   [이전] 11 12 13 14 15 16 17 18 19 20 [다음] 
@@ -621,7 +629,19 @@ public class RecipeCont {
 
     RecipeVO recipeVO = this.recipeProc.read(recipeno);
     mav.addObject("recipeVO", recipeVO); // request 객체에 저장
-
+    
+    int num = recipeseqProc.count_by_recipeno(recipeVO.getRecipeno());
+    HashMap<String, Object> map = null;
+    RecipeseqVO recipeseqVO = new RecipeseqVO();
+    for(int i = 0; i < num; i++) {
+      map = new HashMap<String, Object>();
+      map.put("recipeno", recipeno);
+      map.put("step", i+1);
+      recipeseqVO = recipeseqProc.read_by_recipeno_step(map);
+      mav.addObject("contents"+i, recipeseqVO.getContents());
+      mav.addObject("file_seq"+i, recipeseqVO.getFile_seq());
+    }
+    
 
     mav.setViewName("/recipe/update"); 
     return mav; // forward

@@ -26,9 +26,8 @@ a{color: #333333; text-decoration: none;}
 
 .ellipsis {white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 h2{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-p{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+
 .wrap01{width: 106px;}
-li{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 dd{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 
 /* �뜝�럩逾좂뵓寃밸걢占쎈콦�뛾�룄�←몭占� */

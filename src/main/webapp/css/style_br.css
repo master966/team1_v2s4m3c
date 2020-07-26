@@ -6,8 +6,15 @@
 
   }
 
+  .recipe_container_all2{
+    width: 100%;
+    text-align: center;
+    margin: 0px auto;
+
+  }
+
   .recipe_container{
-    width: 70%;
+    width: 100%;
     margin: 10px auto;
     padding-left : 20px;
     padding-top: 60px;
@@ -18,7 +25,16 @@
     top:30px;
   }
   .recipe_container2{
-    width: 70%;
+    width: 100%;
+    margin: 10px auto;
+    padding-left : 20px;
+    padding-top: 60px;
+    background-color:#FFFFFF;
+    margin-bottom: 10px;
+  }
+  
+  .recipe_container3{
+    width: 100%;
     margin: 10px auto;
     padding-left : 20px;
     padding-top: 60px;
@@ -29,10 +45,11 @@
   .recipe_font{
     font-family: 'Oswald', sans-serif;
     font: 23px;
+    text-align:left;
   }
     
   .mainPhoto{
-    width:130px;
+    width:20%;
     position: absolute;
     right: 90px;
 

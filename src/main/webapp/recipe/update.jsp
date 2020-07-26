@@ -220,7 +220,7 @@ function add_ingredseq(){
   
   var str = 
   '<input type="hidden" name="ingredseq_cnt" value="'+ ingredseq_cnt +'">' +
-  '<div id="recipe_seq_content" style="width:80%;">' +
+  '<div id="recipe_seq_content" style="width:80%; height:100px;">' +
   '<div class="col-sm-2">' +
   'Step' + (ingredseq_cnt + 1) +
   '</div>' +
@@ -232,7 +232,7 @@ function add_ingredseq(){
         'style = "display: none;">' +
     '<input type = "text" name = "file_seq'+ingredseq_cnt+'" id = "file_seq'+ingredseq_cnt+'" style="display:none;">' +
     '<img src = "./images/camera.png" name="file_img'+ingredseq_cnt+'" id = "file_img'+ingredseq_cnt+'" onclick = "document.getElementById('+file2MF_cnt+').click(); document.getElementById('+file_seq+').value = document.getElementById('+file2MF_cnt+').value"' +
-        'style="width:100%;" src="#">'+  
+        'style="width:100%; margin-top:-20px;" src="#">'+  
 
             
   '</div>' +
@@ -254,7 +254,7 @@ function add_ingredseq(){
     '</div>' +
     
   '</div>' +
-'</div>';
+'</div><br>';
   
   //var ingre = "#ingre" + cnt;
   $('#recipe_seq').append(str);
@@ -350,33 +350,58 @@ function add_ingredseq(){
         <div class="col-sm-9">
           <p class="recipe_font col-sm-2">카테고리</p>
           <div class = "col-sm-10" style="text-align: left">
-            <select name='type' id='type'>
+            <select name='type' id='type' style='padding:10px;'>
               <option value='' selected>종류별</option>
               <option value='밑반찬'>밑반찬</option>
               <option value='메인반찬'>메인반찬</option>
               <option value='국/탕'>국/탕</option>
               <option value='찌개'>찌개</option>
+              <option value='디저트'>디저트</option>
+              <option value='면/만두'>면/만두</option>
+              <option value='밥/죽/떡'>밥/죽/떡</option>
+              <option value='기타'>기타</option>
             </select>
-            <select name='case' id='case'>
+            <select name='case' id='case' style='padding:10px;'>
               <option value='' selected>상황별</option>
               <option value='일상'>일상</option>
               <option value='초스피드'>초스피드</option>
               <option value='손님접대'>손님접대</option>
               <option value='술안주'>술안주</option>
+              <option value='다이어트'>다이어트</option>
+              <option value='도시락'>도시락</option>
+              <option value='간식'>간식</option>
+              <option value='야식'>야식</option>
+              <option value='기타'>기타</option>
             </select>
-            <select name='how' id='how'>
-              <option value='' selected>방법별</option>
-              <option value='볶음'>볶음</option>
-              <option value='끓이기'>끓이기</option>
-              <option value='부침'>부침</option>
-              <option value='조림'>조림</option>
-            </select>
-            <select name='ingred' id='ingred'>
+
+            <select name='ingred' id='ingred' style='padding:10px;'>
               <option value='' selected>재료별</option>
               <option value='소고기'>소고기</option>
               <option value='돼지고기'>돼지고기</option>
               <option value='닭고기'>닭고기</option>
               <option value='육류'>육류</option>
+              <option value='채소류'>채소류</option>
+              <option value='해물류'>해물류</option>
+              <option value='달걀/유제품'>달걀/유제품</option>
+              <option value='쌀'>쌀</option>
+              <option value='밀가루'>밀가루</option>
+              <option value='기타'>기타</option>
+            </select>
+            
+            <select name='how' id='how' style='padding:10px;'>
+              <option value='' selected>방법별</option>
+              <option value='볶음'>볶음</option>
+              <option value='끓이기'>끓이기</option>
+              <option value='부침'>부침</option>
+              <option value='조림'>조림</option>
+              <option value='무침'>무침</option>
+              <option value='비빔'>비빔</option>
+              <option value='찜'>찜</option>
+              <option value='튀김'>튀김</option>
+              <option value='삶기'>삶기</option>
+              <option value='굽기'>굽기</option>
+              <option value='기타'>기타</option>
+              
             </select>
             <br>
             <label>분류를 바르게 설정해주시면, 이용자들이 쉽게 레시피를 검색할 수 있어요.</label>
@@ -391,7 +416,7 @@ function add_ingredseq(){
           <p class="recipe_font col-sm-2">요리정보</p>
           <div class = "col-sm-10" style="text-align: left">
             <label>인원</label>
-            <select name='num_person' id='num_person'>
+            <select name='num_person' id='num_person' style="padding:8px;">
               <option value='' selected>인원</option>
               <option value='1인분'>1인분</option>
               <option value='2인분'>2인분</option>
@@ -402,7 +427,7 @@ function add_ingredseq(){
             </select>
             
             <label>시간</label>
-            <select name='time' id='time'>
+            <select name='time' id='time' style="padding:8px;">
               <option value='' selected>시간</option>
               <option value='5분이내'>5분이내</option>
               <option value='10분이내'>10분이내</option>
@@ -414,7 +439,7 @@ function add_ingredseq(){
             </select>
             
             <label>난이도</label>
-            <select name='difficulty' id='difficulty'>
+            <select name='difficulty' id='difficulty' style="padding:8px;">
               <option value='' selected>난이도</option>
               <option value='아무나'>아무나</option>
               <option value='초급'>초급</option>
@@ -515,19 +540,19 @@ function add_ingredseq(){
       </div>
       
       <div id="recipe_seq"> <!-- 본내용 총 DIV. append용 -->
-        <div id="recipe_seq_content" style="width:80%;"> <!-- 본내용 -->
+        <div id="recipe_seq_content" style="width:80%; height:100px;"> <!-- 본내용 -->
           <div class="col-sm-2">
           Step1
           </div>
           <div class="col-sm-6">
-            <textarea placeholder="예)고기가 반쯤 익어갈 때 양파를 함께 볶아요." name="contents0" class="form-control" style="background-color:#F5F5F5;" rows="3"></textarea>
+            <textarea placeholder="예)고기가 반쯤 익어갈 때 양파를 함께 볶아요." name="contents0" class="form-control" style="background-color:#F5F5F5;" rows="3">${contents0 }</textarea>
           </div>
           <div class="col-sm-2" id= "seq_div0">
-            <input type = "file" name ="file2MF" id = "file2MF0" value ="./storage/seq_images/${recipeseqVO.file_seq }" multiple = "multiple"
+            <input type = "file" name ="file2MF" id = "file2MF0" value ="" multiple = "multiple"
                 style = "display: none;">
             <input type = "text" name = "file_seq0" id = "file_seq0" style="display:none;">
-            <img src = "./images/camera.png" name="file_img0" id = "file_img0" onclick = 'document.getElementById("file2MF0").click(); document.getElementById("file_seq0").value = document.getElementById("file2MF0").value'
-                style="width:100%;" src='#'>
+            <img src = "./storage/seq_images/${file_seq0 }" name="file_img0" id = "file_img0" onclick = 'document.getElementById("file2MF0").click(); document.getElementById("file_seq0").value = document.getElementById("file2MF0").value'
+                style="width:100%; margin-top:-20px;" src='#'>
           
           </div>
           <div class="col-sm-2">
@@ -548,7 +573,7 @@ function add_ingredseq(){
             </div>
             
           </div>
-        </div>
+        </div><br>
 
 
 
@@ -571,7 +596,7 @@ function add_ingredseq(){
       <div style="width:100%; height:90px;">
         <div class="col-sm-9">
           <p class="recipe_font col-sm-2">요리팁</p>
-           <textarea name="tip" id="tip" rows="3" class="form-control col-sm-10" placeholder="예) 고기요리에는 소금보다 설탕을 먼저 넣어야 단맛이 겉돌지 않고 육질이 부드러워요." style="width:510px; background-color:#F5F5F5;"></textarea>
+           <textarea name="tip" id="tip" rows="3" class="form-control col-sm-10" placeholder="예) 고기요리에는 소금보다 설탕을 먼저 넣어야 단맛이 겉돌지 않고 육질이 부드러워요." style="width:510px; background-color:#F5F5F5;">${recipeVO.tip }</textarea>
         </div>
         <div class="col-sm-3"></div>
       </div>
@@ -586,7 +611,7 @@ function add_ingredseq(){
         <div class="col-sm-9">
           <p class="recipe_font col-sm-2">태그</p>
           <p class="col-sm-10">
-            <input type="text" name="word" id="word" value="" class="form-control" 
+            <input type="text" name="word" id="word" value="" class="form-control" value="${recipeVO.word }"
                    style="width:510px; background-color:#F5F5F5;
                    vertical-align: middle;">
             <span>주재료,목적,효능,대상 등을 태그로 남겨주세요. 예)돼지고기, 다이어트, 비만, 칼슘, 감기예방, 이유식, 초간단</span>       

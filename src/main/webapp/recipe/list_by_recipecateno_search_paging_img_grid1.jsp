@@ -23,12 +23,112 @@
 <body>
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
 
+  <br>
+  <DIV class="recipe_container_all2">
+   <DIV class="recipe_container3">
+      <table class="table" style='width: 100%; margin-top:-90px;'>
+        <colgroup>
+          <col style="width: 10%;"></col>
+          <col style="width: 90%;"></col>
+        </colgroup>
+        
+        <tbody>
+          
+            
+            <tr> 
+              <td style='text-align: center; vertical-align: middle;'>
+                            종류별
 
-  <DIV class='title_line'>
-    <%-- ${cateVO.name } --%>
-  </DIV>
-  <DIV class="recipe_container_all">
-   <DIV class="recipe_container2">
+              </td>
+              <td style='text-align: left;'>
+                <button type="button" style="border-radius: 70px; -moz-border-radius: 70px; -khtml-border-radius: 70px; -webkit-border-radius: 70px;
+                background-color:#ffbb00; padding:10px; color:white; border:solid 1px #ffbb00;"
+                onclick="location.href = './list.do' " >전체</button>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=밑반찬">밑반찬</a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=메인반찬">메인반찬</a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=국/탕 ">국/탕 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=찌개 ">찌개 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=디저트 ">디저트 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=밥/죽/떡 ">밥/죽/떡 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=면/만두 ">면/만두 </a> &nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=기타 ">기타 </a>&nbsp;&nbsp;&nbsp;
+                
+              </td> 
+            </tr>
+         
+            <tr> 
+              <td style='text-align: center; vertical-align: middle;'>
+                            상황별
+
+              </td>
+              <td style='text-align: left'>
+                <button type="button" style="border-radius: 70px; -moz-border-radius: 70px; -khtml-border-radius: 70px; -webkit-border-radius: 70px;
+                background-color:#ffbb00; padding:10px; color:white; border:solid 1px #ffbb00;"
+                onclick="location.href = './list.do' " >전체</button>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=일상 ">일상 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=초스피드 ">초스피드 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=손님접대 ">손님접대 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=술안주 ">술안주 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=다이어트 ">다이어트 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=도시락 ">도시락 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=간식 ">간식 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=야식 ">야식 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=기타 ">기타 </a>&nbsp;&nbsp;&nbsp;
+          
+              </td> 
+            </tr>
+            
+            <tr> 
+              <td style='text-align: center; vertical-align: middle;'>
+                            재료별
+
+              </td>
+              <td style='text-align: left'>
+                <button type="button" style="border-radius: 70px; -moz-border-radius: 70px; -khtml-border-radius: 70px; -webkit-border-radius: 70px;
+                background-color:#ffbb00; padding:10px; color:white; border:solid 1px #ffbb00;"
+                onclick="location.href = './list.do' " >전체</button>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=소고기 ">소고기 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=돼지고기 ">돼지고기 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=닭고기 ">닭고기 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=육류 ">육류 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=채소류 ">채소류 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=해물류 ">해물류 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=달걀/유제품 ">달걀/유제품 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=쌀 ">쌀 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=밀가루 ">밀가루 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=기타 ">기타 </a>&nbsp;&nbsp;&nbsp;
+                
+              </td> 
+            </tr>
+            
+            <tr> 
+              <td style='text-align: center; vertical-align: middle;'>
+                            방법별
+
+              </td>
+              <td style='text-align: left'>
+                <button type="button" style="border-radius: 70px; -moz-border-radius: 70px; -khtml-border-radius: 70px; -webkit-border-radius: 70px;
+                background-color:#ffbb00; padding:10px; color:white; border:solid 1px #ffbb00;"
+                onclick="location.href = './list.do' " >전체</button>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=볶음 ">볶음 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=끓이기 ">끓이기 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=부침 ">부침 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=조림 ">조림 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=무침 ">무침 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=비빔 ">비빔 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=찜 ">찜 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=튀김 ">튀김 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=삶기 ">삶기 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=굽기 ">굽기 </a>&nbsp;&nbsp;&nbsp;
+                <a href="./list.do?word=기타 ">기타 </a>&nbsp;&nbsp;&nbsp;
+                        
+              </td> 
+            </tr>
+         
+        </tbody>
+        
+      </table>
+      <br><br>
       <form name='frm' id='frm' method='get' action='./list.do'>
         <input type='hidden' name='recipecateno' value='${recipecateVO.recipecateno }'>
         
@@ -37,41 +137,40 @@
          
           <c:choose>
             <c:when test="${param.word != null}"> <%-- 검색하는 경우 --%>
-              >> '${param.word }' ${search_count } 건 검색됨.
+               총 <span style="font-size:20px;">${search_count }</span>개의 맛있는 레시피가 있습니다.
             </c:when>
             
           </c:choose>    
         </ASIDE>
         <ASIDE style='float: right;'>
            <c:if test="${sessionScope.id != null}"> 
-            <A href="./create.do?recipecateno=${recipecateVO.recipecateno }">등록</A>
-            <span class='top_menu_sep'>&nbsp;</span>   
+            <button type="button" style="background-color:#ffbb00; padding:10px; color:white; border:solid 1px #ffbb00;" onclick="location.href = './create.do?recipecateno=${recipecateVO.recipecateno }' ">&nbsp;등록&nbsp;</button>
+              
            </c:if> 
            
-          <A href="./list.do">최신순</A>
-          
-          <span class='top_menu_sep'>&nbsp;</span>    
-          <A href="./list_by_rating.do">평점순</A>
+          <button type="button" onclick="location.href = './list.do' " style="background-color:white; padding:10px; margin-left: -5px; color:#ffbb00; border:solid 1px #ffbb00;">최신순</button>
+            
+          <button type="button" onclick="location.href = './list_by_rating.do' " style="background-color:#ffbb00; padding:10px; margin-left: -5px; color:white; border:solid 1px #ffbb00;">평점순</button>
           
           <c:choose>
             <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
               <input type='text' name='word' id='word' value='${param.word }' 
-                         style='width: 35%;'>
+                         style='width: 35%; border: 1px solid #ffbb00; height:38px;'>
             </c:when>
             <c:otherwise> <%-- 검색하지 않는 경우 --%>
-              <input type='text' name='word' id='word' value='' style='width: 35%;'>
+              <input type='text' name='word' id='word' value='' style='width: 35%; border: 1px solid #ffbb00; height:38px;'>
             </c:otherwise>
           </c:choose>
-          <button type='submit'>검색</button>
-          <c:if test="${param.word.length() > 0 }">
+          <button type='submit' style="background-color:white; color:#ffbb00; padding:10px; border:solid 1px #ffbb00;">검색</button>
+   <%--        <c:if test="${param.word.length() > 0 }">
             <button type='button' 
                          onclick="location.href='./list.do?recipecateno=${recipecateVO.recipecateno}&word='">검색 취소</button>  
           </c:if>
-          
+           --%>
         </ASIDE> 
         <DIV class='menu_line' style='clear: both;'></DIV>
       </form>
-      
+      <br>
       <div style='width: 100%;'>
         
         <!-- 갤러리 Layout 시작 -->
