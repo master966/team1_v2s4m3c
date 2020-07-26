@@ -34,7 +34,7 @@
     style="height: 100%;">
 
     <!-- FK 지정 -->
-    <input type='hidden' name='memberno' id='memberno' value='1'>
+    <input type='hidden' name='memberno' id='memberno' value='${sessionScope.memberno }'>
     <input type='hidden' name='p_no' id='p_no' value='${productVO.p_no }'>
 
     <table class='xans-board-wirte' width="100%">

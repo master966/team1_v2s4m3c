@@ -116,7 +116,11 @@
    var cnt = parseInt($('#quantity').val());
    var p_no = ${productVO.p_no};
    var pay =undf(($('#total').text()));
-   var memberno = ${memberno};
+   var memberno = '${memberno}';
+   if (memberno == ''){
+  	 alert('로그인시 이용가능합니다.');
+  	 return
+   }
    var params = 'p_no=' + p_no + '&cnt=' + cnt + '&pay=' + pay + '&memberno=' + memberno;
    alert(params);
    $.ajax({
@@ -149,6 +153,7 @@
 <body>
   <c:set var="goryno" value="${cate_goryVO.goryno}" />
   <c:set var="p_no" value="${productVO.p_no}" />
+  <c:set var="memberno" value="${sessionScope.memberno}" />
 
   <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
   <DIV class="content">
@@ -308,14 +313,14 @@
       </DIV>
       <DIV id='review_list_btn' style='border: solid 1px #EEEEEE; margin: 0px auto; width: 100%; background-color: #EEFFFF;'>
       
-          <button id='addBtn' style='width: 100%;'>더보기 ▽</button>
+          <button id='addBtn' class="review_btn"style='width: 100%;'>더보기 ▽</button>
       </DIV>  
 
   </DIV> <!-- goods-view-information-content -->
       
      <DIV class="btnArea after">
        <button class="bhs_button" type="button" style='float: right;'
-               onclick="location.href='http://localhost:9090/team1/review/create.do?p_no=${p_no }'">후기쓰기</button>
+               onclick="location.href='http://localhost:9090/team1/review/create.do?p_no=${p_no }&memberno=${memberno}'">후기쓰기</button>
     </DIV> <!-- btnArea after -->  
    
   

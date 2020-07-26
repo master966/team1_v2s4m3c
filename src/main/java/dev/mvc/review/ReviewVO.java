@@ -25,6 +25,8 @@ public class ReviewVO {
   private int p_no;
   /**회원 번호 */
   private int memberno;
+  /**회원 번호 */
+  private String nickname;
   /**글 제목 */
   private String title;
   /**작성일 */
@@ -117,6 +119,10 @@ public class ReviewVO {
   public void setFile1MF(MultipartFile file1mf) {
     file1MF = file1mf;
   }
-  
-  
+  public String getNickname() {
+    return nickname;
+  }
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
+  }
 }

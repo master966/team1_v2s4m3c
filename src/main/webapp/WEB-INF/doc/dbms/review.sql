@@ -3,7 +3,6 @@ CREATE TABLE review(
 		reviewno                        	NUMBER(10)		 NOT NULL		 PRIMARY KEY,
         p_no                       	        NUMBER(10)		 NOT NULL,
         memberno                         NUMBER(7)         NULL,
-        nickname                           VARCHAR(20)      NULL UNIQUE,
 		title                              		VARCHAR2(100)		 NOT NULL,
 		rdate                           		DATE		 NOT NULL,
         content                       		CLOB         		 NOT NULL,
@@ -12,8 +11,7 @@ CREATE TABLE review(
         thumb1                              VARCHAR(100)          NULL,
         size1                                 NUMBER(10)      DEFAULT 0 NULL, 
         FOREIGN KEY (p_no) REFERENCES product (p_no),
-        FOREIGN KEY (memberno) REFERENCES members (memberno),
-        FOREIGN KEY (nickname) REFERENCES members (nickname)
+        FOREIGN KEY (memberno) REFERENCES members (memberno)
 );
 
 COMMENT ON TABLE review is '후기 테이블';
@@ -34,8 +32,8 @@ CREATE SEQUENCE review_seq
   NOCYCLE;                     -- 다시 1부터 생성되는 것을 방지
   
 --등록
-INSERT INTO  review(reviewno, p_no, memberno, nickname, title, rdate, content, passwd, file1, thumb1, size1)
-VALUES(review_seq.nextval, 1, 1, '일빠', '맛있어요', sysdate,  '마싯어영',1234, 'cherry.jpg', 'cherry_t.jpg', 12434);
+INSERT INTO  review(reviewno, p_no, memberno, title, rdate, content, passwd, file1, thumb1, size1)
+VALUES(review_seq.nextval, 1, 3, '맛있어요', sysdate,  '마싯어영',1234, 'cherry.jpg', 'cherry_t.jpg', 12434);
 
 --조회
 SELECT reviewno, p_no, memberno, title, rdate, cnt, content, file1, thumb1, size1
@@ -54,8 +52,8 @@ WHERE m.memberno = r.memberno
 ORDER BY m.memberno ASC, r.memberno ASC;
 
     SELECT p.p_no,
-               r.reviewno, r.title, r.nickname, r.rdate
-    FROM product p,  review r
+               r.reviewno, r.title, r.rdate, m.nickname, r.file1
+    FROM product p,  review r, members m
     WHERE (p.p_no = r.p_no) AND r.p_no=1
     ORDER BY r.reviewno DESC
     

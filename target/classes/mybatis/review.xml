@@ -13,29 +13,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     INSERT INTO review(reviewno, p_no, memberno, title, rdate,content, passwd, file1, thumb1, size1)
     VALUES(#{reviewno}, #{p_no}, #{memberno}, #{title}, sysdate, #{content}, #{passwd}, #{file1}, #{thumb1}, #{size1})
   </insert>
-
-  <select id="list" resultType="ReviewVO">
-  SELECT reviewno, title, nickname, rdate
+ 
+   <select id="list" resultType="ReviewVO">
+  SELECT reviewno, title,rdate
   FROM review
   ORDER BY reviewno DESC
  </select>
  
+ 
   <select id="list_by_p_no_join" resultType="ReviewProductVO" parameterType="int">
   SELECT p.p_no,
-         r.reviewno, r.title, r.nickname, r.rdate
-  FROM product p,  review r
+         r.reviewno, r.title, m.nickname, r.rdate, r.content, r.file1
+  FROM product p,  review r, members m
   WHERE (p.p_no = r.p_no) AND AND r.p_no=#{p_no}
   ORDER BY r.reviewno DESC
   </select> 
   
   <select id="list_by_p_no_join_add_view" resultType="ReviewProductVO" parameterType="HashMap">
-    SELECT p_no, reviewno, title, nickname, rdate
+    SELECT p_no, reviewno, title, nickname, rdate, content, file1
     FROM (
-            SELECT p_no, reviewno, title, nickname, rdate, rownum as r
+            SELECT p_no, reviewno, title, nickname, rdate, content, file1, rownum as r
             FROM (
                     SELECT p.p_no,
-                           r.reviewno, r.title, r.nickname, r.rdate
-                    FROM product p,  review r
+                           r.reviewno, r.title, m.nickname, r.rdate, r.content, r.file1
+                    FROM product p,  review r, members m
                     WHERE (p.p_no = r.p_no) AND r.p_no=#{p_no}
                     ORDER BY r.reviewno DESC
             )
