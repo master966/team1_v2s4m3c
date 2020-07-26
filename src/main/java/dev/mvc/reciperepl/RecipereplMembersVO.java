@@ -4,11 +4,15 @@ public class RecipereplMembersVO {
   /** 닉넴 */
   private String nickname = "";
   
-  
-  private int recipereplno;                    
+  /** 레시피 댓글 번호 */
+  private int recipereplno;
+  /** 회원 번호 */
   private int memberno;                     
+  /** 레시피 번호 */
   private int recipeno;                       
+  /** 내용 */
   private String contents;                       
+  /** 등록일 */
   private String rdate;
   
   public int getRecipereplno() {

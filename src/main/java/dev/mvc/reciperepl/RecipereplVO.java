@@ -1,11 +1,17 @@
 package dev.mvc.reciperepl;
 
 public class RecipereplVO {
-  private int recipereplno;                    
+  /** 레시피 댓글 번호 */
+  private int recipereplno;      
+  /** 회원 번호*/
   private int memberno;                     
+  /** 레시피 번호*/
   private int recipeno;                       
-  private String contents;                       
+  /** 내용*/
+  private String contents;   
+  /** 등록일*/
   private String rdate;
+  
   public int getRecipereplno() {
     return recipereplno;
   }

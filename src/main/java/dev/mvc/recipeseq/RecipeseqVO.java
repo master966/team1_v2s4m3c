@@ -11,15 +11,23 @@ public class RecipeseqVO {
 //  thumb3                   VARCHAR2(100)    NOT NULL,
 //  size3                    NUMBER(10)     NOT NULL,
 //  recipeseqseqno                    NUMBER(10)     DEFAULT 1     NOT NULL,
+  /** 요리순서 번호*/
   private int recipeseqno;
+  /** 레시피 번호*/
   private int recipeno;
+  /** 회원 번호*/
   private int memberno;
+  /** 내용*/
   private String contents;
+  /** 요리순서 파일명*/
   private String file_seq;
+  /** 요리순서 썸네일명*/
   private String thumb_seq;
+  /** 요리순서 파일크기*/
   private long size_seq;
+  /** 요리순서 스텝*/
   private int step;
-  
+  /** 요리순서 순서번호*/
   private int recipeseqseqno;
   
   /** 이미지 MultipartFile */

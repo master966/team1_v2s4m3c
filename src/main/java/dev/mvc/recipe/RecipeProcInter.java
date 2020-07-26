@@ -5,7 +5,18 @@ import java.util.List;
 
 public interface RecipeProcInter {
   
+  /**
+   * 레시피 생성
+   * @param recipeVO
+   * @return
+   */
   public int create(RecipeVO recipeVO);
+  
+  /**
+   * 레시피 조회
+   * @param recipeno
+   * @return
+   */
   public RecipeVO read(int recipeno);
  
   /**
@@ -19,19 +30,39 @@ public interface RecipeProcInter {
    */
   public String pagingBox(String listFile, int recipecateno, int search_count, int nowPage, String word);
   
+  /**
+   * 목록 + 검색 + 페이징 지원 + 멤버 조인
+   * @param map
+   * @return
+   */
   public List<Member_Recipe_join> list_by_recipecateno_search_paging(HashMap<String, Object> map);
   
   /**
-   * 카테고리별 검색 레코드 갯수
+   * 검색 레코드 갯수
    * @param hashMap
    * @return
    */
   public int search_count(HashMap<String, Object> hashMap);
   
+  /**
+   * 평점 카운트 증가 
+   * @param recipeno
+   * @return
+   */
   public int increaseRatingCnt(int recipeno);
   
+  /**
+   * 평점 총합 더하기
+   * @param recipeVO
+   * @return
+   */
   public int addRating(RecipeVO recipeVO);
   
+  /**
+   * 평점 갱신
+   * @param recipeVO
+   * @return
+   */
   public int ratingUpdate(RecipeVO recipeVO);
   
   /**

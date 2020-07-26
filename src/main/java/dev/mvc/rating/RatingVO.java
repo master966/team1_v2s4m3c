@@ -1,10 +1,13 @@
 package dev.mvc.rating;
 
 public class RatingVO {
-  //ratingno, recipeno, memberno, rating
+  /** 평점번호*/
   private int ratingno;
+  /** 레시피번호*/
   private int recipeno;
+  /** 멤버번호*/
   private int memberno;
+  /** 평점*/
   private double rating;
   
   public int getRatingno() {

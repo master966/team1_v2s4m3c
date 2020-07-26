@@ -1,8 +1,9 @@
 package dev.mvc.recipe;
 
 public class Member_Recipe_join {
-  
+  /** 회원 번호 */
   private int m_memberno;
+  /** 회원 닉네임 */
   private String m_nickname;
   
   

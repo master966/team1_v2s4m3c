@@ -30,9 +30,11 @@ public class RecipereplCont {
   }
   
   
-  
-  
-  
+  /**
+   * 등록 처리 JSON
+   * @param recipereplVO
+   * @return
+   */
   @ResponseBody
   @RequestMapping(value = "/reciperepl/create.do",
                             method = RequestMethod.POST,
@@ -62,9 +64,8 @@ public class RecipereplCont {
  
   
   /**
-   * 
-   * http://localhost:9090/ojt/reply/list_by_contentsno_join.do?contentsno=1
-   * @param contentsno
+   * 레시피  조인된 목록
+   * @param recipeno
    * @return
    */
   @ResponseBody
@@ -84,7 +85,12 @@ public class RecipereplCont {
   }
   
 
-
+  /**
+   * 삭제 처리
+   * @param recipeno
+   * @param session
+   * @return
+   */
   @ResponseBody
   @RequestMapping(value = "/reciperepl/delete.do", 
                               method = RequestMethod.POST,
@@ -101,9 +107,9 @@ public class RecipereplCont {
 
   /**
    * 더보기 버튼 페이징 목록
-   * http://localhost:9090/resort/reply/list_by_contentsno_join_add_view.do?contentsno=31&replyPage=1
-   * @param contentsno 댓글 부모글 번호
-   * @param replyPage 댓글 페이지
+   * http://localhost:9090/team1/reciperepl/list_by_recipeno_join_add_view.do?recipeno=31&replyPage=1
+   * @param recipeno
+   * @param replyPage
    * @return
    */
   @ResponseBody
@@ -126,8 +132,8 @@ public class RecipereplCont {
   
   /**
    * 조회
-   * http://localhost:9090/resort/reply/read.do?replyno=108 
-   * @param replyVO
+   * http://localhost:9090/team1/reciperepl/read.do?recipereplno=108 
+   * @param recipereplno
    * @return
    */
   @ResponseBody

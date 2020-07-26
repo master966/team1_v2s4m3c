@@ -112,7 +112,6 @@ public class RecipecategrpCont {
     mav.addObject("cnt", cnt); // request에 저장
 
     if (cnt == 1) {
-      // mav.setViewName("/cate/update_msg"); // webapp/cate/update_msg.jsp
       mav.setViewName("redirect:/recipecategrp/list.do"); // spring 재호출
     } 
 
@@ -129,8 +128,6 @@ public class RecipecategrpCont {
    */
   @RequestMapping(value = "/recipecategrp/read_delete.do", method = RequestMethod.GET)
   public ModelAndView read_delete(int recipecategrpno) {
-    // request.setAttribute("cateno", int cateno) 작동 안됨.
-
     ModelAndView mav = new ModelAndView();
 
     RecipecategrpVO recipecategrpVO = this.recipecategrpProc.read(recipecategrpno);
