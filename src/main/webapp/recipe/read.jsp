@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>가ㄴ펴ㄴ시ㄱ</title>
+<title>꼬박꼬밥</title>
  
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
 <link href="../css/style_br.css" rel="Stylesheet" type="text/css">
@@ -481,7 +481,10 @@ function click_rating_func_false(){
               <c:set var="step" value="${recipeseqVO.step }" />
               <c:set var="contents" value="${recipeseqVO.contents }" />
               <li class="li_none" style="width:100%; height: 250px; margin-top:50px;">
-                <span style="font-size:25px;" class="col-sm-1">${step}</span>
+                <span style="font-size:40px;" class="col-sm-1">
+                  <button style="border-radius: 7px; font-weight: bold; height:35px; width: 35px;
+                          background-color:#ffbb00; margin:-5px 10px 10px 10px; color:white; border:solid 1px #ffbb00;">
+                          ${step}</button></span>
                 <span style="font-size:25px; text-align:left;" class="col-sm-5" >${contents}</span>
                 <c:choose>
                   <c:when test="${file.endsWith('jpg') || file.endsWith('png') || file.endsWith('gif')}">
