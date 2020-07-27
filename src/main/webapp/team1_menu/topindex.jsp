@@ -22,7 +22,7 @@
     </div>
     <div id="utils">
       <c:choose>
-      <c:when test="${sessionScope.id == null}">"src/main/webapp/team1_menu/images/basket.png"
+      <c:when test="${sessionScope.id == null}">
           <a href="${root}/members/login.do">로그인</a>
         &nbsp;|&nbsp;
         <a href="${root}/members/create.do">회원가입</a>
