@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>꼬박꼬밥</title>
+<title>가ㄴ펴ㄴ시ㄱ</title>
  
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
 <link href="../css/style_br.css" rel="Stylesheet" type="text/css">
@@ -160,11 +160,11 @@ function list_by_recipeno_add_view() {
       for (i=0; i < rdata.list.length; i++) {
         var row = rdata.list[i];
         
-        msg += "<DIV id='"+row.recipenono+"' style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px; text-align:left;'>";
+        msg += "<DIV id='"+row.recipereplno+"' style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px; text-align:left;'>";
         msg += "<span style='font-weight: bold; color:#ffbb00;'>" + row.nickname + "</span>";
         msg += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  " + row.rdate + "&nbsp;&nbsp;&nbsp; ";
         if ('${sessionScope.memberno}' == row.memberno) { // 글쓴이 일치여부 확인
-          msg += " <A href='javascript:reply_delete("+row.recipeno+")'><IMG src='./images/delete.png' style='width:15px;'></A>";
+          msg += " <A href='javascript:reply_delete("+row.reciprepleno+")'><IMG src='./images/delete.png' style='width:15px;'></A>";
         }
         msg += "  " + "<br>";
         msg += "<span style='font-size:0.8em'>" + row.contents + "</span>";
@@ -186,16 +186,16 @@ function list_by_recipeno_add_view() {
 function reply_delete(replyno) {
   // alert('replyno: ' + replyno);
   var frm_reply_delete = $('#frm_reply_delete');
-  $('#replyno', frm_reply_delete).val(replyno); // 삭제할 댓글 번호 저장
+  $('#recipereplno', frm_reply_delete).val(replyno); // 삭제할 댓글 번호 저장
   $('#modal_panel_delete').modal();               // 삭제폼 다이얼로그 출력
 }
 
 // 댓글 삭제 처리
-function reply_delete_proc(recipeno) {
+function reply_delete_proc(replyno) {
   // alert('replyno: ' + replyno);
   var params = $('#frm_reply_delete').serialize();
   $.ajax({
-    url: "../recipe/delete.do", // action 대상 주소
+    url: "../reciperepl/delete.do", // action 대상 주소
     type: "post",           // get, post
     cache: false,          // 브러우저의 캐시영역 사용안함.
     async: true,           // true: 비동기
@@ -205,28 +205,19 @@ function reply_delete_proc(recipeno) {
       // alert(rdata);
       var msg = "";
       
-      if (rdata.count ==1) { // 패스워드 일치
-        if (rdata.delete_count == 1) { // 삭제 성공
+      
+      if (rdata.delete_count == 1) { // 삭제 성공
 
-          $('#btn_frm_reply_delete_close').trigger("click"); // 삭제폼 닫기, click 발생 
+        $('#btn_frm_reply_delete_close').trigger("click"); // 삭제폼 닫기, click 발생 
+        console.log('replyno: ' + replyno);
+        $('#' + replyno).remove(); // 태그 삭제
           
-          $('#' + recipeno).remove(); // 태그 삭제
-            
-          return; // 함수 실행 종료
-        } else {  // 삭제 실패
-          msg = "패스 워드는 일치하나 댓글 삭제에 실패했습니다. <br>";
-          msg += " 다시한번 시도해주세요."
-        }
-      } else { // 패스워드 일치하지 않음.
-        // alert('패스워드 불일치');
-        // return;
-        
-        msg = "패스워드가 일치하지 않습니다.";
-        $('#modal_panel_delete_msg').html(msg);
-
-        $('#passwd', '#frm_reply_delete').focus();
-        
+        return; // 함수 실행 종료
+      } else {  // 삭제 실패
+        msg += " 다시한번 시도해주세요.";
       }
+      
+        
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
@@ -240,7 +231,7 @@ function reply_delete_proc(recipeno) {
 
 
 
-
+// 평점 주기
 function click_rating_func(){
   //recipeno, index, rating_int, rating_sosu
   var params = 'recipeno='+ ${recipeVO.recipeno} + '&index=' + index;
@@ -353,14 +344,15 @@ function click_rating_func_false(){
         </div>
         <div class="modal-body">
           <form name='frm_reply_delete' id='frm_reply_delete'>
-            <input type='hidden' name='replyno' id='replyno' value=''>
+            <label>정말 삭제하시겠습니까????</label>
+            <input type='hidden' name='recipereplno' id='recipereplno' value=''>
             
             <DIV id='modal_panel_delete_msg' style='color: #AA0000; font-size: 1.1em;'></DIV>
           </form>
         </div>
         <div class="modal-footer">
           <button type='button' class='btn btn-danger' 
-                       onclick="reply_delete_proc(frm_reply_delete.recipereplno.value);">삭제</button>
+                       onclick="reply_delete_proc(frm_reply_delete.recipereplno.value)">삭제</button>
 
           <button type="button" class="btn btn-default" data-dismiss="modal" 
                        id='btn_frm_reply_delete_close'>Close</button>
@@ -569,7 +561,7 @@ function click_rating_func_false(){
             
             <textarea name='contents' id='contents' style='width: 100%; height: 60px; border-color: #ffbb00' placeholder="댓글 작성, 로그인해야 등록 할 수 있습니다."></textarea>
             <c:if test="${sessionScope.memberno != null}">
-              <br><br><br><button type='button' id='btn_create' style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">등록</button>
+              <br><br><br><button type='button' id='btn_create' style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">등록</button><br><br>
             </c:if>
           </FORM>
           <HR>

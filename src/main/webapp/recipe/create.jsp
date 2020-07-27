@@ -6,7 +6,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>꼬박꼬밥</title>
+<title>가ㄴ펴ㄴ시ㄱ</title>
  
 <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet"> 
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
@@ -33,9 +33,7 @@ $(function() {
     readURL2(this, 0);
   });
 
-
-
-
+  $("#btn_create").on('click', btnCreate);
 /*   // 요리 순서
   for(var i = 1; i <= ingredseq_cnt; i++){
     file2MFcnt = '#file2MF' + i;
@@ -50,7 +48,71 @@ $(function() {
   
 });
 
+function btnCreate(){ // 등록 버튼 
+  if ($("#title").val() == "") {
+    alert("제목을 입력해 주세요");
+    $("#title").focus();
+    return false;
+  }
 
+  if ($("#file1MF").val() == "") {
+    alert("메인 사진을 등록해 주세요");
+    $("#fileimg").focus();
+    return false;
+  }
+
+  if ($("#introdfood").val() == "") {
+    alert("요리 소개를 입력해 주세요");
+    $("#introdfood").focus();
+    return false;
+  } 
+   
+  if ($("#num_person").val() == "") {
+    alert("요리정보(인원)를 선택해 주세요");
+    $("#num_person").focus();
+    return false;
+  } 
+
+  if ($("#time").val() == "") {
+    alert("요리정보(시간)를 선택해 주세요");
+    $("#time").focus();
+    return false;
+  } 
+  
+  if ($("#difficulty").val() == "") {
+    alert("요리정보(난이도)를 선택해 주세요");
+    $("#difficulty").focus();
+    return false;
+  } 
+  
+  if ($("#ingredfood0").val() == "") {
+    alert("주재료를 최소 한개 입력해 주세요.");
+    $("#ingredfood0").focus();
+    return false;
+  } 
+
+  if ($("#ingredfood0").val() == "") {
+    alert("요리 재료를 최소 한개 입력해 주세요.");
+    $("#ingredfood0").focus();
+    return false;
+  } 
+
+  if ($("#contents0").val() == "") {
+    alert("요리 순서 내용을 최소 한개 입력해 주세요.");
+    $("#contents0").focus();
+    return false;
+  } 
+
+  if ($("#file2MF0").val() == "") {
+    alert("요리 순서 사진을 최소 한개 등록해 주세요.");
+    $("#file2MF0").focus();
+    return false;
+  } 
+
+  
+  
+  $('#frm').submit();
+}
 
 
 
@@ -260,7 +322,7 @@ function add_ingredseq(){
   $('#recipe_seq').append(str);
 
 
-  
+   
   $("#file2MF1").on('change', function(){
     readURL2(this, 1);
   });
@@ -275,8 +337,33 @@ function add_ingredseq(){
 
   $("#file2MF4").on('change', function(){
     readURL2(this, 4);
-  });
-  
+  }); 
+
+  $("#file2MF5").on('change', function(){
+    readURL2(this, 5);
+  }); 
+
+  $("#file2MF6").on('change', function(){
+    readURL2(this, 6);
+  }); 
+
+  $("#file2MF7").on('change', function(){
+    readURL2(this, 7);
+  }); 
+
+  $("#file2MF8").on('change', function(){
+    readURL2(this, 8);
+  }); 
+
+  $("#file2MF9").on('change', function(){
+    readURL2(this, 9);
+  }); 
+
+/*   for(var i=1; i<=ingredseq_cnt; i++){
+    $("#file2MF"+i).on('change', function(){
+      readURL2(this, i);
+    });
+  } */
   
 }
 
@@ -291,7 +378,7 @@ function add_ingredseq(){
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
 
  
-<FORM name='frm' method='POST' action='./create.do' class="form-horizontal" enctype="multipart/form-data">
+<FORM name='frm' id='frm' method='POST' action='./create.do' class="form-horizontal" enctype="multipart/form-data">
   <input type="hidden" name="recipecategrpno" value="1">
   <input type="hidden" name="memberno" value="${sessionScope.memberno }">
   <input type="hidden" name="recipecateno" value="1">
@@ -466,7 +553,7 @@ function add_ingredseq(){
           <div id = "ingremain">
             <div class="col-sm-3" id = "ingre_main0"> <!-- 주재료 / 부재료 -->
               <input type="text" name="ingredfood0" id="ingredfood0" value="" class="form-control" 
-                      placeholder="재료" style="width:150px; background-color:#F5F5F5; height:40px;
+                      placeholder="주재료" style="width:150px; background-color:#F5F5F5; height:40px;
                       vertical-align: middle;">
             </div>
             
@@ -543,7 +630,7 @@ function add_ingredseq(){
           Step1
           </div>
           <div class="col-sm-6">
-            <textarea placeholder="예)고기가 반쯤 익어갈 때 양파를 함께 볶아요." name="contents0" class="form-control" style="background-color:#F5F5F5;" rows="3"></textarea>
+            <textarea placeholder="예)고기가 반쯤 익어갈 때 양파를 함께 볶아요." id="contents0" name="contents0" class="form-control" style="background-color:#F5F5F5;" rows="3"></textarea>
           </div>
           <div class="col-sm-2" id= "seq_div0">
             <input type = "file" name ="file2MF" id = "file2MF0" value ="" multiple = "multiple"
@@ -621,7 +708,7 @@ function add_ingredseq(){
     </div>
   
     <DIV class="content_bottom_menu" style="padding-right: 20%;">
-      <button type="submit" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">등록</button>
+      <button type="button" id="btn_create" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">등록</button>
       <button type="button" onclick="location.href='./list.do'" style="background-color:white; padding:10px; color:#ffbb00; border:solid 1px #ffbb00;">목록</button>
     </DIV>
     

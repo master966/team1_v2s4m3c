@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>꼬박꼬밥</title>
+<title>가ㄴ펴ㄴ시ㄱ</title>
  
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
 <link href="../css/style_br.css" rel="Stylesheet" type="text/css">
@@ -23,10 +23,9 @@
 <body>
 <jsp:include page="/team1_menu/topindex.jsp" flush='false' />
 
-  <br>
   <DIV class="recipe_container_all2">
    <DIV class="recipe_container3">
-      <table class="table" style='width: 100%; margin-top:-90px;'>
+      <table class="table" style='width: 100%; margin-top:-70px;'>
         <colgroup>
           <col style="width: 10%;"></col>
           <col style="width: 90%;"></col>

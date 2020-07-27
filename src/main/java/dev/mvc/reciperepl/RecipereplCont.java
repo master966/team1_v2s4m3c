@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,7 +55,6 @@ public class RecipereplCont {
     list.add(recipereplMembersVO);
     
     obj.put("recipereplMembersVO", list);
-    
     System.out.println("create obj :" + obj.toString());
     return obj.toString(); 
 
@@ -95,13 +95,13 @@ public class RecipereplCont {
   @RequestMapping(value = "/reciperepl/delete.do", 
                               method = RequestMethod.POST,
                               produces = "text/plain;charset=UTF-8")
-  public String delete(int recipeno, HttpSession session) {
-    int delete_count = recipereplProc.delete(recipeno); // ¥Ò±€ ªË¡¶
+  public String delete(@RequestParam(value="recipereplno", defaultValue="0") int recipereplno) {
+    int delete_count = recipereplProc.delete(recipereplno); // ¥Ò±€ ªË¡¶
     
-    
+    System.out.println("recipereplno: " + recipereplno);
     JSONObject obj = new JSONObject();
     obj.put("delete_count", delete_count); // ªË¡¶µ» ¥Ò±€
-    
+    System.out.println(obj.toString());
     return obj.toString();
   }
 
